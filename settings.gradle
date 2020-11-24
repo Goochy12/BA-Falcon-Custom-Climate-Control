@@ -1,0 +1,2 @@
+include ':app'
+rootProject.name = "BA Falcon Custom Climate Control"
