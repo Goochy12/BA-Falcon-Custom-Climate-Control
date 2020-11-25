@@ -265,7 +265,8 @@
             app:layout_constraintEnd_toStartOf="@+id/vdivider3"
             app:layout_constraintStart_toEndOf="@+id/vdivider2"
             app:layout_constraintTop_toBottomOf="@+id/divider10"
-            app:srcCompat="@drawable/front_defrost" />
+            app:srcCompat="@drawable/front_defrost"
+            android:background="@null"/>
 
         <ImageButton
             android:id="@+id/button_rearDefrost"
@@ -275,7 +276,8 @@
             app:layout_constraintEnd_toStartOf="@+id/vdivider4"
             app:layout_constraintStart_toEndOf="@+id/vdivider3"
             app:layout_constraintTop_toBottomOf="@+id/divider10"
-            app:srcCompat="@drawable/rear_defrost" />
+            app:srcCompat="@drawable/rear_defrost"
+            android:background="@null" />
 
         <Button
             android:id="@+id/button_ac"
@@ -285,7 +287,8 @@
             app:layout_constraintBottom_toTopOf="@+id/divider20"
             app:layout_constraintEnd_toStartOf="@+id/vdivider55"
             app:layout_constraintStart_toEndOf="@+id/vdivider45"
-            app:layout_constraintTop_toBottomOf="@+id/divider10" />
+            app:layout_constraintTop_toBottomOf="@+id/divider10"
+            android:background="@null"/>
         <Button
             android:id="@+id/button_acMax"
             android:layout_width="wrap_content"
@@ -294,7 +297,8 @@
             app:layout_constraintBottom_toTopOf="@+id/divider20"
             app:layout_constraintEnd_toStartOf="@+id/vdivider7"
             app:layout_constraintStart_toEndOf="@+id/vdivider6"
-            app:layout_constraintTop_toBottomOf="@+id/divider10" />
+            app:layout_constraintTop_toBottomOf="@+id/divider10"
+            android:background="@null"/>
 
         <ImageButton
             android:id="@+id/button_recycle"
@@ -304,7 +308,8 @@
             app:layout_constraintEnd_toStartOf="@+id/vdivider8"
             app:layout_constraintStart_toEndOf="@+id/vdivider7"
             app:layout_constraintTop_toBottomOf="@+id/divider10"
-            app:srcCompat="@drawable/recirculation" />
+            app:srcCompat="@drawable/recirculation"
+            android:background="@null" />
 
 <!--        Fan and Temp-->
         <ImageButton
@@ -315,7 +320,8 @@
             app:layout_constraintEnd_toStartOf="@+id/vdivider4"
             app:layout_constraintStart_toEndOf="@+id/vdivider3"
             app:layout_constraintTop_toBottomOf="@+id/divider30"
-            app:srcCompat="@drawable/arrow" />
+            app:srcCompat="@drawable/arrow"
+            android:background="@null"/>
 
         <ImageButton
             android:id="@+id/button_fanDown"
@@ -326,7 +332,8 @@
             app:layout_constraintStart_toEndOf="@+id/vdivider3"
             app:layout_constraintTop_toBottomOf="@+id/divider40"
             app:srcCompat="@drawable/arrow"
-            android:rotation="180"/>
+            android:rotation="180"
+            android:background="@null"/>
 
         <ImageButton
             android:id="@+id/button_tempUp"
@@ -336,7 +343,8 @@
             app:layout_constraintEnd_toStartOf="@+id/vdivider7"
             app:layout_constraintStart_toEndOf="@+id/vdivider6"
             app:layout_constraintTop_toBottomOf="@+id/divider30"
-            app:srcCompat="@drawable/arrow" />
+            app:srcCompat="@drawable/arrow"
+            android:background="@null"/>
 
         <ImageButton
             android:id="@+id/button_tempDown"
@@ -347,7 +355,8 @@
             app:layout_constraintStart_toEndOf="@+id/vdivider6"
             app:layout_constraintTop_toBottomOf="@+id/divider40"
             app:srcCompat="@drawable/arrow"
-            android:rotation="180"/>
+            android:rotation="180"
+            android:background="@null"/>
 
 <!--        Accessories-->
         <ImageButton
@@ -358,7 +367,8 @@
             app:layout_constraintEnd_toStartOf="@+id/vdivider4"
             app:layout_constraintStart_toEndOf="@+id/vdivider3"
             app:layout_constraintTop_toBottomOf="@+id/divider90"
-            app:srcCompat="@drawable/lightbulb_off"/>
+            app:srcCompat="@drawable/lightbulb_off"
+            android:background="@null"/>
         <ImageButton
             android:id="@+id/button_doorLock"
             android:layout_width="wrap_content"
@@ -367,7 +377,8 @@
             app:layout_constraintEnd_toStartOf="@+id/vdivider7"
             app:layout_constraintStart_toEndOf="@+id/vdivider6"
             app:layout_constraintTop_toBottomOf="@+id/divider80"
-            app:srcCompat="@drawable/lock"/>
+            app:srcCompat="@drawable/lock"
+            android:background="@null"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
