@@ -15,26 +15,27 @@
         app:layout_constraintTop_toTopOf="parent">
 
 <!--Horizontal Dividers-->
-            <View
-                android:id="@+id/divider10"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.1" />
-            <View
-                android:id="@+id/divider20"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.2" />
+        <View
+            android:id="@+id/divider10"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.1" />
+
+        <View
+            android:id="@+id/divider20"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.2" />
             <View
             android:id="@+id/divider30"
             android:layout_width="match_parent"
@@ -117,18 +118,17 @@
                 app:layout_constraintHorizontal_bias="0.1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <View
-                android:id="@+id/vdivider2"
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-            <View
+        <View
+            android:id="@+id/vdivider2"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <View
             android:id="@+id/vdivider3"
             android:layout_width="1dp"
             android:layout_height="match_parent"
@@ -148,6 +148,16 @@
             app:layout_constraintHorizontal_bias="0.4"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+        <View
+            android:id="@+id/vdivider45"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.45"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
             <View
                 android:id="@+id/vdivider5"
                 android:layout_width="1dp"
@@ -158,6 +168,16 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+        <View
+            android:id="@+id/vdivider55"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.55"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
             <View
                 android:id="@+id/vdivider6"
                 android:layout_width="1dp"
@@ -168,6 +188,16 @@
                 app:layout_constraintHorizontal_bias="0.6"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+        <View
+            android:id="@+id/vdivider65"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.65"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
             <View
             android:id="@+id/vdivider7"
             android:layout_width="1dp"
@@ -198,112 +228,12 @@
             app:layout_constraintHorizontal_bias="0.9"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
 <!--AC Modes-->
-            <TextView
-                android:id="@+id/textView_frontDemister"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Front Demister"
-                app:layout_constraintBottom_toTopOf="@+id/divider20"
-                app:layout_constraintEnd_toStartOf="@+id/vdivider3"
-                app:layout_constraintStart_toEndOf="@+id/vdivider2"
-                app:layout_constraintTop_toBottomOf="@+id/divider10" />
-            <TextView
-                android:id="@+id/textView_rearDemister"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rear Demister"
-                app:layout_constraintBottom_toTopOf="@+id/divider20"
-                app:layout_constraintEnd_toStartOf="@+id/vdivider4"
-                app:layout_constraintStart_toEndOf="@+id/vdivider3"
-                app:layout_constraintTop_toBottomOf="@+id/divider10" />
-            <TextView
-                android:id="@+id/textView_ac"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="AC"
-                app:layout_constraintBottom_toTopOf="@+id/divider20"
-                app:layout_constraintEnd_toStartOf="@+id/vdivider5"
-                app:layout_constraintStart_toEndOf="@+id/vdivider4"
-                app:layout_constraintTop_toBottomOf="@+id/divider10"/>
-            <TextView
-                android:id="@+id/textView_acMax"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="AC MAX"
-                app:layout_constraintBottom_toTopOf="@+id/divider20"
-                app:layout_constraintEnd_toStartOf="@+id/vdivider6"
-                app:layout_constraintStart_toEndOf="@+id/vdivider5"
-                app:layout_constraintTop_toBottomOf="@+id/divider10" />
-            <TextView
-                android:id="@+id/textView_recycle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Recycle"
-                app:layout_constraintBottom_toTopOf="@+id/divider20"
-                app:layout_constraintEnd_toStartOf="@+id/vdivider7"
-                app:layout_constraintStart_toEndOf="@+id/vdivider6"
-                app:layout_constraintTop_toBottomOf="@+id/divider10" />
 
-<!--Fan and Temp-->
-            <TextView
-                android:id="@+id/textView_fanUp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Fan Up"
-                app:layout_constraintBottom_toTopOf="@+id/divider40"
-                app:layout_constraintEnd_toStartOf="@+id/vdivider4"
-                app:layout_constraintStart_toEndOf="@+id/vdivider3"
-                app:layout_constraintTop_toBottomOf="@+id/divider30" />
-            <TextView
-                android:id="@+id/textView_fanDown"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Fan Down"
-                app:layout_constraintBottom_toTopOf="@+id/divider50"
-                app:layout_constraintEnd_toStartOf="@+id/vdivider4"
-                app:layout_constraintStart_toEndOf="@+id/vdivider3"
-                app:layout_constraintTop_toBottomOf="@+id/divider40" />
-            <TextView
-                android:id="@+id/textView_tempUp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Temp Up"
-                app:layout_constraintBottom_toTopOf="@+id/divider40"
-                app:layout_constraintEnd_toStartOf="@+id/vdivider7"
-                app:layout_constraintStart_toEndOf="@+id/vdivider6"
-                app:layout_constraintTop_toBottomOf="@+id/divider30" />
-            <TextView
-                android:id="@+id/textView_tempDown"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Temp Down"
-                app:layout_constraintBottom_toTopOf="@+id/divider50"
-                app:layout_constraintEnd_toStartOf="@+id/vdivider7"
-                app:layout_constraintStart_toEndOf="@+id/vdivider6"
-                app:layout_constraintTop_toBottomOf="@+id/divider40" />
+        <!--Accessories-->
 
-<!--Accessories-->
-            <TextView
-                android:id="@+id/textView_domeLight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Dome Light"
-                app:layout_constraintBottom_toTopOf="@+id/divider90"
-                app:layout_constraintEnd_toStartOf="@+id/vdivider4"
-                app:layout_constraintStart_toEndOf="@+id/vdivider3"
-                app:layout_constraintTop_toBottomOf="@+id/divider80" />
-            <TextView
-                android:id="@+id/textView_doorLock"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Door Lock"
-                app:layout_constraintBottom_toTopOf="@+id/divider90"
-                app:layout_constraintEnd_toStartOf="@+id/vdivider7"
-                app:layout_constraintStart_toEndOf="@+id/vdivider6"
-                app:layout_constraintTop_toBottomOf="@+id/divider80" />
-
-<!--Control Bars-->
+        <!--Control Bars-->
         <ProgressBar
             android:id="@+id/fanProgressBar"
             style="?android:attr/progressBarStyleHorizontal"
@@ -326,6 +256,118 @@
             app:layout_constraintStart_toEndOf="@+id/vdivider7"
             app:layout_constraintTop_toBottomOf="@+id/divider30" />
 
+<!--        AC Modes-->
+        <ImageButton
+            android:id="@+id/button_frontDefrost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/divider20"
+            app:layout_constraintEnd_toStartOf="@+id/vdivider3"
+            app:layout_constraintStart_toEndOf="@+id/vdivider2"
+            app:layout_constraintTop_toBottomOf="@+id/divider10"
+            app:srcCompat="@drawable/front_defrost" />
+
+        <ImageButton
+            android:id="@+id/button_rearDefrost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/divider20"
+            app:layout_constraintEnd_toStartOf="@+id/vdivider4"
+            app:layout_constraintStart_toEndOf="@+id/vdivider3"
+            app:layout_constraintTop_toBottomOf="@+id/divider10"
+            app:srcCompat="@drawable/rear_defrost" />
+
+        <Button
+            android:id="@+id/button_ac"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AC"
+            app:layout_constraintBottom_toTopOf="@+id/divider20"
+            app:layout_constraintEnd_toStartOf="@+id/vdivider55"
+            app:layout_constraintStart_toEndOf="@+id/vdivider45"
+            app:layout_constraintTop_toBottomOf="@+id/divider10" />
+        <Button
+            android:id="@+id/button_acMax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AC MAX"
+            app:layout_constraintBottom_toTopOf="@+id/divider20"
+            app:layout_constraintEnd_toStartOf="@+id/vdivider7"
+            app:layout_constraintStart_toEndOf="@+id/vdivider6"
+            app:layout_constraintTop_toBottomOf="@+id/divider10" />
+
+        <ImageButton
+            android:id="@+id/button_recycle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/divider20"
+            app:layout_constraintEnd_toStartOf="@+id/vdivider8"
+            app:layout_constraintStart_toEndOf="@+id/vdivider7"
+            app:layout_constraintTop_toBottomOf="@+id/divider10"
+            app:srcCompat="@drawable/recirculation" />
+
+<!--        Fan and Temp-->
+        <ImageButton
+            android:id="@+id/button_fanUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/divider40"
+            app:layout_constraintEnd_toStartOf="@+id/vdivider4"
+            app:layout_constraintStart_toEndOf="@+id/vdivider3"
+            app:layout_constraintTop_toBottomOf="@+id/divider30"
+            app:srcCompat="@drawable/arrow" />
+
+        <ImageButton
+            android:id="@+id/button_fanDown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/divider50"
+            app:layout_constraintEnd_toStartOf="@+id/vdivider4"
+            app:layout_constraintStart_toEndOf="@+id/vdivider3"
+            app:layout_constraintTop_toBottomOf="@+id/divider40"
+            app:srcCompat="@drawable/arrow"
+            android:rotation="180"/>
+
+        <ImageButton
+            android:id="@+id/button_tempUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/divider40"
+            app:layout_constraintEnd_toStartOf="@+id/vdivider7"
+            app:layout_constraintStart_toEndOf="@+id/vdivider6"
+            app:layout_constraintTop_toBottomOf="@+id/divider30"
+            app:srcCompat="@drawable/arrow" />
+
+        <ImageButton
+            android:id="@+id/button_tempDown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/divider50"
+            app:layout_constraintEnd_toStartOf="@+id/vdivider7"
+            app:layout_constraintStart_toEndOf="@+id/vdivider6"
+            app:layout_constraintTop_toBottomOf="@+id/divider40"
+            app:srcCompat="@drawable/arrow"
+            android:rotation="180"/>
+
+<!--        Accessories-->
+        <ImageButton
+            android:id="@+id/button_domeLight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/divider80"
+            app:layout_constraintEnd_toStartOf="@+id/vdivider4"
+            app:layout_constraintStart_toEndOf="@+id/vdivider3"
+            app:layout_constraintTop_toBottomOf="@+id/divider90"
+            app:srcCompat="@drawable/lightbulb_off"/>
+        <ImageButton
+            android:id="@+id/button_doorLock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/divider90"
+            app:layout_constraintEnd_toStartOf="@+id/vdivider7"
+            app:layout_constraintStart_toEndOf="@+id/vdivider6"
+            app:layout_constraintTop_toBottomOf="@+id/divider80"
+            app:srcCompat="@drawable/lock"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
