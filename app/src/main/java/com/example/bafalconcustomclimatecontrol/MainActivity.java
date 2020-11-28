@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,6 +15,8 @@ public class MainActivity extends AppCompatActivity {
             button_fanDown, button_tempUp, button_tempDown, button_domeLight, button_doorLock;
 
     private Button button_ac, button_acMax;
+
+    private ProgressBar fanProgressBar, tempProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
 
         button_ac = findViewById(R.id.button_ac);
         button_acMax = findViewById(R.id.button_acMax);
+
+        //declare progress bars
+        fanProgressBar = (ProgressBar) findViewById(R.id.fanProgressBar);
+        tempProgressBar = (ProgressBar) findViewById(R.id.tempProgressBar);
 
         //declare button listeners
         button_ac.setOnClickListener(new View.OnClickListener() {
@@ -73,28 +80,28 @@ public class MainActivity extends AppCompatActivity {
         button_fanUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                fanProgressBar.incrementProgressBy(10);
             }
         });
 
         button_fanDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                fanProgressBar.incrementProgressBy(-10);
             }
         });
 
         button_tempUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                tempProgressBar.incrementProgressBy(10);
             }
         });
 
         button_tempDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                tempProgressBar.incrementProgressBy(-10);
             }
         });
 
