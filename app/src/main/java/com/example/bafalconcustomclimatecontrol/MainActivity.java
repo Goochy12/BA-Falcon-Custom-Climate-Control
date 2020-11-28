@@ -61,24 +61,14 @@ public class MainActivity extends AppCompatActivity {
         button_ac.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!button_ac_isSelected) {
-                    button_ac.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
-                } else {
-                    button_ac.setBackgroundColor(getResources().getColor(R.color.black));
-                }
-                button_ac_isSelected = !button_ac_isSelected;
+                setAC();
             }
         });
 
         button_acMax.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!button_acMax_isSelected) {
-                    button_acMax.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
-                } else {
-                    button_acMax.setBackgroundColor(getResources().getColor(R.color.black));
-                }
-                button_acMax_isSelected = !button_acMax_isSelected;
+                setAcMax();
             }
         });
 
@@ -169,8 +159,129 @@ public class MainActivity extends AppCompatActivity {
                 button_doorLock_isSelected = !button_doorLock_isSelected;
             }
         });
+
+
     }
 
+    //function getters and setters
+    //get from car
+    //send to car
+    private void sendAC_status() {
+
+    }
+
+    private void getAC_status() {
+
+    }
+
+    private void setAC() {
+        if (!getButton_ac_isSelected()) {
+            button_ac.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
+        } else {
+            button_ac.setBackgroundColor(getResources().getColor(R.color.black));
+            button_acMax.setBackgroundColor(getResources().getColor(R.color.black));
+            setButton_acMax_isSelected(false);
+        }
+        setButton_ac_isSelected(!getButton_ac_isSelected());
+    }
+
+    private void sendAcMax_status() {
+
+    }
+
+    private void getAcMax_status() {
+
+    }
+
+    private void setAcMax() {
+        if (!button_acMax_isSelected) {
+            button_acMax.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
+            button_ac.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
+            setButton_ac_isSelected(true);
+        } else {
+            button_acMax.setBackgroundColor(getResources().getColor(R.color.black));
+        }
+        button_acMax_isSelected = !button_acMax_isSelected;
+    }
+
+    private void sendfrontDefrost_status() {
+
+    }
+
+    private void getfrontDefrost_status() {
+
+    }
+
+    private void setfrontDefrost() {
+
+    }
+
+    private void sendRearDefrost_status() {
+
+    }
+
+    private void getRearDefrost_status() {
+
+    }
+
+    private void setRearDefrost() {
+
+    }
+
+    private void sendRecycle_status() {
+
+    }
+
+    private void getRecycle_status() {
+
+    }
+
+    private void setRecycle() {
+
+    }
+
+    private void senddomeLight_status() {
+
+    }
+
+    private void getdomeLight_status() {
+
+    }
+
+    private void setdomeLight() {
+
+    }
+
+    private void sendDoorLock_status() {
+
+    }
+
+    private void getDoorLock_status() {
+
+    }
+
+    private void setDoorLock() {
+
+    }
+
+    public ProgressBar getFanProgressBar() {
+        return fanProgressBar;
+    }
+
+    public void setFanProgressBar(ProgressBar fanProgressBar) {
+        this.fanProgressBar = fanProgressBar;
+    }
+
+    public ProgressBar getTempProgressBar() {
+        return tempProgressBar;
+    }
+
+    public void setTempProgressBar(ProgressBar tempProgressBar) {
+        this.tempProgressBar = tempProgressBar;
+    }
+
+
+    //boolean getters and setters
     public Boolean getButton_frontDefrost_isSelected() {
         return button_frontDefrost_isSelected;
     }
@@ -227,20 +338,5 @@ public class MainActivity extends AppCompatActivity {
         this.button_acMax_isSelected = button_acMax_isSelected;
     }
 
-    public ProgressBar getFanProgressBar() {
-        return fanProgressBar;
-    }
-
-    public void setFanProgressBar(ProgressBar fanProgressBar) {
-        this.fanProgressBar = fanProgressBar;
-    }
-
-    public ProgressBar getTempProgressBar() {
-        return tempProgressBar;
-    }
-
-    public void setTempProgressBar(ProgressBar tempProgressBar) {
-        this.tempProgressBar = tempProgressBar;
-    }
 
 }
