@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         button_frontDefrost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-setfrontDefrost();
+                setfrontDefrost();
             }
         });
 
@@ -91,7 +91,7 @@ setfrontDefrost();
         button_recycle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-setRecycle();
+                setRecycle();
             }
         });
 
@@ -126,17 +126,21 @@ setRecycle();
         button_domeLight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-setdomeLight();
+                setdomeLight();
             }
         });
 
         button_doorLock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-setDoorLock();
+                setDoorLock();
             }
         });
 
+
+        //initialise variables
+        setTempProgressBar(0);
+        setFanProgressBar(0);
 
     }
 
@@ -282,11 +286,12 @@ setDoorLock();
 
     public void setTempProgressBar_status() {
     }
+
     public void setTempProgressBar(int incAmmount) {
         this.tempProgressBar.incrementProgressBy(incAmmount);
-        if (this.tempProgressBar.getProgress() > 50){
+        if (this.tempProgressBar.getProgress() > 50) {
             this.tempProgressBar.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
-        }else{
+        } else {
             this.tempProgressBar.getProgressDrawable().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);
         }
     }
