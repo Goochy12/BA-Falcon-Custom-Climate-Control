@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     //boolean variables for button
     private Boolean button_frontDefrost_isSelected, button_rearDefrost_isSelected, button_recycle_isSelected,
-    button_domeLight_isSelected, button_doorLock_isSelected, button_ac_isSelected, button_acMax_isSelected;
+            button_domeLight_isSelected, button_doorLock_isSelected, button_ac_isSelected, button_acMax_isSelected;
 
     private ProgressBar fanProgressBar, tempProgressBar;
 
@@ -60,42 +60,60 @@ public class MainActivity extends AppCompatActivity {
         button_ac.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!button_ac_isSelected){
-                Log.i("debug_liam", "Working");
+                if (!button_ac_isSelected) {
                     button_ac.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
-                }else{
-                    Log.i("debug_liam", "Working");
+                } else {
                     button_ac.setBackgroundColor(getResources().getColor(R.color.black));
                 }
-                    button_ac_isSelected = !button_ac_isSelected;
+                button_ac_isSelected = !button_ac_isSelected;
             }
         });
 
         button_acMax.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (!button_acMax_isSelected) {
+                    button_acMax.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
+                } else {
+                    button_acMax.setBackgroundColor(getResources().getColor(R.color.black));
+                }
+                button_acMax_isSelected = !button_acMax_isSelected;
             }
         });
 
         button_frontDefrost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (!button_frontDefrost_isSelected) {
+                    button_frontDefrost.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
+                } else {
+                    button_frontDefrost.setBackgroundColor(getResources().getColor(R.color.black));
+                }
+                button_frontDefrost_isSelected = !button_frontDefrost_isSelected;
             }
         });
 
         button_rearDefrost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (!button_rearDefrost_isSelected) {
+                    button_rearDefrost.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
+                } else {
+                    button_rearDefrost.setBackgroundColor(getResources().getColor(R.color.black));
+                }
+                button_rearDefrost_isSelected = !button_rearDefrost_isSelected;
             }
         });
 
         button_recycle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (!button_recycle_isSelected) {
+                    button_recycle.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
+                } else {
+                    button_recycle.setBackgroundColor(getResources().getColor(R.color.black));
+                }
+                button_recycle_isSelected = !button_recycle_isSelected;
             }
         });
 
@@ -130,14 +148,24 @@ public class MainActivity extends AppCompatActivity {
         button_domeLight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (!button_domeLight_isSelected) {
+                    button_domeLight.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
+                } else {
+                    button_domeLight.setBackgroundColor(getResources().getColor(R.color.black));
+                }
+                button_domeLight_isSelected = !button_domeLight_isSelected;
             }
         });
 
         button_doorLock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (!button_doorLock_isSelected) {
+                    button_doorLock.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
+                } else {
+                    button_doorLock.setBackgroundColor(getResources().getColor(R.color.black));
+                }
+                button_doorLock_isSelected = !button_doorLock_isSelected;
             }
         });
     }
