@@ -2,6 +2,8 @@ package com.example.bafalconcustomclimatecontrol;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
@@ -75,88 +77,63 @@ public class MainActivity extends AppCompatActivity {
         button_frontDefrost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!button_frontDefrost_isSelected) {
-                    button_frontDefrost.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
-                } else {
-                    button_frontDefrost.setBackgroundColor(getResources().getColor(R.color.black));
-                }
-                button_frontDefrost_isSelected = !button_frontDefrost_isSelected;
+setfrontDefrost();
             }
         });
 
         button_rearDefrost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!button_rearDefrost_isSelected) {
-                    button_rearDefrost.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
-                } else {
-                    button_rearDefrost.setBackgroundColor(getResources().getColor(R.color.black));
-                }
-                button_rearDefrost_isSelected = !button_rearDefrost_isSelected;
+                setRearDefrost();
             }
         });
 
         button_recycle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!button_recycle_isSelected) {
-                    button_recycle.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
-                } else {
-                    button_recycle.setBackgroundColor(getResources().getColor(R.color.black));
-                }
-                button_recycle_isSelected = !button_recycle_isSelected;
+setRecycle();
             }
         });
 
         button_fanUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fanProgressBar.incrementProgressBy(10);
+                setFanProgressBar(10);
             }
         });
 
         button_fanDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fanProgressBar.incrementProgressBy(-10);
+                setFanProgressBar(-10);
             }
         });
 
         button_tempUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tempProgressBar.incrementProgressBy(10);
+                setTempProgressBar(10);
             }
         });
 
         button_tempDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tempProgressBar.incrementProgressBy(-10);
+                setTempProgressBar(-10);
             }
         });
 
         button_domeLight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!button_domeLight_isSelected) {
-                    button_domeLight.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
-                } else {
-                    button_domeLight.setBackgroundColor(getResources().getColor(R.color.black));
-                }
-                button_domeLight_isSelected = !button_domeLight_isSelected;
+setdomeLight();
             }
         });
 
         button_doorLock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!button_doorLock_isSelected) {
-                    button_doorLock.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
-                } else {
-                    button_doorLock.setBackgroundColor(getResources().getColor(R.color.black));
-                }
-                button_doorLock_isSelected = !button_doorLock_isSelected;
+setDoorLock();
             }
         });
 
@@ -213,7 +190,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setfrontDefrost() {
-
+        if (!button_frontDefrost_isSelected) {
+            button_frontDefrost.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
+        } else {
+            button_frontDefrost.setBackgroundColor(getResources().getColor(R.color.black));
+        }
+        button_frontDefrost_isSelected = !button_frontDefrost_isSelected;
     }
 
     private void sendRearDefrost_status() {
@@ -225,7 +207,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setRearDefrost() {
-
+        if (!button_rearDefrost_isSelected) {
+            button_rearDefrost.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
+        } else {
+            button_rearDefrost.setBackgroundColor(getResources().getColor(R.color.black));
+        }
+        button_rearDefrost_isSelected = !button_rearDefrost_isSelected;
     }
 
     private void sendRecycle_status() {
@@ -237,7 +224,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setRecycle() {
-
+        if (!button_recycle_isSelected) {
+            button_recycle.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
+        } else {
+            button_recycle.setBackgroundColor(getResources().getColor(R.color.black));
+        }
+        button_recycle_isSelected = !button_recycle_isSelected;
     }
 
     private void senddomeLight_status() {
@@ -249,7 +241,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setdomeLight() {
-
+        if (!button_domeLight_isSelected) {
+            button_domeLight.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
+        } else {
+            button_domeLight.setBackgroundColor(getResources().getColor(R.color.black));
+        }
+        button_domeLight_isSelected = !button_domeLight_isSelected;
     }
 
     private void sendDoorLock_status() {
@@ -261,23 +258,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setDoorLock() {
-
+        if (!button_doorLock_isSelected) {
+            button_doorLock.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
+        } else {
+            button_doorLock.setBackgroundColor(getResources().getColor(R.color.black));
+        }
+        button_doorLock_isSelected = !button_doorLock_isSelected;
     }
 
-    public ProgressBar getFanProgressBar() {
-        return fanProgressBar;
+    //progress bars
+    public void getFanProgressBar_status() {
     }
 
-    public void setFanProgressBar(ProgressBar fanProgressBar) {
-        this.fanProgressBar = fanProgressBar;
+    public void setFanProgressBar_status() {
     }
 
-    public ProgressBar getTempProgressBar() {
-        return tempProgressBar;
+    public void setFanProgressBar(int incAmmount) {
+        this.fanProgressBar.incrementProgressBy(incAmmount);
     }
 
-    public void setTempProgressBar(ProgressBar tempProgressBar) {
-        this.tempProgressBar = tempProgressBar;
+    public void getTempProgressBar_status() {
+    }
+
+    public void setTempProgressBar_status() {
+    }
+    public void setTempProgressBar(int incAmmount) {
+        this.tempProgressBar.incrementProgressBy(incAmmount);
+        if (this.tempProgressBar.getProgress() > 50){
+            this.tempProgressBar.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+        }else{
+            this.tempProgressBar.getProgressDrawable().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);
+        }
     }
 
 
