@@ -292,7 +292,7 @@
             app:layout_constraintStart_toEndOf="@+id/vdivider45"
             app:layout_constraintTop_toBottomOf="@+id/divider10"
             app:strokeColor="#FFFFFF"
-            app:strokeWidth="1" />
+            app:strokeWidth="1dp" />
 
         <Button
             android:id="@+id/button_acMax"
@@ -307,7 +307,7 @@
             app:layout_constraintStart_toEndOf="@+id/vdivider6"
             app:layout_constraintTop_toBottomOf="@+id/divider10"
             app:strokeColor="#FFFFFF"
-            app:strokeWidth="1" />
+            app:strokeWidth="1dp" />
 
         <ImageButton
             android:id="@+id/button_recycle"
