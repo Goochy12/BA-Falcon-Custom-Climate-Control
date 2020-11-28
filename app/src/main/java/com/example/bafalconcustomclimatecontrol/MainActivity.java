@@ -19,8 +19,8 @@ public class MainActivity extends AppCompatActivity {
     private Button button_ac, button_acMax;
 
     //boolean variables for button
-    private Boolean button_frontDefrost_isPressed, button_rearDefrost_isPressed, button_recycle_isPressed,
-    button_domeLight_isPressed, button_doorLock_isPressed, button_ac_isPressed, button_acMax_isPressed;
+    private Boolean button_frontDefrost_isSelected, button_rearDefrost_isSelected, button_recycle_isSelected,
+    button_domeLight_isSelected, button_doorLock_isSelected, button_ac_isSelected, button_acMax_isSelected;
 
     private ProgressBar fanProgressBar, tempProgressBar;
 
@@ -48,27 +48,26 @@ public class MainActivity extends AppCompatActivity {
         tempProgressBar = (ProgressBar) findViewById(R.id.tempProgressBar);
 
         //set boolean variables
-        button_frontDefrost_isPressed = false;
-        button_rearDefrost_isPressed = false;
-        button_recycle_isPressed = false;
-        button_domeLight_isPressed = false;
-        button_doorLock_isPressed = false;
-        button_ac_isPressed = false;
-        button_acMax_isPressed = false;
+        button_frontDefrost_isSelected = false;
+        button_rearDefrost_isSelected = false;
+        button_recycle_isSelected = false;
+        button_domeLight_isSelected = false;
+        button_doorLock_isSelected = false;
+        button_ac_isSelected = false;
+        button_acMax_isSelected = false;
 
         //declare button listeners
         button_ac.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!button_ac_isPressed){
+                if(!button_ac_isSelected){
                 Log.i("debug_liam", "Working");
                     button_ac.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
-                    button_ac_isPressed = true;
                 }else{
                     Log.i("debug_liam", "Working");
                     button_ac.setBackgroundColor(getResources().getColor(R.color.black));
-                    button_ac_isPressed = false;
                 }
+                    button_ac_isSelected = !button_ac_isSelected;
             }
         });
 
