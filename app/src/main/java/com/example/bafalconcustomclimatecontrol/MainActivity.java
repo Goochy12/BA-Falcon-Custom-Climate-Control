@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         button_ac_isSelected = false;
         button_acMax_isSelected = false;
 
+
         //declare button listeners
         button_ac.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,6 +169,78 @@ public class MainActivity extends AppCompatActivity {
                 button_doorLock_isSelected = !button_doorLock_isSelected;
             }
         });
+    }
+
+    public Boolean getButton_frontDefrost_isSelected() {
+        return button_frontDefrost_isSelected;
+    }
+
+    public void setButton_frontDefrost_isSelected(Boolean button_frontDefrost_isSelected) {
+        this.button_frontDefrost_isSelected = button_frontDefrost_isSelected;
+    }
+
+    public Boolean getButton_rearDefrost_isSelected() {
+        return button_rearDefrost_isSelected;
+    }
+
+    public void setButton_rearDefrost_isSelected(Boolean button_rearDefrost_isSelected) {
+        this.button_rearDefrost_isSelected = button_rearDefrost_isSelected;
+    }
+
+    public Boolean getButton_recycle_isSelected() {
+        return button_recycle_isSelected;
+    }
+
+    public void setButton_recycle_isSelected(Boolean button_recycle_isSelected) {
+        this.button_recycle_isSelected = button_recycle_isSelected;
+    }
+
+    public Boolean getButton_domeLight_isSelected() {
+        return button_domeLight_isSelected;
+    }
+
+    public void setButton_domeLight_isSelected(Boolean button_domeLight_isSelected) {
+        this.button_domeLight_isSelected = button_domeLight_isSelected;
+    }
+
+    public Boolean getButton_doorLock_isSelected() {
+        return button_doorLock_isSelected;
+    }
+
+    public void setButton_doorLock_isSelected(Boolean button_doorLock_isSelected) {
+        this.button_doorLock_isSelected = button_doorLock_isSelected;
+    }
+
+    public Boolean getButton_ac_isSelected() {
+        return button_ac_isSelected;
+    }
+
+    public void setButton_ac_isSelected(Boolean button_ac_isSelected) {
+        this.button_ac_isSelected = button_ac_isSelected;
+    }
+
+    public Boolean getButton_acMax_isSelected() {
+        return button_acMax_isSelected;
+    }
+
+    public void setButton_acMax_isSelected(Boolean button_acMax_isSelected) {
+        this.button_acMax_isSelected = button_acMax_isSelected;
+    }
+
+    public ProgressBar getFanProgressBar() {
+        return fanProgressBar;
+    }
+
+    public void setFanProgressBar(ProgressBar fanProgressBar) {
+        this.fanProgressBar = fanProgressBar;
+    }
+
+    public ProgressBar getTempProgressBar() {
+        return tempProgressBar;
+    }
+
+    public void setTempProgressBar(ProgressBar tempProgressBar) {
+        this.tempProgressBar = tempProgressBar;
     }
 
 }
