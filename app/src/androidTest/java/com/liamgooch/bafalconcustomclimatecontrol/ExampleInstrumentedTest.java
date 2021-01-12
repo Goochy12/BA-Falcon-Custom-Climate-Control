@@ -1,4 +1,4 @@
-package com.example.bafalconcustomclimatecontrol;
+package com.liamgooch.bafalconcustomclimatecontrol;
 
 import android.content.Context;
 

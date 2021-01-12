@@ -1,13 +1,10 @@
-package com.example.bafalconcustomclimatecontrol;
+package com.liamgooch.bafalconcustomclimatecontrol;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.media.Image;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
