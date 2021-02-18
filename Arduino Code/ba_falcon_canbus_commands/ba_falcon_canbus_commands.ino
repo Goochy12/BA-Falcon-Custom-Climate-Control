@@ -28,8 +28,6 @@ void setup()
 
 void loop()
 {
-  // put your main code here, to run repeatedly:
-
   //get serial in and process
   if (Serial.available())
   {
@@ -48,6 +46,11 @@ void loop()
 
     //send CAN data?
   }
+
+
+//TODO no need to do this each time
+  sendButtonPressed();
+  resetICCButton();
 
   //keep alive function
   sendKeepAlive();
@@ -84,6 +87,9 @@ void sendCANMessage(int id, unsigned char msg[8])
 /*Function to send a serial message*/
 void sendSerialData(unsigned long ID, unsigned char msg)
 {
+  String sM;
+  sM += "CAN_MSG: " + String(ID,HEX) + " " + String(msg);
+  Serial.print(sM);
 }
 
 /*
@@ -95,6 +101,11 @@ void processSerialIn(String sIn)
   {
     doorLock();
   }
+  else if (sIn == "dome_light")
+  {
+    domeLight();
+  }
+  return;
 }
 
 /*
@@ -102,6 +113,7 @@ Function to process CAN data received from the Car
 */
 void processCANDataIn(unsigned long canNodeID, unsigned char buf[8])
 {
+  //TODO Update IF statements - code smells
   //read CAN ID
   if (canNodeID == himID)
   {
@@ -109,6 +121,7 @@ void processCANDataIn(unsigned long canNodeID, unsigned char buf[8])
   }
   else if (canNodeID == bemID)
   {
+    sendSerialData(canNodeID,buf[0]);
   }
 }
 
@@ -118,22 +131,50 @@ void sendKeepAlive()
   sendCANMessage(buttonID, ICC_Buttons);
 }
 
+void setICCButton(int position, int code)
+{
+  ICC_Buttons[position] = code;
+}
+
+void resetICCButton(){
+  for(int i = 0; i < sizeof(KeepAlive); i++){
+    ICC_Buttons[i] = KeepAlive[i];
+  }
+  //temp and fan positions
+  setTemp();
+  setFan();
+}
+
+void sendButtonPressed(){
+  sendCANMessage(0x307,ICC_Buttons);
+}
+
 void doorLock()
 {
-  ICC_Buttons[3] = 0xC0;
+  setICCButton(3, 0xC0);
 }
 
 void doorLock_OFF()
 {
-  ICC_Buttons[3] = 0x40;
+  setICCButton(3, 0x40);
 }
 
 void domeLight()
 {
-  ICC_Buttons[3] = 0xA0;
+  setICCButton(3, 0xA0);
 }
 
 void domeLight_OFF()
 {
-  ICC_Buttons[3] = 0x20;
+  setICCButton(3, 0x20);
+}
+
+
+//TODO: UPDATE METHODS WITH INPUT FROM KNOBS
+void setTemp(){
+  setICCButton(5, 0x0);
+}
+
+void setFan(){
+  setICCButton(6, 0x0);
 }
