@@ -146,7 +146,7 @@ void resetICCButton(){
 }
 
 void sendButtonPressed(){
-  sendCANMessage(0x307,ICC_Buttons);
+  sendCANMessage(buttonID,ICC_Buttons);
 }
 
 void doorLock()
