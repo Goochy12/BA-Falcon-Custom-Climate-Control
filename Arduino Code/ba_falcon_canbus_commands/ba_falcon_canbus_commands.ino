@@ -17,6 +17,10 @@ mcp2515_can CAN(SPI_CS_PIN);
 unsigned char ICC_Buttons[8] = {0, 0, 0, 0x80, 0, 0, 0, 0xA};
 unsigned char ICC_Buttons_OFF[8] = {0, 0, 0, 0, 0, 0, 0, 0xA};
 
+//fan and temp settings
+int fanValue = 0x0;
+int tempValue = 0x0;
+
 void setup()
 {
   Serial.begin(115200);
@@ -47,13 +51,9 @@ void loop()
     //send CAN data?
   }
 
-
-//TODO no need to do this each time
+  //TODO no need to do this each time
   sendButtonPressed();
   resetICCButton();
-
-  //keep alive function
-  sendKeepAlive();
 }
 
 /*
@@ -88,7 +88,7 @@ void sendCANMessage(int id, unsigned char msg[8])
 void sendSerialData(unsigned long ID, unsigned char msg)
 {
   String sM;
-  sM += "CAN_MSG: " + String(ID,HEX) + " " + String(msg);
+  sM += "CAN_MSG: " + String(ID, HEX) + " " + String(msg);
   Serial.print(sM);
 }
 
@@ -104,6 +104,18 @@ void processSerialIn(String sIn)
   else if (sIn == "dome_light")
   {
     domeLight();
+  }
+  else if (sIn == "recycle")
+  {
+    recycle();
+  }
+  else if (sIn == "rear_demist")
+  {
+    rear_demist();
+  }
+  else if (sIn == "feet_front_demist")
+  {
+    feet_front_demist();
   }
   return;
 }
@@ -121,14 +133,8 @@ void processCANDataIn(unsigned long canNodeID, unsigned char buf[8])
   }
   else if (canNodeID == bemID)
   {
-    sendSerialData(canNodeID,buf[0]);
+    sendSerialData(canNodeID, buf[0]);
   }
-}
-
-void sendKeepAlive()
-{
-  ICC_Buttons[3] = keepAliveID;
-  sendCANMessage(buttonID, ICC_Buttons);
 }
 
 void setICCButton(int position, int code)
@@ -136,17 +142,20 @@ void setICCButton(int position, int code)
   ICC_Buttons[position] = code;
 }
 
-void resetICCButton(){
-  for(int i = 0; i < sizeof(KeepAlive); i++){
+void resetICCButton()
+{
+  for (int i = 0; i < sizeof(KeepAlive); i++)
+  {
     ICC_Buttons[i] = KeepAlive[i];
   }
   //temp and fan positions
-  setTemp();
-  setFan();
+  iccTemp();
+  iccFan();
 }
 
-void sendButtonPressed(){
-  sendCANMessage(buttonID,ICC_Buttons);
+void sendButtonPressed()
+{
+  sendCANMessage(buttonID, ICC_Buttons);
 }
 
 void doorLock()
@@ -169,12 +178,58 @@ void domeLight_OFF()
   setICCButton(3, 0x20);
 }
 
-
-//TODO: UPDATE METHODS WITH INPUT FROM KNOBS
-void setTemp(){
-  setICCButton(5, 0x0);
+void recycle()
+{
+  setICCButton(0, 0x40);
 }
 
-void setFan(){
-  setICCButton(6, 0x0);
+void rearDemist()
+{
+  setICCButton(0, 0x20);
+}
+
+void feetFrontDemist()
+{
+  setICCButton(0, 0x1);
+}
+
+void frontDemist()
+{
+  setICCButton(0, 0x2);
+}
+
+void face()
+{
+  setICCButton(0, 0x10);
+}
+
+void faceFeet()
+{
+  setICCButton(0, 0x4);
+}
+
+void ac()
+{
+  setICCButton(0, 0x80);
+}
+
+//TODO: UPDATE METHODS WITH INPUT FROM KNOBS
+void iccTemp()
+{
+  setICCButton(5, tempValue);
+}
+
+void iccFan()
+{
+  setICCButton(6, fanValue);
+}
+
+void setTemp(int tempV)
+{
+  tempValue = tempV;
+}
+
+void setFan(int fanV)
+{
+  fanValue = fanV;
 }
