@@ -105,9 +105,9 @@ void processSerialIn(String sIn)
   {
     domeLight();
   }
-  else if (sIn == "recycle")
+  else if (sIn == "cabin_cycle")
   {
-    recycle();
+    cabin_cycle();
   }
   else if (sIn == "rear_demist")
   {
@@ -194,7 +194,7 @@ void domeLight_OFF()
   setICCButton(3, 0x20);
 }
 
-void recycle()
+void cabin_cycle()
 {
   setICCButton(0, 0x40);
 }
