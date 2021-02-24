@@ -111,11 +111,27 @@ void processSerialIn(String sIn)
   }
   else if (sIn == "rear_demist")
   {
-    rear_demist();
+    rearDemist();
   }
   else if (sIn == "feet_front_demist")
   {
-    feet_front_demist();
+    feetFrontDemist();
+  }
+  else if (sIn == "front_demist")
+  {
+    frontDemist();
+  }
+  else if (sIn == "face")
+  {
+    face();
+  }
+  else if (sIn == "face_feet")
+  {
+    faceFeet();
+  }
+  else if (sIn == "ac")
+  {
+    ac();
   }
   return;
 }
@@ -232,4 +248,12 @@ void setTemp(int tempV)
 void setFan(int fanV)
 {
   fanValue = fanV;
+}
+
+void decodeHIM(unsigned char value)
+{
+}
+
+void decodeBEM(unsigned char value)
+{
 }
