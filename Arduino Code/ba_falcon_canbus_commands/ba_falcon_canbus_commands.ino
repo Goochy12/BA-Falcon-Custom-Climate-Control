@@ -19,7 +19,12 @@ unsigned char ICC_Buttons_OFF[8] = {0, 0, 0, 0, 0, 0, 0, 0xA};
 
 //fan and temp settings
 int fanValue = 0x0;
+int fanMax = 0xE;
+int fanMin = 0x0;
+
 int tempValue = 0x0;
+int tempMax = 0xE;
+int tempMin = 0x0;
 
 void setup()
 {
@@ -133,6 +138,22 @@ void processSerialIn(String sIn)
   {
     ac();
   }
+  else if (sIn == "fanUp")
+  {
+    fanUp();
+  }
+  else if (sIn == "fanDown")
+  {
+    fanDown();
+  }
+  else if (sIn == "tempUp")
+  {
+    tempUp();
+  }
+  else if (sIn == "tempDown")
+  {
+    tempDown();
+  }
   return;
 }
 
@@ -227,6 +248,42 @@ void faceFeet()
 void ac()
 {
   setICCButton(0, 0x80);
+}
+
+void fanUp()
+{
+  if (fanValue < fanMax)
+  {
+    fanValue += 0x1;
+    iccFan();
+  }
+}
+
+void fanDown()
+{
+  if (fanValue > fanMin)
+  {
+    fanValue -= 0x1;
+    iccFan();
+  }
+}
+
+void tempUp()
+{
+  if (tempValue < tempMax)
+  {
+    tempValue += 0x1;
+    iccTemp();
+  }
+}
+
+void tempDown()
+{
+  if (tempValue > tempMin)
+  {
+    tempValue -= 0x1;
+    iccTemp();
+  }
 }
 
 //TODO: UPDATE METHODS WITH INPUT FROM KNOBS
