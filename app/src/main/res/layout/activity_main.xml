@@ -312,7 +312,7 @@
             app:strokeWidth="1dp" />
 
         <ImageButton
-            android:id="@+id/button_recycle"
+            android:id="@+id/button_cabin_cycle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/divider20"
