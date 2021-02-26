@@ -138,21 +138,25 @@ void processSerialIn(String sIn)
   {
     ac();
   }
-  else if (sIn == "fanUp")
+  else if (sIn == "fan_up")
   {
     fanUp();
   }
-  else if (sIn == "fanDown")
+  else if (sIn == "fan_down")
   {
     fanDown();
   }
-  else if (sIn == "tempUp")
+  else if (sIn == "temp_up")
   {
     tempUp();
   }
-  else if (sIn == "tempDown")
+  else if (sIn == "temp_down")
   {
     tempDown();
+  }
+  else if (sIn == "temp0")
+  {
+    temp0();
   }
   return;
 }
@@ -284,6 +288,12 @@ void tempDown()
     tempValue -= 0x1;
     iccTemp();
   }
+}
+
+void temp0()
+{
+  tempValue = 0x0;
+  iccTemp();
 }
 
 //TODO: UPDATE METHODS WITH INPUT FROM KNOBS
