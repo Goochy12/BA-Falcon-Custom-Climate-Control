@@ -2,16 +2,8 @@ package com.liamgooch.bafalconcustomclimatecontrol;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.hardware.usb.UsbDevice;
-import android.hardware.usb.UsbDeviceConnection;
-import android.hardware.usb.UsbManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,24 +12,33 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.felhr.usbserial.UsbSerialDevice;
-import com.felhr.usbserial.UsbSerialInterface;
-
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
-
 public class MainActivity extends AppCompatActivity implements USBSerialCallbacks {
 
     private static final String TAG = "BAFalcon-Test";
+    private static final String ac_string = "ac";
+    private static final String fan_up_string = "fan_up";
+    private static final String fan_down_string = "fan_down";
+    private static final String temp_up_string = "temp_up";
+    private static final String temp_down_string = "temp_down";
+    private static final String face_string = "face";
+    private static final String feet_string = "feet";
+    private static final String front_demist_string = "front_demist";
+    private static final String rear_demist_string = "rear_demist";
+    private static final String closed_cabin_string = "closed_cabin";
+    private static final String open_cabin_string = "open_cabin";
+    private static final String cabin_cycle_string = "cabin_cycle";
+    private static final String dome_light_string = "dome_light";
+    private static final String door_lock_string = "door_lock";
 
-    private ImageButton button_frontDefrost, button_rearDefrost, button_cabin_cycle, button_fanUp,
+    private UsbSerial usbSerial;
+
+    private ImageButton button_frontDemist, button_rearDemist, button_cabin_cycle, button_fanUp,
             button_fanDown, button_tempUp, button_tempDown, button_domeLight, button_doorLock;
 
     private Button button_ac, button_acMax;
 
     //boolean variables for button
-    private Boolean button_frontDefrost_isSelected, button_rearDefrost_isSelected, button_cabin_cycle_isSelected,
+    private Boolean button_frontDemist_isSelected, button_rearDemist_isSelected, button_cabin_cycle_isSelected,
             button_domeLight_isSelected, button_doorLock_isSelected, button_ac_isSelected, button_acMax_isSelected;
 
     private ProgressBar fanProgressBar, tempProgressBar;
@@ -49,8 +50,8 @@ public class MainActivity extends AppCompatActivity implements USBSerialCallback
 
 
         //declare buttons
-        button_frontDefrost = this.findViewById(R.id.button_frontDefrost);
-        button_rearDefrost = findViewById(R.id.button_rearDefrost);
+        button_frontDemist = this.findViewById(R.id.button_frontDemist);
+        button_rearDemist = findViewById(R.id.button_rearDemist);
         button_cabin_cycle = findViewById(R.id.button_cabin_cycle);
         button_fanUp = findViewById(R.id.button_fanUp);
         button_fanDown = findViewById(R.id.button_fanDown);
@@ -67,8 +68,8 @@ public class MainActivity extends AppCompatActivity implements USBSerialCallback
         tempProgressBar = (ProgressBar) findViewById(R.id.tempProgressBar);
 
         //set boolean variables
-        button_frontDefrost_isSelected = false;
-        button_rearDefrost_isSelected = false;
+        button_frontDemist_isSelected = false;
+        button_rearDemist_isSelected = false;
         button_cabin_cycle_isSelected = false;
         button_domeLight_isSelected = false;
         button_doorLock_isSelected = false;
@@ -79,91 +80,106 @@ public class MainActivity extends AppCompatActivity implements USBSerialCallback
         button_ac.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setAC();
+                sendAC_status();
+                setAC(!getButton_ac_isSelected());
             }
         });
 
         button_acMax.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setAcMax();
+                setAcMax(!getButton_acMax_isSelected());
+//                acMaxCheck();
+                if(getButton_acMax_isSelected()){
+                    setTempProgressBar(0);
+                }else {
+                    setTempProgressBar(1);
+                }
             }
         });
 
-        button_frontDefrost.setOnClickListener(new View.OnClickListener() {
+        button_frontDemist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setfrontDefrost();
+                sendfrontDemist_status();
+                setfrontDemist(!getButton_frontDemist_isSelected());
             }
         });
 
-        button_rearDefrost.setOnClickListener(new View.OnClickListener() {
+        button_rearDemist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setRearDefrost();
+                sendRearDemist_status();
+                setRearDemist(!getButton_rearDemist_isSelected());
             }
         });
 
         button_cabin_cycle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setCabinCycle();
+                sendCabinCycle_status();
+                setCabinCycle(!getButton_cabin_cycle_isSelected());
             }
         });
 
         button_fanUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setFanProgressBar(10);
+                incrementFanProgressBar(1);
+                sendFanUp_status();
             }
         });
 
         button_fanDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setFanProgressBar(-10);
+                incrementFanProgressBar(-1);
+                sendFanDown_status();
             }
         });
 
         button_tempUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setTempProgressBar(10);
+                incrementTempProgressBar(1);
+                sendtempUp_status();
             }
         });
 
         button_tempDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setTempProgressBar(-10);
+                incrementTempProgressBar(-1);
+                sendtempDown_status();
             }
         });
 
         button_domeLight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setdomeLight();
+                senddomeLight_status();
             }
         });
 
         button_doorLock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setDoorLock();
+                sendDoorLock_status();
             }
         });
 
-
-        //initialise variables
-        setTempProgressBar(0);
-        setFanProgressBar(0);
+        setStartState();
 
         //usb serial
 
-        UsbSerial usbSerial = new UsbSerial(this.getApplicationContext(), this);
-//        usbSerial.startUSBConnection();
+        this.usbSerial = new UsbSerial(this.getApplicationContext(), this);
+        this.usbSerial.startUSBConnection();
+        boolean startedSuccessfully = false;
+        startedSuccessfully = this.usbSerial.startUSBConnection();
+        if (!startedSuccessfully) {
+            Toast.makeText(this, "USB SERIAL FAILED TO START", Toast.LENGTH_LONG).show();
+        }
 //
-//        boolean startedSuccessfully = false;
 //        while (!startedSuccessfully){
 //            startedSuccessfully = usbSerial.startUSBConnection();
 //            if(!startedSuccessfully){
@@ -173,174 +189,181 @@ public class MainActivity extends AppCompatActivity implements USBSerialCallback
 //        }
     }
 
+    private void setStartState() {
+        //initialise variables
+        setTempProgressBar(1);
+        incrementFanProgressBar(0);
+        setAC(true);
+    }
+
     //function getters and setters
     //get from car
     //send to car
     private void sendAC_status() {
-
+        sendData(ac_string);
     }
 
-    private void getAC_status() {
-
-    }
-
-    private void setAC() {
-        if (!getButton_ac_isSelected()) {
-            button_ac.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
-        } else {
-            button_ac.setBackgroundColor(getResources().getColor(R.color.black));
-            button_acMax.setBackgroundColor(getResources().getColor(R.color.black));
-            setButton_acMax_isSelected(false);
-        }
-        setButton_ac_isSelected(!getButton_ac_isSelected());
-    }
-
-    private void sendAcMax_status() {
-
-    }
-
-    private void getAcMax_status() {
-
-    }
-
-    private void setAcMax() {
-        if (!button_acMax_isSelected) {
-            button_acMax.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
+    private void setAC(boolean select) {
+        if (select) {
             button_ac.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
             setButton_ac_isSelected(true);
         } else {
+            button_ac.setBackgroundColor(getResources().getColor(R.color.black));
+            setAcMax(false);
+            setButton_ac_isSelected(false);
+        }
+    }
+
+    private void setAcMax(boolean select) {
+        if (select) {
+            button_acMax.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
+            setAC(true);
+            setButton_acMax_isSelected(true);
+
+            //set temp
+//            setTempProgressBar(0);
+        } else {
             button_acMax.setBackgroundColor(getResources().getColor(R.color.black));
+            setButton_acMax_isSelected(false);
+            //set temp
+//            if (tempProgressBar.getProgress() <= 0){
+//                setTempProgressBar(1);
+//            }
         }
-        button_acMax_isSelected = !button_acMax_isSelected;
     }
 
-    private void sendfrontDefrost_status() {
-
+    private void sendfrontDemist_status() {
+        sendData(front_demist_string);
     }
 
-    private void getfrontDefrost_status() {
-
-    }
-
-    private void setfrontDefrost() {
-        if (!button_frontDefrost_isSelected) {
-            button_frontDefrost.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
+    private void setfrontDemist(boolean select) {
+        if (select) {
+            button_frontDemist.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
+            setButton_frontDemist_isSelected(true);
         } else {
-            button_frontDefrost.setBackgroundColor(getResources().getColor(R.color.black));
+            button_frontDemist.setBackgroundColor(getResources().getColor(R.color.black));
+            setButton_frontDemist_isSelected(false);
         }
-        button_frontDefrost_isSelected = !button_frontDefrost_isSelected;
     }
 
-    private void sendRearDefrost_status() {
-
+    private void sendRearDemist_status() {
+        sendData(rear_demist_string);
     }
 
-    private void getRearDefrost_status() {
-
-    }
-
-    private void setRearDefrost() {
-        if (!button_rearDefrost_isSelected) {
-            button_rearDefrost.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
+    private void setRearDemist(boolean select) {
+        if (select) {
+            button_rearDemist.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
+            setButton_rearDemist_isSelected(true);
         } else {
-            button_rearDefrost.setBackgroundColor(getResources().getColor(R.color.black));
+            button_rearDemist.setBackgroundColor(getResources().getColor(R.color.black));
+            setButton_rearDemist_isSelected(false);
         }
-        button_rearDefrost_isSelected = !button_rearDefrost_isSelected;
     }
 
     private void sendCabinCycle_status() {
-
+        sendData(cabin_cycle_string);
     }
 
-    private void getCabinCycle_status() {
-
-    }
-
-    private void setCabinCycle() {
-        if (!button_cabin_cycle_isSelected) {
+    private void setCabinCycle(boolean select) {
+        if (select) {
             button_cabin_cycle.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
+            setButton_cabin_cycle_isSelected(true);
         } else {
             button_cabin_cycle.setBackgroundColor(getResources().getColor(R.color.black));
+            setButton_cabin_cycle_isSelected(false);
         }
-        button_cabin_cycle_isSelected = !button_cabin_cycle_isSelected;
     }
 
     private void senddomeLight_status() {
-
+        sendData(dome_light_string);
     }
 
-    private void getdomeLight_status() {
-
-    }
-
-    private void setdomeLight() {
-        if (!button_domeLight_isSelected) {
-            button_domeLight.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
-        } else {
-            button_domeLight.setBackgroundColor(getResources().getColor(R.color.black));
-        }
-        button_domeLight_isSelected = !button_domeLight_isSelected;
-    }
+//    private void setdomeLight() {
+//        if (!button_domeLight_isSelected) {
+//            button_domeLight.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
+//        } else {
+//            button_domeLight.setBackgroundColor(getResources().getColor(R.color.black));
+//        }
+//    }
 
     private void sendDoorLock_status() {
-
+        sendData(door_lock_string);
     }
 
-    private void getDoorLock_status() {
-
-    }
-
-    private void setDoorLock() {
-        if (!button_doorLock_isSelected) {
-            button_doorLock.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
-        } else {
-            button_doorLock.setBackgroundColor(getResources().getColor(R.color.black));
-        }
-        button_doorLock_isSelected = !button_doorLock_isSelected;
-    }
+//    private void setDoorLock() {
+//        if (!button_doorLock_isSelected) {
+//            button_doorLock.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
+//        } else {
+//            button_doorLock.setBackgroundColor(getResources().getColor(R.color.black));
+//        }
+//        button_doorLock_isSelected = !button_doorLock_isSelected;
+//    }
 
     //progress bars
-    public void getFanProgressBar_status() {
+
+    private void sendFanUp_status(){
+        sendData(fan_up_string);
+    }
+    private void sendFanDown_status(){
+        sendData(fan_down_string);
     }
 
-    public void setFanProgressBar_status() {
+    public void incrementFanProgressBar(int incAmount) {
+        this.fanProgressBar.incrementProgressBy(incAmount);
     }
 
-    public void setFanProgressBar(int incAmmount) {
-        this.fanProgressBar.incrementProgressBy(incAmmount);
+    private void sendtempUp_status(){
+        sendData(temp_up_string);
+    }
+    private void sendtempDown_status(){
+        sendData(temp_down_string);
     }
 
-    public void getTempProgressBar_status() {
+    private void incrementTempProgressBar(int incAmount){
+        this.tempProgressBar.incrementProgressBy(incAmount);
+        setProgressColours();
+        acMaxCheck();
     }
 
-    public void setTempProgressBar_status() {
-    }
-
-    public void setTempProgressBar(int incAmmount) {
-        this.tempProgressBar.incrementProgressBy(incAmmount);
-        if (this.tempProgressBar.getProgress() > 50) {
+    private void setProgressColours() {
+        if (this.tempProgressBar.getProgress() > (this.tempProgressBar.getMax() / 2)) {
             this.tempProgressBar.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
         } else {
             this.tempProgressBar.getProgressDrawable().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);
         }
     }
 
+    private void acMaxCheck() {
+        if (this.tempProgressBar.getProgress() <= 0) {
+            setAcMax(true);
+        }else {
+            setAcMax(false);
+        }
+    }
+
+    public void setTempProgressBar(int amount) {
+        this.tempProgressBar.setProgress(amount);
+        setProgressColours();
+        acMaxCheck();
+    }
+
 
     //boolean getters and setters
-    public Boolean getButton_frontDefrost_isSelected() {
-        return button_frontDefrost_isSelected;
+
+    public Boolean getButton_frontDemist_isSelected() {
+        return button_frontDemist_isSelected;
     }
 
-    public void setButton_frontDefrost_isSelected(Boolean button_frontDefrost_isSelected) {
-        this.button_frontDefrost_isSelected = button_frontDefrost_isSelected;
+    public void setButton_frontDemist_isSelected(Boolean button_frontDemist_isSelected) {
+        this.button_frontDemist_isSelected = button_frontDemist_isSelected;
     }
 
-    public Boolean getButton_rearDefrost_isSelected() {
-        return button_rearDefrost_isSelected;
+    public Boolean getButton_rearDemist_isSelected() {
+        return button_rearDemist_isSelected;
     }
 
-    public void setButton_rearDefrost_isSelected(Boolean button_rearDefrost_isSelected) {
-        this.button_rearDefrost_isSelected = button_rearDefrost_isSelected;
+    public void setButton_rearDemist_isSelected(Boolean button_rearDemist_isSelected) {
+        this.button_rearDemist_isSelected = button_rearDemist_isSelected;
     }
 
     public Boolean getButton_cabin_cycle_isSelected() {
@@ -383,6 +406,38 @@ public class MainActivity extends AppCompatActivity implements USBSerialCallback
         this.button_acMax_isSelected = button_acMax_isSelected;
     }
 
+    private void process(String sIn) {
+        setStartState();
+        String[] arr = sIn.split(".");
+        for (String x : arr) {
+            decode(x);
+            Log.i(TAG, "process: " + x);
+        }
+    }
+
+    private void decode(String s) {
+        switch (s) {
+            case front_demist_string:
+                setfrontDemist(true);
+                return;
+            case feet_string:
+                return;
+            case face_string:
+                return;
+            case open_cabin_string:
+                setCabinCycle(true);
+                return;
+            case closed_cabin_string:
+                setCabinCycle(true);
+                return;
+            case ac_string:
+                setAC(true);
+                return;
+            default:
+                break;
+        }
+    }
+
     @Override
     public void serialInCallback(String serial) {
         //decode
@@ -390,8 +445,13 @@ public class MainActivity extends AppCompatActivity implements USBSerialCallback
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
+                process(serial);
             }
         });
+    }
+
+    private void sendData(String d) {
+//        this.usbSerial.sendData(d);
+        Log.i(TAG, "sendData: " + d);
     }
 }

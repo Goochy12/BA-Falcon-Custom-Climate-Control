@@ -236,6 +236,7 @@
         <!--Control Bars-->
         <ProgressBar
             android:id="@+id/fanProgressBar"
+            android:max="16"
             style="?android:attr/progressBarStyleHorizontal"
             android:scaleY="8"
             android:layout_width="0dp"
@@ -248,6 +249,7 @@
 
         <ProgressBar
             android:id="@+id/tempProgressBar"
+            android:max="16"
             style="?android:attr/progressBarStyleHorizontal"
             android:scaleY="8"
             android:layout_width="0dp"
@@ -260,7 +262,7 @@
 
 <!--        AC Modes-->
         <ImageButton
-            android:id="@+id/button_frontDefrost"
+            android:id="@+id/button_frontDemist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/divider20"
@@ -271,7 +273,7 @@
             android:background="@null"/>
 
         <ImageButton
-            android:id="@+id/button_rearDefrost"
+            android:id="@+id/button_rearDemist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/divider20"
@@ -331,7 +333,7 @@
             app:layout_constraintEnd_toStartOf="@+id/vdivider4"
             app:layout_constraintStart_toEndOf="@+id/vdivider3"
             app:layout_constraintTop_toBottomOf="@+id/divider30"
-            app:srcCompat="@drawable/arrow"
+            app:srcCompat="@drawable/round_arrow_circle_up_white_48"
             android:background="@null"/>
 
         <ImageButton
@@ -342,8 +344,7 @@
             app:layout_constraintEnd_toStartOf="@+id/vdivider4"
             app:layout_constraintStart_toEndOf="@+id/vdivider3"
             app:layout_constraintTop_toBottomOf="@+id/divider40"
-            app:srcCompat="@drawable/arrow"
-            android:rotation="180"
+            app:srcCompat="@drawable/round_arrow_circle_down_white_48"
             android:background="@null"/>
 
         <ImageButton
@@ -354,7 +355,7 @@
             app:layout_constraintEnd_toStartOf="@+id/vdivider7"
             app:layout_constraintStart_toEndOf="@+id/vdivider6"
             app:layout_constraintTop_toBottomOf="@+id/divider30"
-            app:srcCompat="@drawable/arrow"
+            app:srcCompat="@drawable/round_arrow_circle_up_white_48"
             android:background="@null"/>
 
         <ImageButton
@@ -365,8 +366,7 @@
             app:layout_constraintEnd_toStartOf="@+id/vdivider7"
             app:layout_constraintStart_toEndOf="@+id/vdivider6"
             app:layout_constraintTop_toBottomOf="@+id/divider40"
-            app:srcCompat="@drawable/arrow"
-            android:rotation="180"
+            app:srcCompat="@drawable/round_arrow_circle_down_white_48"
             android:background="@null"/>
 
 <!--        Accessories-->
@@ -388,7 +388,7 @@
             app:layout_constraintEnd_toStartOf="@+id/vdivider7"
             app:layout_constraintStart_toEndOf="@+id/vdivider6"
             app:layout_constraintTop_toBottomOf="@+id/divider80"
-            app:srcCompat="@drawable/lock"
+            app:srcCompat="@drawable/round_lock_white_48"
             android:background="@null"/>
 
         <TextView
