@@ -18,7 +18,7 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-public class root_main extends Fragment implements USBSerialCallbacks {
+public class RootMain extends Fragment implements USBSerialCallbacks {
 
     private static final String TAG = "BAFalcon-Test";
     private static final String ac_string = "ac";
@@ -51,7 +51,7 @@ public class root_main extends Fragment implements USBSerialCallbacks {
     private Activity thisActivity;
     private Context thisContext;
 
-    public root_main() {
+    public RootMain() {
         // Required empty public constructor
     }
 
@@ -104,7 +104,7 @@ public class root_main extends Fragment implements USBSerialCallbacks {
         button_settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).addToBackStack("settings").commit();
+                getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment(RootMain.this)).addToBackStack("settings").commit();
             }
         });
 
@@ -202,13 +202,7 @@ public class root_main extends Fragment implements USBSerialCallbacks {
 
         //usb serial
         this.usbSerial = new UsbSerial(this.thisActivity.getApplicationContext(), this);
-        this.usbSerial.startUSBConnection();
-        boolean startedSuccessfully = false;
-        startedSuccessfully = this.usbSerial.startUSBConnection();
-        if (!startedSuccessfully) {
-            Toast.makeText(this.thisActivity, "USB SERIAL FAILED TO START", Toast.LENGTH_LONG).show();
-            setDisableState();
-        }
+        startSerialConnection();
 //
 //        while (!startedSuccessfully){
 //            startedSuccessfully = usbSerial.startUSBConnection();
@@ -244,6 +238,9 @@ public class root_main extends Fragment implements USBSerialCallbacks {
         } else {
             button_ac.setBackgroundColor(getResources().getColor(R.color.black));
             setAcMax(false);
+            if(tempProgressBar.getProgress() <= 0 ){
+                setTempProgressBar(1);
+            }
             setButton_ac_isSelected(false);
         }
     }
@@ -447,5 +444,15 @@ public class root_main extends Fragment implements USBSerialCallbacks {
     private void sendData(String d) {
 //        this.usbSerial.sendData(d);
         Log.i(TAG, "sendData: " + d);
+    }
+
+    @Override
+    public void startSerialConnection(){
+        this.usbSerial.startUSBConnection();
+        boolean startedSuccessfully = this.usbSerial.startUSBConnection();
+        if (!startedSuccessfully) {
+            Toast.makeText(this.thisActivity, "USB SERIAL FAILED TO START", Toast.LENGTH_LONG).show();
+            setDisableState();
+        }
     }
 }

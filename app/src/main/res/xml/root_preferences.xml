@@ -1,35 +1,16 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory app:title="@string/messages_header">
-
-        <EditTextPreference
-            app:key="signature"
-            app:title="@string/signature_title"
-            app:useSimpleSummaryProvider="true" />
-
-        <ListPreference
-            app:defaultValue="reply"
-            app:entries="@array/reply_entries"
-            app:entryValues="@array/reply_values"
-            app:key="reply"
-            app:title="@string/reply_title"
-            app:useSimpleSummaryProvider="true" />
-
+    <PreferenceCategory app:title="@string/arduino_header">
+        <Preference
+            app:key="retry_arduino"
+            app:title="@string/retry_arduino"/>
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/sync_header">
-
+    <PreferenceCategory app:title="@string/controls_header">
         <SwitchPreferenceCompat
-            app:key="sync"
-            app:title="@string/sync_title" />
-
-        <SwitchPreferenceCompat
-            app:dependency="sync"
-            app:key="attachment"
-            app:summaryOff="@string/attachment_summary_off"
-            app:summaryOn="@string/attachment_summary_on"
-            app:title="@string/attachment_title" />
-
+            app:key="hu_buttons_switch"
+            app:title="@string/hu_buttons_switch"
+            />
     </PreferenceCategory>
-
 </PreferenceScreen>

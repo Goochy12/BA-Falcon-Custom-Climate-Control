@@ -3,6 +3,15 @@
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>
+    <string name="arduino_header">Arduino</string>
+    <string name="controls_header">Controls</string>
+
+<!--    Arduino Preferences-->
+    <string name="retry_arduino">Retry Connection to Arduino</string>
+
+<!--    Controls Preferences-->
+    <string name="hu_buttons_switch">Head Unit Controls Climate</string>
+
 
     <!-- Messages Preferences -->
     <string name="signature_title">Your signature</string>
