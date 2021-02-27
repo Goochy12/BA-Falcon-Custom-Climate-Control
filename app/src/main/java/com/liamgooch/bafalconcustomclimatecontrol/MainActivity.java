@@ -38,8 +38,7 @@ public class MainActivity extends AppCompatActivity implements USBSerialCallback
     private Button button_ac, button_acMax;
 
     //boolean variables for button
-    private Boolean button_frontDemist_isSelected, button_rearDemist_isSelected, button_cabin_cycle_isSelected,
-            button_domeLight_isSelected, button_doorLock_isSelected, button_ac_isSelected, button_acMax_isSelected;
+    private Boolean button_frontDemist_isSelected, button_rearDemist_isSelected, button_cabin_cycle_isSelected, button_ac_isSelected, button_acMax_isSelected;
 
     private ProgressBar fanProgressBar, tempProgressBar;
 
@@ -71,8 +70,6 @@ public class MainActivity extends AppCompatActivity implements USBSerialCallback
         button_frontDemist_isSelected = false;
         button_rearDemist_isSelected = false;
         button_cabin_cycle_isSelected = false;
-        button_domeLight_isSelected = false;
-        button_doorLock_isSelected = false;
         button_ac_isSelected = false;
         button_acMax_isSelected = false;
 
@@ -89,7 +86,6 @@ public class MainActivity extends AppCompatActivity implements USBSerialCallback
             @Override
             public void onClick(View v) {
                 setAcMax(!getButton_acMax_isSelected());
-//                acMaxCheck();
                 if(getButton_acMax_isSelected()){
                     setTempProgressBar(0);
                 }else {
@@ -178,6 +174,7 @@ public class MainActivity extends AppCompatActivity implements USBSerialCallback
         startedSuccessfully = this.usbSerial.startUSBConnection();
         if (!startedSuccessfully) {
             Toast.makeText(this, "USB SERIAL FAILED TO START", Toast.LENGTH_LONG).show();
+            setDisableState();
         }
 //
 //        while (!startedSuccessfully){
@@ -187,6 +184,10 @@ public class MainActivity extends AppCompatActivity implements USBSerialCallback
 //                toast.show()
 //            }
 //        }
+    }
+
+    private void setDisableState() {
+
     }
 
     private void setStartState() {
@@ -219,16 +220,9 @@ public class MainActivity extends AppCompatActivity implements USBSerialCallback
             button_acMax.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
             setAC(true);
             setButton_acMax_isSelected(true);
-
-            //set temp
-//            setTempProgressBar(0);
         } else {
             button_acMax.setBackgroundColor(getResources().getColor(R.color.black));
             setButton_acMax_isSelected(false);
-            //set temp
-//            if (tempProgressBar.getProgress() <= 0){
-//                setTempProgressBar(1);
-//            }
         }
     }
 
@@ -278,26 +272,10 @@ public class MainActivity extends AppCompatActivity implements USBSerialCallback
         sendData(dome_light_string);
     }
 
-//    private void setdomeLight() {
-//        if (!button_domeLight_isSelected) {
-//            button_domeLight.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
-//        } else {
-//            button_domeLight.setBackgroundColor(getResources().getColor(R.color.black));
-//        }
-//    }
-
     private void sendDoorLock_status() {
         sendData(door_lock_string);
     }
 
-//    private void setDoorLock() {
-//        if (!button_doorLock_isSelected) {
-//            button_doorLock.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
-//        } else {
-//            button_doorLock.setBackgroundColor(getResources().getColor(R.color.black));
-//        }
-//        button_doorLock_isSelected = !button_doorLock_isSelected;
-//    }
 
     //progress bars
 
@@ -372,22 +350,6 @@ public class MainActivity extends AppCompatActivity implements USBSerialCallback
 
     public void setButton_cabin_cycle_isSelected(Boolean button_cabin_cycle_isSelected) {
         this.button_cabin_cycle_isSelected = button_cabin_cycle_isSelected;
-    }
-
-    public Boolean getButton_domeLight_isSelected() {
-        return button_domeLight_isSelected;
-    }
-
-    public void setButton_domeLight_isSelected(Boolean button_domeLight_isSelected) {
-        this.button_domeLight_isSelected = button_domeLight_isSelected;
-    }
-
-    public Boolean getButton_doorLock_isSelected() {
-        return button_doorLock_isSelected;
-    }
-
-    public void setButton_doorLock_isSelected(Boolean button_doorLock_isSelected) {
-        this.button_doorLock_isSelected = button_doorLock_isSelected;
     }
 
     public Boolean getButton_ac_isSelected() {
