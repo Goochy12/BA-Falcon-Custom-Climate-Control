@@ -290,7 +290,7 @@
             app:layout_constraintEnd_toStartOf="@+id/vdivider3"
             app:layout_constraintStart_toEndOf="@+id/vdivider2"
             app:layout_constraintTop_toBottomOf="@+id/divider10"
-            app:srcCompat="@drawable/front_defrost" />
+            app:srcCompat="@drawable/front_demist" />
 
         <ImageButton
             android:id="@+id/button_rearDemist"
@@ -301,7 +301,7 @@
             app:layout_constraintEnd_toStartOf="@+id/vdivider4"
             app:layout_constraintStart_toEndOf="@+id/vdivider3"
             app:layout_constraintTop_toBottomOf="@+id/divider10"
-            app:srcCompat="@drawable/rear_defrost" />
+            app:srcCompat="@drawable/rear_demist" />
 
         <Button
             android:id="@+id/button_ac"
