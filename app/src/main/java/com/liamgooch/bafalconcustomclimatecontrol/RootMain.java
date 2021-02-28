@@ -28,6 +28,8 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     private static final String temp_down_string = "temp_down";
     private static final String face_string = "face";
     private static final String feet_string = "feet";
+    private static final String face_feet_string = "face_feet";
+    private static final String feet_front_demist_string = "feet_front_demist";
     private static final String front_demist_string = "front_demist";
     private static final String rear_demist_string = "rear_demist";
     private static final String closed_cabin_string = "closed_cabin";
@@ -39,13 +41,15 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     private UsbSerial usbSerial;
 
     private ImageButton button_frontDemist, button_rearDemist, button_cabin_cycle, button_fanUp,
-            button_fanDown, button_tempUp, button_tempDown, button_domeLight, button_doorLock, button_settings;
+            button_fanDown, button_tempUp, button_tempDown, button_domeLight, button_doorLock, button_settings,
+            button_face, button_feet, button_face_feet, button_feet_front_demist;
 
     private Button button_ac, button_acMax;
 
     //boolean variables for button
-    private Boolean button_frontDemist_isSelected, button_rearDemist_isSelected, button_cabin_cycle_isSelected, button_ac_isSelected, button_acMax_isSelected;
-
+    private Boolean button_frontDemist_isSelected, button_rearDemist_isSelected, button_ac_isSelected, button_acMax_isSelected,
+            button_face_isSelected, button_feet_isSelected, button_face_feet_isSelected, button_feet_front_demist_isSelected;
+    private String button_cabin_cycle_isSelected;
     private ProgressBar fanProgressBar, tempProgressBar;
 
     private Activity thisActivity;
@@ -72,7 +76,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         //declare buttons
-        button_settings = view.findViewById(R.id.settings_button);
+        button_settings = view.findViewById(R.id.button_settings);
 
         button_frontDemist = view.findViewById(R.id.button_frontDemist);
         button_rearDemist = view.findViewById(R.id.button_rearDemist);
@@ -83,6 +87,11 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         button_tempDown = view.findViewById(R.id.button_tempDown);
         button_domeLight = view.findViewById(R.id.button_domeLight);
         button_doorLock = view.findViewById(R.id.button_doorLock);
+        button_face = view.findViewById(R.id.button_face);
+        button_feet = view.findViewById(R.id.button_feet);
+        button_face_feet = view.findViewById(R.id.button_face_feet);
+        button_feet_front_demist = view.findViewById(R.id.button_feet_front_demist);
+
 
         button_ac = view.findViewById(R.id.button_ac);
         button_acMax = view.findViewById(R.id.button_acMax);
@@ -94,108 +103,90 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         //set boolean variables
         button_frontDemist_isSelected = false;
         button_rearDemist_isSelected = false;
-        button_cabin_cycle_isSelected = false;
+        button_cabin_cycle_isSelected = closed_cabin_string;
         button_ac_isSelected = false;
         button_acMax_isSelected = false;
+        button_face_isSelected = false;
+        button_feet_isSelected = false;
+        button_face_feet_isSelected = false;
+        button_feet_front_demist_isSelected = false;
 
-        button_settings = view.findViewById(R.id.settings_button);
+        button_settings = view.findViewById(R.id.button_settings);
         //declare button listeners
 
-        button_settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment(RootMain.this)).addToBackStack("settings").commit();
+        button_settings.setOnClickListener(v -> getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment(RootMain.this)).addToBackStack("settings").commit());
+
+        button_ac.setOnClickListener(v -> {
+            sendAC_status();
+            setAC(!getButton_ac_isSelected());
+        });
+
+        button_acMax.setOnClickListener(v -> {
+            setAcMax(!getButton_acMax_isSelected());
+            if (getButton_acMax_isSelected()) {
+                setTempProgressBar(0);
+            } else {
+                setTempProgressBar(1);
             }
         });
 
-        button_ac.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendAC_status();
-                setAC(!getButton_ac_isSelected());
+        button_frontDemist.setOnClickListener(v -> {
+            sendfrontDemist_status();
+            setfrontDemist(!getButton_frontDemist_isSelected());
+        });
+
+        button_rearDemist.setOnClickListener(v -> {
+            sendRearDemist_status();
+            setRearDemist(!getButton_rearDemist_isSelected());
+        });
+
+        button_cabin_cycle.setOnClickListener(v -> {
+            sendCabinCycle_status();
+            if (getButton_cabin_cycle_isSelected().equals(open_cabin_string)){
+                setCabinCycle(closed_cabin_string);
+            }else {
+                setCabinCycle(open_cabin_string);
             }
         });
 
-        button_acMax.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setAcMax(!getButton_acMax_isSelected());
-                if(getButton_acMax_isSelected()){
-                    setTempProgressBar(0);
-                }else {
-                    setTempProgressBar(1);
-                }
-            }
+        button_fanUp.setOnClickListener(v -> {
+            incrementFanProgressBar(1);
+            sendFanUp_status();
         });
 
-        button_frontDemist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendfrontDemist_status();
-                setfrontDemist(!getButton_frontDemist_isSelected());
-            }
+        button_fanDown.setOnClickListener(v -> {
+            incrementFanProgressBar(-1);
+            sendFanDown_status();
         });
 
-        button_rearDemist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendRearDemist_status();
-                setRearDemist(!getButton_rearDemist_isSelected());
-            }
+        button_tempUp.setOnClickListener(v -> {
+            incrementTempProgressBar(1);
+            sendtempUp_status();
         });
 
-        button_cabin_cycle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendCabinCycle_status();
-                setCabinCycle(!getButton_cabin_cycle_isSelected());
-            }
+        button_tempDown.setOnClickListener(v -> {
+            incrementTempProgressBar(-1);
+            sendtempDown_status();
         });
 
-        button_fanUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                incrementFanProgressBar(1);
-                sendFanUp_status();
-            }
+        button_domeLight.setOnClickListener(v -> senddomeLight_status());
+
+        button_doorLock.setOnClickListener(v -> sendDoorLock_status());
+
+        button_face.setOnClickListener(v -> {
+
         });
 
-        button_fanDown.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                incrementFanProgressBar(-1);
-                sendFanDown_status();
-            }
+        button_feet.setOnClickListener(v -> {
+
         });
 
-        button_tempUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                incrementTempProgressBar(1);
-                sendtempUp_status();
-            }
+        button_face_feet.setOnClickListener(v -> {
+
         });
 
-        button_tempDown.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                incrementTempProgressBar(-1);
-                sendtempDown_status();
-            }
-        });
+        button_feet_front_demist.setOnClickListener(v -> {
 
-        button_domeLight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                senddomeLight_status();
-            }
-        });
-
-        button_doorLock.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendDoorLock_status();
-            }
         });
 
         setStartState();
@@ -203,14 +194,6 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         //usb serial
         this.usbSerial = new UsbSerial(this.thisActivity.getApplicationContext(), this);
         startSerialConnection();
-//
-//        while (!startedSuccessfully){
-//            startedSuccessfully = usbSerial.startUSBConnection();
-//            if(!startedSuccessfully){
-//                Toast toast = Toast.makeText(this, "USB SERIAL FAILED TO START", Toast.LENGTH_LONG).show();
-//                toast.show()
-//            }
-//        }
     }
 
     private void setDisableState() {
@@ -238,7 +221,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         } else {
             button_ac.setBackgroundColor(getResources().getColor(R.color.black));
             setAcMax(false);
-            if(tempProgressBar.getProgress() <= 0 ){
+            if (tempProgressBar.getProgress() <= 0) {
                 setTempProgressBar(1);
             }
             setButton_ac_isSelected(false);
@@ -284,17 +267,32 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         }
     }
 
+    //TODO: update cabin cycle
     private void sendCabinCycle_status() {
         sendData(cabin_cycle_string);
     }
 
-    private void setCabinCycle(boolean select) {
-        if (select) {
-            button_cabin_cycle.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
-            setButton_cabin_cycle_isSelected(true);
+    private void setCabinCycle(String cycleString) {
+        if (cycleString.equals(open_cabin_string)) {
+            button_cabin_cycle.setImageResource(R.drawable.open_cabin);
+            setButton_cabin_cycle_isSelected(open_cabin_string);
         } else {
-            button_cabin_cycle.setBackgroundColor(getResources().getColor(R.color.black));
-            setButton_cabin_cycle_isSelected(false);
+            button_cabin_cycle.setImageResource(R.drawable.closed_cabin);
+            setButton_cabin_cycle_isSelected(closed_cabin_string);
+        }
+    }
+
+    private void sendFace_status() {
+        sendData(face_string);
+    }
+
+    private void setFace(boolean select) {
+        if (select) {
+            button_face.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
+            setButton_face_isSelected(true);
+        } else {
+            button_face.setBackgroundColor(getResources().getColor(R.color.black));
+            setButton_face_isSelected(false);
         }
     }
 
@@ -309,10 +307,11 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     //progress bars
 
-    private void sendFanUp_status(){
+    private void sendFanUp_status() {
         sendData(fan_up_string);
     }
-    private void sendFanDown_status(){
+
+    private void sendFanDown_status() {
         sendData(fan_down_string);
     }
 
@@ -320,14 +319,15 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         this.fanProgressBar.incrementProgressBy(incAmount);
     }
 
-    private void sendtempUp_status(){
+    private void sendtempUp_status() {
         sendData(temp_up_string);
     }
-    private void sendtempDown_status(){
+
+    private void sendtempDown_status() {
         sendData(temp_down_string);
     }
 
-    private void incrementTempProgressBar(int incAmount){
+    private void incrementTempProgressBar(int incAmount) {
         this.tempProgressBar.incrementProgressBy(incAmount);
         setProgressColours();
         acMaxCheck();
@@ -344,7 +344,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     private void acMaxCheck() {
         if (this.tempProgressBar.getProgress() <= 0) {
             setAcMax(true);
-        }else {
+        } else {
             setAcMax(false);
         }
     }
@@ -374,11 +374,11 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         this.button_rearDemist_isSelected = button_rearDemist_isSelected;
     }
 
-    public Boolean getButton_cabin_cycle_isSelected() {
+    public String getButton_cabin_cycle_isSelected() {
         return button_cabin_cycle_isSelected;
     }
 
-    public void setButton_cabin_cycle_isSelected(Boolean button_cabin_cycle_isSelected) {
+    public void setButton_cabin_cycle_isSelected(String button_cabin_cycle_isSelected) {
         this.button_cabin_cycle_isSelected = button_cabin_cycle_isSelected;
     }
 
@@ -388,6 +388,38 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     public void setButton_ac_isSelected(Boolean button_ac_isSelected) {
         this.button_ac_isSelected = button_ac_isSelected;
+    }
+
+    public Boolean getButton_face_isSelected() {
+        return button_face_isSelected;
+    }
+
+    public void setButton_face_isSelected(Boolean button_face_isSelected) {
+        this.button_face_isSelected = button_face_isSelected;
+    }
+
+    public Boolean getButton_feet_isSelected() {
+        return button_feet_isSelected;
+    }
+
+    public void setButton_feet_isSelected(Boolean button_feet_isSelected) {
+        this.button_feet_isSelected = button_feet_isSelected;
+    }
+
+    public Boolean getButton_face_feet_isSelected() {
+        return button_face_feet_isSelected;
+    }
+
+    public void setButton_face_feet_isSelected(Boolean button_face_feet_isSelected) {
+        this.button_face_feet_isSelected = button_face_feet_isSelected;
+    }
+
+    public Boolean getButton_feet_front_demist_isSelected() {
+        return button_feet_front_demist_isSelected;
+    }
+
+    public void setButton_feet_front_demist_isSelected(Boolean button_feet_front_demist_isSelected) {
+        this.button_feet_front_demist_isSelected = button_feet_front_demist_isSelected;
     }
 
     public Boolean getButton_acMax_isSelected() {
@@ -416,11 +448,15 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
                 return;
             case face_string:
                 return;
+            case face_feet_string:
+                return;
+            case feet_front_demist_string:
+                return;
             case open_cabin_string:
-                setCabinCycle(true);
+                setCabinCycle(open_cabin_string);
                 return;
             case closed_cabin_string:
-                setCabinCycle(true);
+                setCabinCycle(cabin_cycle_string);
                 return;
             case ac_string:
                 setAC(true);
@@ -447,7 +483,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     }
 
     @Override
-    public void startSerialConnection(){
+    public void startSerialConnection() {
         this.usbSerial.startUSBConnection();
         boolean startedSuccessfully = this.usbSerial.startUSBConnection();
         if (!startedSuccessfully) {

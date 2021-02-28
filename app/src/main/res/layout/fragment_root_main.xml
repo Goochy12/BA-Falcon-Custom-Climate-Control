@@ -433,7 +433,7 @@
             app:layout_constraintTop_toBottomOf="@+id/divider40" />
 
         <ImageButton
-            android:id="@+id/settings_button"
+            android:id="@+id/button_settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/divider10"
@@ -443,7 +443,7 @@
             app:srcCompat="@drawable/baseline_settings_20" />
 
         <ImageButton
-            android:id="@+id/face_button"
+            android:id="@+id/button_face"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/face"
@@ -454,7 +454,7 @@
             app:layout_constraintTop_toBottomOf="@+id/divider60" />
 
         <ImageButton
-            android:id="@+id/face_feet_button"
+            android:id="@+id/button_face_feet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/face_feet"
@@ -465,7 +465,7 @@
             app:layout_constraintTop_toBottomOf="@+id/divider50" />
 
         <ImageButton
-            android:id="@+id/feet_button"
+            android:id="@+id/button_feet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/feet"
@@ -476,7 +476,7 @@
             app:layout_constraintTop_toBottomOf="@+id/divider60" />
 
         <ImageButton
-            android:id="@+id/feet_fron_demist_button"
+            android:id="@+id/button_feet_front_demist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/feet_front_demist"
