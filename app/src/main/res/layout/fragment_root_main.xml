@@ -342,7 +342,7 @@
             app:layout_constraintEnd_toStartOf="@+id/vdivider8"
             app:layout_constraintStart_toEndOf="@+id/vdivider7"
             app:layout_constraintTop_toBottomOf="@+id/divider10"
-            app:srcCompat="@drawable/recirculation" />
+            app:srcCompat="@drawable/closed_cabin"/>
 
         <!--        Fan and Temp-->
         <ImageButton
@@ -441,6 +441,50 @@
             app:layout_constraintStart_toEndOf="@+id/vdivider9"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/baseline_settings_20" />
+
+        <ImageButton
+            android:id="@+id/face_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/face"
+            android:background="@null"
+            app:layout_constraintBottom_toTopOf="@+id/divider70"
+            app:layout_constraintEnd_toStartOf="@+id/vdivider4"
+            app:layout_constraintStart_toEndOf="@+id/vdivider3"
+            app:layout_constraintTop_toBottomOf="@+id/divider60" />
+
+        <ImageButton
+            android:id="@+id/face_feet_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/face_feet"
+            android:background="@null"
+            app:layout_constraintBottom_toTopOf="@+id/divider60"
+            app:layout_constraintEnd_toStartOf="@+id/vdivider55"
+            app:layout_constraintStart_toEndOf="@+id/vdivider45"
+            app:layout_constraintTop_toBottomOf="@+id/divider50" />
+
+        <ImageButton
+            android:id="@+id/feet_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/feet"
+            android:background="@null"
+            app:layout_constraintBottom_toTopOf="@+id/divider70"
+            app:layout_constraintEnd_toStartOf="@+id/vdivider7"
+            app:layout_constraintStart_toEndOf="@+id/vdivider6"
+            app:layout_constraintTop_toBottomOf="@+id/divider60" />
+
+        <ImageButton
+            android:id="@+id/feet_fron_demist_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/feet_front_demist"
+            android:background="@null"
+            app:layout_constraintBottom_toTopOf="@+id/divider80"
+            app:layout_constraintEnd_toStartOf="@+id/vdivider55"
+            app:layout_constraintStart_toEndOf="@+id/vdivider45"
+            app:layout_constraintTop_toBottomOf="@+id/divider70" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
