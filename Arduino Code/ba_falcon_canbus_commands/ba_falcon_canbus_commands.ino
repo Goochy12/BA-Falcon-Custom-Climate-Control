@@ -95,7 +95,7 @@ void sendCANMessage(int id, unsigned char msg[8])
 void sendSerialData(unsigned long ID, unsigned char msg)
 {
   String sM;
-  sM += "CAN_MSG: " + String(ID, HEX) + " " + String(msg);
+  sM += "CAN_MSG: " + String(ID, HEX) + " " + String(msg, HEX);
   Serial.print(sM);
 }
 
