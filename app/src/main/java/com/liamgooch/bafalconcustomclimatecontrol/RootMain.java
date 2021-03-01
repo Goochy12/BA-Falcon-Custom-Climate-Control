@@ -18,6 +18,9 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 public class RootMain extends Fragment implements USBSerialCallbacks {
 
     private static final String TAG = "BAFalcon-Test";
@@ -39,6 +42,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     private static final String door_lock_string = "door_lock";
 
     private UsbSerial usbSerial;
+    private Decoder decoder;
 
     private ImageButton button_frontDemist, button_rearDemist, button_cabin_cycle, button_fanUp,
             button_fanDown, button_tempUp, button_tempDown, button_domeLight, button_doorLock, button_settings,
@@ -142,10 +146,10 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
         button_cabin_cycle.setOnClickListener(v -> {
             sendCabinCycle_status();
-            if (getButton_cabin_cycle_isSelected().equals(open_cabin_string)){
-                setCabinCycle(closed_cabin_string);
-            }else {
-                setCabinCycle(open_cabin_string);
+            if (getButton_cabin_cycle_isSelected().equals(open_cabin_string)) {
+                setCabinCycle(Decoder.Mappings.CLOSED_CABIN);
+            } else {
+                setCabinCycle(Decoder.Mappings.OPEN_CABIN);
             }
         });
 
@@ -190,6 +194,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         });
 
         setStartState();
+        this.decoder = new Decoder();
 
         //usb serial
         this.usbSerial = new UsbSerial(this.thisActivity.getApplicationContext(), this);
@@ -272,7 +277,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         sendData(cabin_cycle_string);
     }
 
-    private void setCabinCycle(String cycleString) {
+    private void setCabinCycle(Decoder.Mappings cycleString) {
         if (cycleString.equals(open_cabin_string)) {
             button_cabin_cycle.setImageResource(R.drawable.open_cabin);
             setButton_cabin_cycle_isSelected(open_cabin_string);
@@ -432,37 +437,63 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     private void process(String sIn) {
         setStartState();
-        String[] arr = sIn.split(".");
-        for (String x : arr) {
-            decode(x);
-            Log.i(TAG, "process: " + x);
+        String[] arr = sIn.split(" ");
+        if (arr[1].equals(decoder.getHimID())) {
+            Log.i(TAG, "process: Decoding HIM");
+            decodeHIM(arr[2]);
+        } else if (arr[1].equals(decoder.getBemID())) {
+            Log.i(TAG, "process: Decoding BEM");
+        } else {
+            Log.i(TAG, "process: NOT A VALID ID - " + sIn);
+        }
+
+//        try {
+//            String[] arr = sIn.split(" ");
+//            if(arr[1] == decoder.getHimID()){
+//                Log.i(TAG, "process: Decoding HIM");
+//                decodeHIM(arr[2]);
+//            }else if(arr[1] == decoder.getBemID()){
+//                Log.i(TAG, "process: Decoding BEM");
+//            }
+//            Log.i(TAG, "process: " + arr[2]);
+//        }catch (Exception e){
+//            Log.i(TAG, "process: " + e);
+//            Toast.makeText(thisContext,"ERROR PROCESSING SERIAL IN", Toast.LENGTH_LONG).show();
+//        }
+
+    }
+
+    private void decodeHIM(String code) {
+        ArrayList<Decoder.Mappings> mappings = decoder.getDecodedList(code);
+        for (Decoder.Mappings value : Decoder.Mappings.values()) {
+            makeHimChanges(value);
         }
     }
 
-    private void decode(String s) {
-        switch (s) {
-            case front_demist_string:
-                setfrontDemist(true);
-                return;
-            case feet_string:
-                return;
-            case face_string:
-                return;
-            case face_feet_string:
-                return;
-            case feet_front_demist_string:
-                return;
-            case open_cabin_string:
-                setCabinCycle(open_cabin_string);
-                return;
-            case closed_cabin_string:
-                setCabinCycle(cabin_cycle_string);
-                return;
-            case ac_string:
+    private boolean makeHimChanges(Decoder.Mappings mappedValue) {
+        switch (mappedValue) {
+            case AC:
                 setAC(true);
-                return;
+                return true;
+            case FACE:
+                return true;
+            case FEET:
+                return true;
+            case FACE_FEET:
+                return true;
+            case FEET_FRONT_DEMIST:
+                return true;
+            case FRONT_DEMIST:
+                setfrontDemist(true);
+                return true;
+            case OPEN_CABIN:
+                setCabinCycle(Decoder.Mappings.OPEN_CABIN);
+                return true;
+            case CLOSED_CABIN:
+                setCabinCycle(Decoder.Mappings.CLOSED_CABIN);
+                return true;
             default:
-                break;
+                return false;
         }
     }
 
