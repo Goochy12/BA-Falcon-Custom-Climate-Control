@@ -26,6 +26,8 @@ int tempValue = 0x0;
 int tempMax = 0xE;
 int tempMin = 0x0;
 
+const String errorString = "error";
+
 void setup()
 {
   Serial.begin(115200);
@@ -168,8 +170,10 @@ void processCANDataIn(unsigned long canNodeID, unsigned char buf[8])
 {
   //TODO Update IF statements - code smells
   //read CAN ID
+  // String code;
   if (canNodeID == himID)
   {
+    // code = decodeHIM(buf[0]);
     sendSerialData(canNodeID, buf[0]);
   }
   else if (canNodeID == bemID)
@@ -317,10 +321,59 @@ void setFan(int fanV)
   fanValue = fanV;
 }
 
-void decodeHIM(unsigned char value)
-{
-}
+// String decodeHIM(unsigned char value)
+// {
+//   switch (value)
+//   {
+//   case acOpenFace:
+//     break;
 
-void decodeBEM(unsigned char value)
-{
-}
+//   default:
+//     return errorString;
+//   }
+// }
+
+// String decodeBEM(unsigned char value)
+// {
+// }
+
+//MAPPINGS
+// const unsigned char acOpenFace = 0xB2;
+// const unsigned char acOpenFeet = 0xAA;
+// const unsigned char acOpenFaceFeet = 0xBA;
+// const unsigned char acOpenFrontDemist = 0xA6;
+// const unsigned char acOpenFeetFrontDemist = 0xAE;
+// const unsigned char acClosedFace = 0xD2;
+// const unsigned char acClosedFeet = 0xCA;
+// const unsigned char acClosedFaceFeet = 0xDA;
+// const unsigned char acClosedFrontDemist = 0xC6;
+// const unsigned char acClosedFeetFront = 0xCE;
+// const unsigned char openFace = 0x32;
+// const unsigned char openFeet = 0x2A;
+// const unsigned char openFaceFeet = 0x3A;
+// const unsigned char openFrontDemist = 0x26;
+// const unsigned char openFeetFrontDemist = 0x2E;
+// const unsigned char closedFace = 0x52;
+// const unsigned char closedFeet = 0x4A;
+// const unsigned char closedFaceFeet = 0x5A;
+// const unsigned char closedFeetFrontDemist = 0x4E;
+
+// const String acOpenFaceString = "ac.open_cabin.face";
+// const String acOpenFeetString = "ac.open_cabin.feet";
+// const String acOpenFaceFeetString = "ac.open_cabin.face/feet";
+// const String acOpenFrontDemistString = "ac.open_cabin.front_demist";
+// const String acOpenFeetFrontDemistString = "ac.open_cabin.feet/front_demist";
+// const String acClosedFaceString = "ac.closed_cabin.face";
+// const String acClosedFeetString = "ac.closed_cabin.feet";
+// const String acClosedFaceFeetString = "ac.closed_cabin.face/feet";
+// const String acClosedFrontDemistString = "ac.closed_cabin.front_demist";
+// const String acClosedFeetFrontString = "ac.closed_cabin.feet/front_demist";
+// const String openFaceString = "open_cabin.face";
+// const String openFeetString = "open_cabin.feet";
+// const String openFaceFeetString = "open_cabin.face/feet";
+// const String openFrontDemistString = "open_cabin.front_demist";
+// const String openFeetFrontDemistString = "open_cabin.feet/front_demist";
+// const String closedFaceString = "closed_cabin.face";
+// const String closedFeetString = "closed_cabin.feet";
+// const String closedFaceFeetString = "closed_cabin.face/feet";
+// const String closedFeetFrontDemistString = "closed_cabin.feet/front_demist";
