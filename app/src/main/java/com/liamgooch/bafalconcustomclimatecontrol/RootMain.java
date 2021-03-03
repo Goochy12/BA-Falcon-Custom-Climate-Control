@@ -19,9 +19,10 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class RootMain extends Fragment implements USBSerialCallbacks {
+
+//    TODO: Create a log to show in settings fragment
 
     private static final String TAG = "BAFalcon-Test";
     private static final String ac_string = "ac";
@@ -121,31 +122,22 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         button_settings.setOnClickListener(v -> getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment(RootMain.this)).addToBackStack("settings").commit());
 
         button_ac.setOnClickListener(v -> {
-            sendAC_status();
             setAC(!getButton_ac_isSelected());
         });
 
         button_acMax.setOnClickListener(v -> {
             setAcMax(!getButton_acMax_isSelected());
-            if (getButton_acMax_isSelected()) {
-                setTempProgressBar(0);
-            } else {
-                setTempProgressBar(1);
-            }
         });
 
         button_frontDemist.setOnClickListener(v -> {
-            sendfrontDemist_status();
-            setfrontDemist(!getButton_frontDemist_isSelected());
+            setFrontDemist(!getButton_frontDemist_isSelected());
         });
 
         button_rearDemist.setOnClickListener(v -> {
-            sendRearDemist_status();
             setRearDemist(!getButton_rearDemist_isSelected());
         });
 
         button_cabin_cycle.setOnClickListener(v -> {
-            sendCabinCycle_status();
             if (getButton_cabin_cycle_isSelected().equals(open_cabin_string)) {
                 setCabinCycle(Decoder.Mappings.CLOSED_CABIN);
             } else {
@@ -154,23 +146,19 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         });
 
         button_fanUp.setOnClickListener(v -> {
-            incrementFanProgressBar(1);
-            sendFanUp_status();
+            fanUp();
         });
 
         button_fanDown.setOnClickListener(v -> {
-            incrementFanProgressBar(-1);
-            sendFanDown_status();
+            fanDown();
         });
 
         button_tempUp.setOnClickListener(v -> {
-            incrementTempProgressBar(1);
-            sendtempUp_status();
+            tempUp();
         });
 
         button_tempDown.setOnClickListener(v -> {
-            incrementTempProgressBar(-1);
-            sendtempDown_status();
+            tempDown();
         });
 
         button_domeLight.setOnClickListener(v -> senddomeLight_status());
@@ -178,19 +166,19 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         button_doorLock.setOnClickListener(v -> sendDoorLock_status());
 
         button_face.setOnClickListener(v -> {
-
+            setFace(!getButton_face_isSelected());
         });
 
         button_feet.setOnClickListener(v -> {
-
+            setFeet(!getButton_feet_isSelected());
         });
 
         button_face_feet.setOnClickListener(v -> {
-
+            setFaceFeet(!getButton_face_feet_isSelected());
         });
 
         button_feet_front_demist.setOnClickListener(v -> {
-
+            setFeetFrontDemist(!getButton_feet_front_demist_isSelected());
         });
 
         setStartState();
@@ -201,39 +189,80 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         startSerialConnection();
     }
 
-    private void setDisableState() {
+    private void setState(boolean state) {
+        button_frontDemist.setEnabled(state);
+        button_rearDemist.setEnabled(state);
+        button_cabin_cycle.setEnabled(state);
+        button_fanUp.setEnabled(state);
+        button_fanDown.setEnabled(state);
+        button_tempUp.setEnabled(state);
+        button_tempDown.setEnabled(state);
+        button_domeLight.setEnabled(state);
+        button_doorLock.setEnabled(state);
+        button_face.setEnabled(state);
+        button_feet.setEnabled(state);
+        button_face_feet.setEnabled(state);
+        button_feet_front_demist.setEnabled(state);
 
+
+        button_ac.setEnabled(state);
+        button_acMax.setEnabled(state);
+
+        //declare progress bars
+        fanProgressBar.setEnabled(state);
+        tempProgressBar.setEnabled(state);
     }
 
     private void setStartState() {
+//        TODO: Reset ALL
         //initialise variables
         setTempProgressBar(1);
         incrementFanProgressBar(0);
-        setAC(true);
+//        setState(true);
+//        setAC(true);
     }
 
-    //function getters and setters
-    //get from car
-    //send to car
+//    TODO: break into SET_TASK -> SET_BUTTON, SET SEND_STATUS
+
+    private void setAC(boolean select) {
+        setACButton(select);
+        if(!select){
+            tempProgressBarAC();
+        }
+        sendAC_status();
+    }
+
     private void sendAC_status() {
         sendData(ac_string);
     }
 
-    private void setAC(boolean select) {
+    private void setACButton(boolean select) {
         if (select) {
             button_ac.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
             setButton_ac_isSelected(true);
         } else {
             button_ac.setBackgroundColor(getResources().getColor(R.color.black));
             setAcMax(false);
-            if (tempProgressBar.getProgress() <= 0) {
-                setTempProgressBar(1);
-            }
             setButton_ac_isSelected(false);
         }
     }
 
+    private void tempProgressBarAC(){
+        if (tempProgressBar.getProgress() <= 0) {
+            setTempProgressBar(1);
+        }
+    }
+
     private void setAcMax(boolean select) {
+        setAcMaxButton(select);
+        if (getButton_acMax_isSelected()) {
+            setTempProgressBar(0);
+        } else {
+            setTempProgressBar(1);
+        }
+    }
+
+    private void setAcMaxButton(boolean select) {
         if (select) {
             button_acMax.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
             setAC(true);
@@ -244,11 +273,16 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         }
     }
 
-    private void sendfrontDemist_status() {
+    private void setFrontDemist(boolean select) {
+        setFrontDemistButton(select);
+        sendFrontDemist_status();
+    }
+
+    private void sendFrontDemist_status() {
         sendData(front_demist_string);
     }
 
-    private void setfrontDemist(boolean select) {
+    private void setFrontDemistButton(boolean select) {
         if (select) {
             button_frontDemist.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
             setButton_frontDemist_isSelected(true);
@@ -258,11 +292,16 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         }
     }
 
+    private void setRearDemist(boolean select) {
+        setRearDemistButton(select);
+        sendRearDemist_status();
+    }
+
     private void sendRearDemist_status() {
         sendData(rear_demist_string);
     }
 
-    private void setRearDemist(boolean select) {
+    private void setRearDemistButton(boolean select) {
         if (select) {
             button_rearDemist.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
             setButton_rearDemist_isSelected(true);
@@ -272,13 +311,16 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         }
     }
 
-    //TODO: update cabin cycle
+    private void setCabinCycle(Decoder.Mappings select) {
+        setCabinCycleButton(select);
+        sendCabinCycle_status();
+    }
     private void sendCabinCycle_status() {
         sendData(cabin_cycle_string);
     }
 
-    private void setCabinCycle(Decoder.Mappings cycleString) {
-        if (cycleString.equals(open_cabin_string)) {
+    private void setCabinCycleButton(Decoder.Mappings cycleString) {
+        if (cycleString == Decoder.Mappings.OPEN_CABIN) {
             button_cabin_cycle.setImageResource(R.drawable.open_cabin);
             setButton_cabin_cycle_isSelected(open_cabin_string);
         } else {
@@ -287,17 +329,79 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         }
     }
 
+    private void setFace(boolean select) {
+        setFaceButton(select);
+        sendFace_status();
+    }
+
     private void sendFace_status() {
         sendData(face_string);
     }
 
-    private void setFace(boolean select) {
+    private void setFaceButton(boolean select) {
         if (select) {
             button_face.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
             setButton_face_isSelected(true);
         } else {
             button_face.setBackgroundColor(getResources().getColor(R.color.black));
             setButton_face_isSelected(false);
+        }
+    }
+
+    private void setFeet(boolean select) {
+        setFeetButton(select);
+        sendFeet_status();
+    }
+
+    private void sendFeet_status() {
+        sendData(feet_string);
+    }
+
+    private void setFeetButton(boolean select) {
+        if (select) {
+            button_feet.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
+            setButton_feet_isSelected(true);
+        } else {
+            button_feet.setBackgroundColor(getResources().getColor(R.color.black));
+            setButton_feet_isSelected(false);
+        }
+    }
+
+    private void setFaceFeet(boolean select) {
+        setFaceFeetButton(select);
+        sendFaceFeet_status();
+    }
+
+    private void sendFaceFeet_status() {
+        sendData(face_feet_string);
+    }
+
+    private void setFaceFeetButton(boolean select) {
+        if (select) {
+            button_face_feet.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
+            setButton_face_feet_isSelected(true);
+        } else {
+            button_face_feet.setBackgroundColor(getResources().getColor(R.color.black));
+            setButton_face_feet_isSelected(false);
+        }
+    }
+
+    private void setFeetFrontDemist(boolean select) {
+        setFeetFrontDemistButton(select);
+        sendFeetFrontDemist_status();
+    }
+
+    private void sendFeetFrontDemist_status() {
+        sendData(feet_front_demist_string);
+    }
+
+    private void setFeetFrontDemistButton(boolean select){
+        if (select) {
+            button_feet_front_demist.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
+            setButton_feet_front_demist_isSelected(true);
+        } else {
+            button_feet_front_demist.setBackgroundColor(getResources().getColor(R.color.black));
+            setButton_feet_front_demist_isSelected(false);
         }
     }
 
@@ -311,6 +415,26 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
 
     //progress bars
+
+    private void tempUp(){
+        incrementTempProgressBar(1);
+        sendtempUp_status();
+    }
+
+    private void tempDown(){
+        incrementTempProgressBar(-1);
+        sendtempDown_status();
+    }
+
+    private void fanUp(){
+        incrementFanProgressBar(1);
+        sendFanUp_status();
+    }
+
+    private void fanDown(){
+        incrementFanProgressBar(-1);
+        sendFanDown_status();
+    }
 
     private void sendFanUp_status() {
         sendData(fan_up_string);
@@ -348,9 +472,9 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     private void acMaxCheck() {
         if (this.tempProgressBar.getProgress() <= 0) {
-            setAcMax(true);
+            setAcMaxButton(true);
         } else {
-            setAcMax(false);
+            setAcMaxButton(false);
         }
     }
 
@@ -438,35 +562,26 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     private void process(String sIn) {
         setStartState();
         String[] arr = sIn.split(" ");
-        if (arr[1].equals(decoder.getHimID())) {
-            Log.i(TAG, "process: Decoding HIM");
-            decodeHIM(arr[2]);
-        } else if (arr[1].equals(decoder.getBemID())) {
-            Log.i(TAG, "process: Decoding BEM");
-        } else {
-            Log.i(TAG, "process: NOT A VALID ID - " + sIn);
+        try {
+            if (arr[1].equals(decoder.getHimID())) {
+                Log.i(TAG, "process: Decoding HIM");
+                decodeHIM(arr[2]);
+            } else if (arr[1].equals(decoder.getBemID())) {
+                Log.i(TAG, "process: Decoding BEM");
+            } else {
+                Log.i(TAG, "process: NOT A VALID ID - " + sIn);
+            }
+        }catch (Exception e){
+            Log.i(TAG, "process: " + e);
+            Toast.makeText(thisContext,"ERROR PROCESSING SERIAL IN", Toast.LENGTH_LONG).show();
         }
-
-//        try {
-//            String[] arr = sIn.split(" ");
-//            if(arr[1] == decoder.getHimID()){
-//                Log.i(TAG, "process: Decoding HIM");
-//                decodeHIM(arr[2]);
-//            }else if(arr[1] == decoder.getBemID()){
-//                Log.i(TAG, "process: Decoding BEM");
-//            }
-//            Log.i(TAG, "process: " + arr[2]);
-//        }catch (Exception e){
-//            Log.i(TAG, "process: " + e);
-//            Toast.makeText(thisContext,"ERROR PROCESSING SERIAL IN", Toast.LENGTH_LONG).show();
-//        }
 
     }
 
     private void decodeHIM(String code) {
         ArrayList<Decoder.Mappings> mappings = decoder.getDecodedList(code);
-        for (Decoder.Mappings value : Decoder.Mappings.values()) {
-            makeHimChanges(value);
+        for (Decoder.Mappings mapping : mappings) {
+            makeHimChanges(mapping);
         }
     }
 
@@ -484,7 +599,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
             case FEET_FRONT_DEMIST:
                 return true;
             case FRONT_DEMIST:
-                setfrontDemist(true);
+                setFrontDemist(true);
                 return true;
             case OPEN_CABIN:
                 setCabinCycle(Decoder.Mappings.OPEN_CABIN);
@@ -519,7 +634,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         boolean startedSuccessfully = this.usbSerial.startUSBConnection();
         if (!startedSuccessfully) {
             Toast.makeText(this.thisActivity, "USB SERIAL FAILED TO START", Toast.LENGTH_LONG).show();
-            setDisableState();
+//            setState(false);
         }
     }
 }

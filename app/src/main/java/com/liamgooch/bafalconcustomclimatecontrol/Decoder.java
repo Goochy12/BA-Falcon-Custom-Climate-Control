@@ -119,9 +119,6 @@ public class Decoder {
         acClosedFeetFrontDemist.add(Mappings.FEET_FRONT_DEMIST);
         hashMap.put("ce", acClosedFeetFrontDemist);
 
-
-
-
         openFace = new ArrayList<>();
         openFace.add(Mappings.OPEN_CABIN);
         openFace.add(Mappings.FACE);
