@@ -30,6 +30,8 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     private static final String fan_down_string = "fan_down";
     private static final String temp_up_string = "temp_up";
     private static final String temp_down_string = "temp_down";
+    private static final String temp_set_string = "temp_set";
+    private static final String temp0_string = "temp0";
     private static final String face_string = "face";
     private static final String feet_string = "feet";
     private static final String face_feet_string = "face_feet";
@@ -258,8 +260,10 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         setAcMaxButton(select);
         if (getButton_acMax_isSelected()) {
             setTempProgressBar(0);
+            sendTemp0_status();
         } else {
             setTempProgressBar(1);
+            sendtempUp_status();
         }
     }
 
@@ -428,6 +432,11 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         sendtempDown_status();
     }
 
+    private void temp0(){
+        this.tempProgressBar.setProgress(0);
+        sendTemp0_status();
+    }
+
     private void fanUp() {
         incrementFanProgressBar(1);
         sendFanUp_status();
@@ -436,6 +445,14 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     private void fanDown() {
         incrementFanProgressBar(-1);
         sendFanDown_status();
+    }
+
+    private void sendTemp0_status(){
+        sendData(temp0_string);
+    }
+
+    private void sendTemp_status(int amount){
+        sendData(temp_set_string, amount);
     }
 
     private void sendFanUp_status() {
@@ -482,6 +499,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     public void setTempProgressBar(int amount) {
         this.tempProgressBar.setProgress(amount);
+        sendTemp_status(amount);
         setProgressColours();
         acMaxCheck();
     }
@@ -632,6 +650,15 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     private void sendData(String d) {
         if (startedSuccessfully) {
             this.usbSerial.sendData(d);
+        }
+        Log.i(TAG, "sendData: " + d);
+    }
+
+    private void sendData(String d, int amount) {
+        String data = null;
+        if (startedSuccessfully) {
+            data = d + ":" + String.valueOf(amount);
+            this.usbSerial.sendData(data);
         }
         Log.i(TAG, "sendData: " + d);
     }
