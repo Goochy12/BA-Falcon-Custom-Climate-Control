@@ -44,6 +44,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     private UsbSerial usbSerial;
     private Decoder decoder;
+    boolean startedSuccessfully = false;
 
     private ImageButton button_frontDemist, button_rearDemist, button_cabin_cycle, button_fanUp,
             button_fanDown, button_tempUp, button_tempDown, button_domeLight, button_doorLock, button_settings,
@@ -226,7 +227,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     private void setAC(boolean select) {
         setACButton(select);
-        if(!select){
+        if (!select) {
             tempProgressBarAC();
         }
         sendAC_status();
@@ -247,7 +248,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         }
     }
 
-    private void tempProgressBarAC(){
+    private void tempProgressBarAC() {
         if (tempProgressBar.getProgress() <= 0) {
             setTempProgressBar(1);
         }
@@ -315,6 +316,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         setCabinCycleButton(select);
         sendCabinCycle_status();
     }
+
     private void sendCabinCycle_status() {
         sendData(cabin_cycle_string);
     }
@@ -395,7 +397,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         sendData(feet_front_demist_string);
     }
 
-    private void setFeetFrontDemistButton(boolean select){
+    private void setFeetFrontDemistButton(boolean select) {
         if (select) {
             button_feet_front_demist.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
             setButton_feet_front_demist_isSelected(true);
@@ -416,22 +418,22 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     //progress bars
 
-    private void tempUp(){
+    private void tempUp() {
         incrementTempProgressBar(1);
         sendtempUp_status();
     }
 
-    private void tempDown(){
+    private void tempDown() {
         incrementTempProgressBar(-1);
         sendtempDown_status();
     }
 
-    private void fanUp(){
+    private void fanUp() {
         incrementFanProgressBar(1);
         sendFanUp_status();
     }
 
-    private void fanDown(){
+    private void fanDown() {
         incrementFanProgressBar(-1);
         sendFanDown_status();
     }
@@ -560,20 +562,20 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     }
 
     private void process(String sIn) {
-        setStartState();
         String[] arr = sIn.split(" ");
         try {
             if (arr[1].equals(decoder.getHimID())) {
                 Log.i(TAG, "process: Decoding HIM");
+                setStartState();
                 decodeHIM(arr[2]);
             } else if (arr[1].equals(decoder.getBemID())) {
                 Log.i(TAG, "process: Decoding BEM");
             } else {
                 Log.i(TAG, "process: NOT A VALID ID - " + sIn);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.i(TAG, "process: " + e);
-            Toast.makeText(thisContext,"ERROR PROCESSING SERIAL IN", Toast.LENGTH_LONG).show();
+            Toast.makeText(thisContext, "ERROR PROCESSING SERIAL IN", Toast.LENGTH_LONG).show();
         }
 
     }
@@ -591,12 +593,16 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
                 setAC(true);
                 return true;
             case FACE:
+                setFace(true);
                 return true;
             case FEET:
+                setFeet(true);
                 return true;
             case FACE_FEET:
+                setFaceFeet(true);
                 return true;
             case FEET_FRONT_DEMIST:
+                setFeetFrontDemist(true);
                 return true;
             case FRONT_DEMIST:
                 setFrontDemist(true);
@@ -624,14 +630,16 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     }
 
     private void sendData(String d) {
-//        this.usbSerial.sendData(d);
+        if (startedSuccessfully) {
+            this.usbSerial.sendData(d);
+        }
         Log.i(TAG, "sendData: " + d);
     }
 
     @Override
     public void startSerialConnection() {
         this.usbSerial.startUSBConnection();
-        boolean startedSuccessfully = this.usbSerial.startUSBConnection();
+        this.startedSuccessfully = this.usbSerial.startUSBConnection();
         if (!startedSuccessfully) {
             Toast.makeText(this.thisActivity, "USB SERIAL FAILED TO START", Toast.LENGTH_LONG).show();
 //            setState(false);
