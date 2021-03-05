@@ -10,11 +10,11 @@ const int himID = 0x353;
 const int bemID = 0x403;
 
 const unsigned char keepAliveID = 0x80;
-const unsigned char KeepAlive[8] = {0, 0, 0, 0x80, 0, 0, 0, 0xA};
+const unsigned char KeepAlive[8] = {0, 0, 0, 0x80, 0, 1, 0, 0xA};
 
 mcp2515_can CAN(SPI_CS_PIN);
 
-unsigned char ICC_Buttons[8] = {0, 0, 0, 0x80, 0, 0, 0, 0xA};
+unsigned char ICC_Buttons[8] = {0, 0, 0, 0x80, 0, 1, 0, 0xA};
 unsigned char ICC_Buttons_OFF[8] = {0, 0, 0, 0, 0, 0, 0, 0xA};
 
 //fan and temp settings
