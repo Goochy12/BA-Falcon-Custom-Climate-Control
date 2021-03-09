@@ -15,7 +15,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     SwitchPreferenceCompat headUnitControls;
     USBSerialCallbacks _serial;
 
-    public SettingsFragment(USBSerialCallbacks _serial){
+    public SettingsFragment(USBSerialCallbacks _serial) {
         this._serial = _serial;
     }
 

@@ -42,7 +42,7 @@ public class UsbSerial {
 
     UsbManager usbManager;
 
-    public UsbSerial(Context context, USBSerialCallbacks _serialCalls){
+    public UsbSerial(Context context, USBSerialCallbacks _serialCalls) {
 
         this.context = context;
         this._serialCalls = _serialCalls;
@@ -135,7 +135,7 @@ public class UsbSerial {
 //                    setUI(true);
 
                     return true;
-                }else{
+                } else {
                     this.usbConnection = null;
                     this.device = null;
                 }
