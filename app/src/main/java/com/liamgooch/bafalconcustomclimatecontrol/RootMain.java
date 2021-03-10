@@ -164,7 +164,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
             tempDown();
         });
 
-        button_domeLight.setOnClickListener(v -> senddomeLight_status());
+        button_domeLight.setOnClickListener(v -> sendDomeLight_status());
 
         button_doorLock.setOnClickListener(v -> sendDoorLock_status());
 
@@ -225,6 +225,10 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 //        setAC(true);
     }
 
+    private void setBemState() {
+        setRearDemist(false);
+    }
+
 //    TODO: break into SET_TASK -> SET_BUTTON, SET SEND_STATUS
 
     private void setAC(boolean select) {
@@ -263,7 +267,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
             sendTemp0_status();
         } else {
             setTempProgressBar(1);
-            sendtempUp_status();
+            sendTempUp_status();
         }
     }
 
@@ -411,7 +415,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         }
     }
 
-    private void senddomeLight_status() {
+    private void sendDomeLight_status() {
         sendData(dome_light_string);
     }
 
@@ -424,15 +428,15 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     private void tempUp() {
         incrementTempProgressBar(1);
-        sendtempUp_status();
+        sendTempUp_status();
     }
 
     private void tempDown() {
         incrementTempProgressBar(-1);
-        sendtempDown_status();
+        sendTempDown_status();
     }
 
-    private void temp0(){
+    private void temp0() {
         this.tempProgressBar.setProgress(0);
         sendTemp0_status();
     }
@@ -447,11 +451,11 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         sendFanDown_status();
     }
 
-    private void sendTemp0_status(){
+    private void sendTemp0_status() {
         sendData(temp0_string);
     }
 
-    private void sendTemp_status(int amount){
+    private void sendTemp_status(int amount) {
         sendData(temp_set_string, amount);
     }
 
@@ -467,11 +471,11 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         this.fanProgressBar.incrementProgressBy(incAmount);
     }
 
-    private void sendtempUp_status() {
+    private void sendTempUp_status() {
         sendData(temp_up_string);
     }
 
-    private void sendtempDown_status() {
+    private void sendTempDown_status() {
         sendData(temp_down_string);
     }
 
@@ -580,14 +584,19 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     }
 
     private void process(String sIn) {
-        String[] arr = sIn.split(" ");
         try {
-            if (arr[1].equals(decoder.getHimID())) {
+            String[] arr = sIn.split(" ");
+            int codeHex = Integer.parseInt(arr[1], 16);
+            int msgHex = Integer.parseInt(arr[2], 16);
+
+            if (codeHex == decoder.getHimID()) {
                 Log.i(TAG, "process: Decoding HIM");
                 setStartState();
-                decodeHIM(arr[2]);
-            } else if (arr[1].equals(decoder.getBemID())) {
+                decode(decoder.getHimDecodedList(msgHex));
+            } else if (codeHex == decoder.getBemID()) {
                 Log.i(TAG, "process: Decoding BEM");
+                setBemState();
+                decode(decoder.getBemDecodedList(msgHex));
             } else {
                 Log.i(TAG, "process: NOT A VALID ID - " + sIn);
             }
@@ -598,41 +607,43 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     }
 
-    private void decodeHIM(String code) {
-        ArrayList<Decoder.Mappings> mappings = decoder.getDecodedList(code);
+
+    private void decode(ArrayList<Decoder.Mappings> mappings) {
         for (Decoder.Mappings mapping : mappings) {
-            makeHimChanges(mapping);
+            makeChanges(mapping);
         }
     }
 
-    private boolean makeHimChanges(Decoder.Mappings mappedValue) {
+    private void makeChanges(Decoder.Mappings mappedValue) {
         switch (mappedValue) {
             case AC:
                 setAC(true);
-                return true;
+                return;
             case FACE:
                 setFace(true);
-                return true;
+                return;
             case FEET:
                 setFeet(true);
-                return true;
+                return;
             case FACE_FEET:
                 setFaceFeet(true);
-                return true;
+                return;
             case FEET_FRONT_DEMIST:
                 setFeetFrontDemist(true);
-                return true;
+                return;
             case FRONT_DEMIST:
                 setFrontDemist(true);
-                return true;
+                return;
             case OPEN_CABIN:
                 setCabinCycle(Decoder.Mappings.OPEN_CABIN);
-                return true;
+                return;
             case CLOSED_CABIN:
                 setCabinCycle(Decoder.Mappings.CLOSED_CABIN);
-                return true;
+                return;
+            case REAR_DEMIST:
+                setRearDemist(true);
+                return;
             default:
-                return false;
         }
     }
 
@@ -669,6 +680,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         this.startedSuccessfully = this.usbSerial.startUSBConnection();
         if (!startedSuccessfully) {
             Toast.makeText(this.thisActivity, "USB SERIAL FAILED TO START", Toast.LENGTH_LONG).show();
+//            TODO: UNCOMMENT FOR TESTING
 //            setState(false);
         }
     }
