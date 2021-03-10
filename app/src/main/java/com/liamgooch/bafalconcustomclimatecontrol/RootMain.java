@@ -207,7 +207,6 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         button_face_feet.setEnabled(state);
         button_feet_front_demist.setEnabled(state);
 
-
         button_ac.setEnabled(state);
         button_acMax.setEnabled(state);
 
@@ -221,8 +220,8 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         //initialise variables
         setTempProgressBar(1);
         incrementFanProgressBar(0);
-//        setState(true);
-//        setAC(true);
+        setState(true);
+        setAC(true);
     }
 
     private void setBemState() {
@@ -681,7 +680,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         if (!startedSuccessfully) {
             Toast.makeText(this.thisActivity, "USB SERIAL FAILED TO START", Toast.LENGTH_LONG).show();
 //            TODO: UNCOMMENT FOR TESTING
-//            setState(false);
+            setState(false);
         }
     }
 }
