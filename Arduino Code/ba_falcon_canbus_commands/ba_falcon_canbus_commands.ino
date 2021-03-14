@@ -26,6 +26,12 @@ int tempValue = 0x0;
 int tempMax = 0xE;
 int tempMin = 0x0;
 
+const char startChar = '<';
+const char endChar = '>';
+char incomingSerial[32];
+int incomingCount = 0;
+bool reading = false;
+
 const String errorString = "error";
 
 void setup()
@@ -42,8 +48,7 @@ void loop()
   //get serial in and process
   if (Serial.available())
   {
-    String sIn = Serial.readString();
-    processSerialIn(sIn);
+    processSerialIn();
   }
 
   //process CAN data (from car)
@@ -71,13 +76,13 @@ boolean start()
   //if CAN wiring OK - run the CAN BUS at 500KBPS
   if (CAN_OK != CAN.begin(CAN_500KBPS))
   {
-    Serial.print("FAIL");
+    Serial.println("FAIL");
     delay(100);
     return false;
   }
   else
   {
-    Serial.print("START");
+    Serial.println("START");
     return true;
   }
 }
@@ -95,68 +100,98 @@ void sendCANMessage(int id, unsigned char msg[8])
 void sendSerialData(unsigned long ID, unsigned char msg)
 {
   String sM;
-  sM += "CAN_MSG: " + String(ID, HEX) + " " + String(msg, HEX);
-  Serial.print(sM);
+  sM += startChar + "CAN_MSG: " + String(ID, HEX) + " " + String(msg, HEX) + endChar;
+  Serial.println(sM);
 }
 
 /*
 Function to process the serial data received
 */
-void processSerialIn(String sIn)
+void processSerialIn()
 {
-  if (sIn == "door_lock")
+  char sIn = Serial.read();
+  if (sIn == endChar)
+  {
+    actionSerialIn(incomingSerial);
+
+    //reset incoming serial
+    reading = false;
+    for (int i; i < incomingCount; i++)
+    {
+      incomingSerial[i] = (char)0;
+    }
+    incomingCount = 0;
+  }
+  else if (sIn == startChar)
+  {
+    //if start serial in
+    reading = true;
+  }
+  else if (reading)
+  {
+    incomingSerial[incomingCount] = sIn;
+    incomingCount++;
+  }
+}
+
+/*
+Method to process use an ICC function
+*/
+void actionSerialIn(char sIn[32])
+{
+  if (strcmp(sIn, "door_lock") == 0)
   {
     doorLock();
   }
-  else if (sIn == "dome_light")
+  else if (strcmp(sIn, "dome_light") == 0)
   {
     domeLight();
   }
-  else if (sIn == "cabin_cycle")
+  else if (strcmp(sIn, "cabin_cycle") == 0)
   {
     cabin_cycle();
   }
-  else if (sIn == "rear_demist")
+  else if (strcmp(sIn, "rear_demist") == 0)
   {
     rearDemist();
   }
-  else if (sIn == "feet_front_demist")
+  else if (strcmp(sIn, "feet_front_demist") == 0)
   {
     feetFrontDemist();
   }
-  else if (sIn == "front_demist")
+  else if (strcmp(sIn, "front_demist") == 0)
   {
     frontDemist();
   }
-  else if (sIn == "face")
+  else if (strcmp(sIn, "face") == 0)
   {
     face();
   }
-  else if (sIn == "face_feet")
+  else if (strcmp(sIn, "face_feet") == 0)
   {
     faceFeet();
   }
-  else if (sIn == "ac")
+  else if (strcmp(sIn, "ac") == 0)
   {
     ac();
   }
-  else if (sIn == "fan_up")
+  else if (strcmp(sIn, "fan_up") == 0)
   {
     fanUp();
   }
-  else if (sIn == "fan_down")
+  else if (strcmp(sIn, "fan_down") == 0)
   {
     fanDown();
   }
-  else if (sIn == "temp_up")
+  else if (strcmp(sIn, "temp_up") == 0)
   {
     tempUp();
   }
-  else if (sIn == "temp_down")
+  else if (strcmp(sIn, "temp_down") == 0)
   {
     tempDown();
   }
-  else if (sIn == "temp0")
+  else if (strcmp(sIn, "temp0") == 0)
   {
     temp0();
   }
