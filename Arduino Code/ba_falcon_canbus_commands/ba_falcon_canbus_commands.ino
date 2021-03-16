@@ -11,6 +11,8 @@ const int bemID = 0x403;
 
 const unsigned char keepAliveID = 0x80;
 const unsigned char KeepAlive[8] = {0, 0, 0, 0x80, 0, 1, 0, 0xA};
+const unsigned char BEM[8] = {0, 0, 0, 0, 0, 1, 0, 0};
+const unsigned char HIM[8] = {0, 0, 0, 0, 0, 1, 0, 0};
 
 mcp2515_can CAN(SPI_CS_PIN);
 
@@ -195,6 +197,10 @@ void actionSerialIn(char sIn[32])
   {
     temp0();
   }
+  else if (strcmp(sIn, "get_data") == 0)
+  {
+    sendData();
+  }
   return;
 }
 
@@ -208,12 +214,20 @@ void processCANDataIn(unsigned long canNodeID, unsigned char buf[8])
   // String code;
   if (canNodeID == himID)
   {
+    for (int i = 0; i < 8; i++)
+    {
+      HIM[i] = buf[i];
+    }
     // code = decodeHIM(buf[0]);
-    sendSerialData(canNodeID, buf[0]);
+    // sendSerialData(canNodeID, buf[0]);
   }
   else if (canNodeID == bemID)
   {
-    sendSerialData(canNodeID, buf[0]);
+    // sendSerialData(canNodeID, buf[0]);
+    for (int i = 0; i < 8; i++)
+    {
+      BEM[i] = buf[i];
+    }
   }
 }
 
@@ -333,6 +347,12 @@ void temp0()
 {
   tempValue = 0x0;
   iccTemp();
+}
+
+void sendData()
+{
+  sendSerialData(bemID, BEM[0]);
+  sendSerialData(himID, HIM[0]);
 }
 
 //TODO: UPDATE METHODS WITH INPUT FROM KNOBS
