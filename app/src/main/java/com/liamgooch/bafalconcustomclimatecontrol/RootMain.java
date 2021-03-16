@@ -19,6 +19,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RootMain extends Fragment implements USBSerialCallbacks {
 
@@ -43,6 +45,11 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     private static final String cabin_cycle_string = "cabin_cycle";
     private static final String dome_light_string = "dome_light";
     private static final String door_lock_string = "door_lock";
+    private static final String getData_string = "get_data";
+    private static final String startChar = "<";
+    private static final String endChar = ">";
+    private static final String splitChar = " ";
+    private static final String canMsg_string = "CAN_MSG:";
 
     private UsbSerial usbSerial;
     private Decoder decoder;
@@ -190,6 +197,12 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         //usb serial
         this.usbSerial = new UsbSerial(this.thisActivity.getApplicationContext(), this);
         startSerialConnection();
+
+        getData();
+    }
+
+    private void getData() {
+        sendData(getData_string);
     }
 
     private void setState(boolean state) {
@@ -221,7 +234,8 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         setTempProgressBar(1);
         incrementFanProgressBar(0);
         setState(true);
-        setAC(true);
+//        setAC(true);
+        getData();
     }
 
     private void setBemState() {
@@ -584,20 +598,32 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     private void process(String sIn) {
         try {
-            String[] arr = sIn.split(" ");
-            int codeHex = Integer.parseInt(arr[1], 16);
-            int msgHex = Integer.parseInt(arr[2], 16);
+            HashMap<Integer, Integer> messages = new HashMap<>();
+            String[] raw = sIn.split(endChar);
 
-            if (codeHex == decoder.getHimID()) {
-                Log.i(TAG, "process: Decoding HIM");
-                setStartState();
-                decode(decoder.getHimDecodedList(msgHex));
-            } else if (codeHex == decoder.getBemID()) {
-                Log.i(TAG, "process: Decoding BEM");
-                setBemState();
-                decode(decoder.getBemDecodedList(msgHex));
-            } else {
-                Log.i(TAG, "process: NOT A VALID ID - " + sIn);
+            for (String r : raw) {
+                r = r.replace(startChar,"");
+                String[] m = r.split(splitChar);
+                if(m[0].equals(canMsg_string)){
+                    messages.put(Integer.parseInt(m[1],16),Integer.parseInt(m[2],16));
+                }
+            }
+
+            for (Map.Entry<Integer, Integer> set: messages.entrySet()) {
+                Integer codeHex = set.getKey();
+                Integer msgHex = set.getValue();
+
+                if (codeHex == decoder.getHimID()) {
+                    Log.i(TAG, "process: Decoding HIM");
+                    setStartState();
+                    decode(decoder.getHimDecodedList(msgHex));
+                } else if (codeHex == decoder.getBemID()) {
+                    Log.i(TAG, "process: Decoding BEM");
+                    setBemState();
+                    decode(decoder.getBemDecodedList(msgHex));
+                } else {
+                    Log.i(TAG, "process: NOT A VALID ID - " + sIn);
+                }
             }
         } catch (Exception e) {
             Log.i(TAG, "process: " + e);
@@ -649,17 +675,16 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     @Override
     public void serialInCallback(String serial) {
         //decode
-        this.thisActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                process(serial);
-            }
-        });
+        this.thisActivity.runOnUiThread(() -> process(serial));
+    }
+
+    private String constructSerialData(String inputData){
+        return startChar + inputData + endChar;
     }
 
     private void sendData(String d) {
         if (startedSuccessfully) {
-            this.usbSerial.sendData(d);
+            this.usbSerial.sendData(constructSerialData(d));
         }
         Log.i(TAG, "sendData: " + d);
     }
@@ -667,8 +692,8 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     private void sendData(String d, int amount) {
         String data = null;
         if (startedSuccessfully) {
-            data = d + ":" + String.valueOf(amount);
-            this.usbSerial.sendData(data);
+            data = d + ":" + amount;
+            this.usbSerial.sendData(constructSerialData(data));
         }
         Log.i(TAG, "sendData: " + d);
     }
