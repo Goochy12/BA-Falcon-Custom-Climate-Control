@@ -107,13 +107,12 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         button_face_feet = view.findViewById(R.id.button_face_feet);
         button_feet_front_demist = view.findViewById(R.id.button_feet_front_demist);
 
-
         button_ac = view.findViewById(R.id.button_ac);
         button_acMax = view.findViewById(R.id.button_acMax);
 
         //declare progress bars
-        fanProgressBar = (ProgressBar) view.findViewById(R.id.fanProgressBar);
-        tempProgressBar = (ProgressBar) view.findViewById(R.id.tempProgressBar);
+        fanProgressBar = view.findViewById(R.id.fanProgressBar);
+        tempProgressBar = view.findViewById(R.id.tempProgressBar);
 
         //set boolean variables
         button_frontDemist_isSelected = false;
@@ -131,21 +130,13 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
         button_settings.setOnClickListener(v -> getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment(RootMain.this)).addToBackStack("settings").commit());
 
-        button_ac.setOnClickListener(v -> {
-            setAC(!getButton_ac_isSelected());
-        });
+        button_ac.setOnClickListener(v -> setAC(!getButton_ac_isSelected()));
 
-        button_acMax.setOnClickListener(v -> {
-            setAcMax(!getButton_acMax_isSelected());
-        });
+        button_acMax.setOnClickListener(v -> setAcMax(!getButton_acMax_isSelected()));
 
-        button_frontDemist.setOnClickListener(v -> {
-            setFrontDemist(!getButton_frontDemist_isSelected());
-        });
+        button_frontDemist.setOnClickListener(v -> setFrontDemist(!getButton_frontDemist_isSelected()));
 
-        button_rearDemist.setOnClickListener(v -> {
-            setRearDemist(!getButton_rearDemist_isSelected());
-        });
+        button_rearDemist.setOnClickListener(v -> setRearDemist(!getButton_rearDemist_isSelected()));
 
         button_cabin_cycle.setOnClickListener(v -> {
             if (getButton_cabin_cycle_isSelected().equals(open_cabin_string)) {
@@ -155,41 +146,25 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
             }
         });
 
-        button_fanUp.setOnClickListener(v -> {
-            fanUp();
-        });
+        button_fanUp.setOnClickListener(v -> fanUp());
 
-        button_fanDown.setOnClickListener(v -> {
-            fanDown();
-        });
+        button_fanDown.setOnClickListener(v -> fanDown());
 
-        button_tempUp.setOnClickListener(v -> {
-            tempUp();
-        });
+        button_tempUp.setOnClickListener(v -> tempUp());
 
-        button_tempDown.setOnClickListener(v -> {
-            tempDown();
-        });
+        button_tempDown.setOnClickListener(v -> tempDown());
 
         button_domeLight.setOnClickListener(v -> sendDomeLight_status());
 
         button_doorLock.setOnClickListener(v -> sendDoorLock_status());
 
-        button_face.setOnClickListener(v -> {
-            setFace(!getButton_face_isSelected());
-        });
+        button_face.setOnClickListener(v -> setFace(!getButton_face_isSelected()));
 
-        button_feet.setOnClickListener(v -> {
-            setFeet(!getButton_feet_isSelected());
-        });
+        button_feet.setOnClickListener(v -> setFeet(!getButton_feet_isSelected()));
 
-        button_face_feet.setOnClickListener(v -> {
-            setFaceFeet(!getButton_face_feet_isSelected());
-        });
+        button_face_feet.setOnClickListener(v -> setFaceFeet(!getButton_face_feet_isSelected()));
 
-        button_feet_front_demist.setOnClickListener(v -> {
-            setFeetFrontDemist(!getButton_feet_front_demist_isSelected());
-        });
+        button_feet_front_demist.setOnClickListener(v -> setFeetFrontDemist(!getButton_feet_front_demist_isSelected()));
 
         setStartState();
         this.decoder = new Decoder();
@@ -197,8 +172,6 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         //usb serial
         this.usbSerial = new UsbSerial(this.thisActivity.getApplicationContext(), this);
         startSerialConnection();
-
-        getData();
     }
 
     private void getData() {
@@ -276,8 +249,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     private void setAcMax(boolean select) {
         setAcMaxButton(select);
         if (getButton_acMax_isSelected()) {
-            setTempProgressBar(0);
-            sendTemp0_status();
+            temp0();
         } else {
             setTempProgressBar(1);
             sendTempUp_status();
@@ -507,11 +479,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     }
 
     private void acMaxCheck() {
-        if (this.tempProgressBar.getProgress() <= 0) {
-            setAcMaxButton(true);
-        } else {
-            setAcMaxButton(false);
-        }
+        setAcMaxButton(this.tempProgressBar.getProgress() <= 0);
     }
 
     public void setTempProgressBar(int amount) {
@@ -602,14 +570,14 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
             String[] raw = sIn.split(endChar);
 
             for (String r : raw) {
-                r = r.replace(startChar,"");
+                r = r.replace(startChar, "");
                 String[] m = r.split(splitChar);
-                if(m[0].equals(canMsg_string)){
-                    messages.put(Integer.parseInt(m[1],16),Integer.parseInt(m[2],16));
+                if (m[0].equals(canMsg_string)) {
+                    messages.put(Integer.parseInt(m[1], 16), Integer.parseInt(m[2], 16));
                 }
             }
 
-            for (Map.Entry<Integer, Integer> set: messages.entrySet()) {
+            for (Map.Entry<Integer, Integer> set : messages.entrySet()) {
                 Integer codeHex = set.getKey();
                 Integer msgHex = set.getValue();
 
@@ -631,7 +599,6 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         }
 
     }
-
 
     private void decode(ArrayList<Decoder.Mappings> mappings) {
         for (Decoder.Mappings mapping : mappings) {
@@ -678,7 +645,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         this.thisActivity.runOnUiThread(() -> process(serial));
     }
 
-    private String constructSerialData(String inputData){
+    private String constructSerialData(String inputData) {
         return startChar + inputData + endChar;
     }
 
@@ -690,7 +657,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     }
 
     private void sendData(String d, int amount) {
-        String data = null;
+        String data = "";
         if (startedSuccessfully) {
             data = d + ":" + amount;
             this.usbSerial.sendData(constructSerialData(data));
@@ -706,6 +673,8 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
             Toast.makeText(this.thisActivity, "USB SERIAL FAILED TO START", Toast.LENGTH_LONG).show();
 //            TODO: UNCOMMENT FOR TESTING
             setState(false);
+        } else {
+            getData();
         }
     }
 }
