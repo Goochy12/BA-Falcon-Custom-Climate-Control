@@ -354,7 +354,7 @@
             app:layout_constraintEnd_toStartOf="@+id/vdivider4"
             app:layout_constraintStart_toEndOf="@+id/vdivider3"
             app:layout_constraintTop_toBottomOf="@+id/divider30"
-            app:srcCompat="@drawable/round_arrow_circle_up_white_48" />
+            app:srcCompat="@drawable/up_arrow" />
 
         <ImageButton
             android:id="@+id/button_fanDown"
@@ -365,7 +365,7 @@
             app:layout_constraintEnd_toStartOf="@+id/vdivider4"
             app:layout_constraintStart_toEndOf="@+id/vdivider3"
             app:layout_constraintTop_toBottomOf="@+id/divider40"
-            app:srcCompat="@drawable/round_arrow_circle_down_white_48" />
+            app:srcCompat="@drawable/down_arrow" />
 
         <ImageButton
             android:id="@+id/button_tempUp"
@@ -376,7 +376,7 @@
             app:layout_constraintEnd_toStartOf="@+id/vdivider7"
             app:layout_constraintStart_toEndOf="@+id/vdivider6"
             app:layout_constraintTop_toBottomOf="@+id/divider30"
-            app:srcCompat="@drawable/round_arrow_circle_up_white_48" />
+            app:srcCompat="@drawable/up_arrow" />
 
         <ImageButton
             android:id="@+id/button_tempDown"
@@ -387,7 +387,7 @@
             app:layout_constraintEnd_toStartOf="@+id/vdivider7"
             app:layout_constraintStart_toEndOf="@+id/vdivider6"
             app:layout_constraintTop_toBottomOf="@+id/divider40"
-            app:srcCompat="@drawable/round_arrow_circle_down_white_48" />
+            app:srcCompat="@drawable/down_arrow" />
 
         <!--        Accessories-->
         <ImageButton
