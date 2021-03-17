@@ -13,6 +13,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     Preference retrySerialPreference;
     SwitchPreferenceCompat headUnitControls;
+    Preference getDataPreference;
     USBSerialCallbacks _serial;
 
     public SettingsFragment(USBSerialCallbacks _serial) {
@@ -25,11 +26,17 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         retrySerialPreference = findPreference("retry_arduino");
         headUnitControls = findPreference("hu_buttons_switch");
+        getDataPreference = findPreference("get_data");
 
         setPreferenceDefaults();
 
         retrySerialPreference.setOnPreferenceClickListener(preference -> {
             this._serial.startSerialConnection();
+            return true;
+        });
+
+        getDataPreference.setOnPreferenceClickListener(preference -> {
+            this._serial.getData();
             return true;
         });
     }

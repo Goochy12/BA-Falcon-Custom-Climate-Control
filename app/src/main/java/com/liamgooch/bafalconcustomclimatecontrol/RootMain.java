@@ -174,7 +174,8 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         startSerialConnection();
     }
 
-    private void getData() {
+    @Override
+    public void getData() {
         sendData(getData_string);
     }
 

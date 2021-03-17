@@ -12,5 +12,8 @@
             app:key="hu_buttons_switch"
             app:title="@string/hu_buttons_switch"
             />
+        <Preference
+            app:key="get_data"
+            app:title="@string/get_data_string"/>
     </PreferenceCategory>
 </PreferenceScreen>
