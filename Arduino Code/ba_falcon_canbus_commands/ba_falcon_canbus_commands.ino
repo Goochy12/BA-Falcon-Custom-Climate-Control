@@ -212,8 +212,13 @@ void processCANDataIn(unsigned long canNodeID, unsigned char buf[8])
   //TODO Update IF statements - code smells
   //read CAN ID
   // String code;
+  bool dataChanged = false;
   if (canNodeID == himID)
   {
+    if (HIM[0] != buf[0])
+    {
+      dataChanged = true;
+    }
     for (int i = 0; i < 8; i++)
     {
       HIM[i] = buf[i];
@@ -223,11 +228,20 @@ void processCANDataIn(unsigned long canNodeID, unsigned char buf[8])
   }
   else if (canNodeID == bemID)
   {
+    if (BEM[0] != buf[0])
+    {
+      dataChanged = true;
+    }
     // sendSerialData(canNodeID, buf[0]);
     for (int i = 0; i < 8; i++)
     {
       BEM[i] = buf[i];
     }
+  }
+
+  if (dataChanged)
+  {
+    sendData();
   }
 }
 
