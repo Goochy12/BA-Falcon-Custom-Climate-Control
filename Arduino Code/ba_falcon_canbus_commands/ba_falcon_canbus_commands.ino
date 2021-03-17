@@ -209,7 +209,7 @@ Function to process CAN data received from the Car
 */
 void processCANDataIn(unsigned long canNodeID, unsigned char buf[8])
 {
-  //TODO Update IF statements - code smells
+  //TODO Update IF statements - code smells: add to array
   //read CAN ID
   // String code;
   bool dataChanged = false;
