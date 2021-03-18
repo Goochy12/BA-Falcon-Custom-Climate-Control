@@ -11,8 +11,8 @@ const int bemID = 0x403;
 
 const unsigned char keepAliveID = 0x80;
 const unsigned char KeepAlive[8] = {0, 0, 0, 0x80, 0, 1, 0, 0xA};
-const unsigned char BEM[8] = {0, 0, 0, 0, 0, 1, 0, 0};
-const unsigned char HIM[8] = {0, 0, 0, 0, 0, 1, 0, 0};
+unsigned char BEM[8] = {0, 0, 0, 0, 0, 1, 0, 0};
+unsigned char HIM[8] = {0, 0, 0, 0, 0, 1, 0, 0};
 
 mcp2515_can CAN(SPI_CS_PIN);
 
