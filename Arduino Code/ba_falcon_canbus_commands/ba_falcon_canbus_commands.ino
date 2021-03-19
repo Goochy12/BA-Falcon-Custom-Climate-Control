@@ -1,6 +1,7 @@
 //#include <mcp_can.h>
 #include <SPI.h>
 #include "mcp2515_can.h"
+#include <SimpleTimer.h>
 
 const int SPI_CS_PIN = 10;
 const int CAN_INT_PIN = 2;
@@ -28,11 +29,15 @@ int tempValue = 0x0;
 int tempMax = 0xE;
 int tempMin = 0x0;
 
+SimpleTimer timer100ms;
+
 const char startChar = '<';
 const char endChar = '>';
 char incomingSerial[32];
 int incomingCount = 0;
 bool reading = false;
+int sendButton = 0;
+bool chg = false;
 
 const String errorString = "error";
 
@@ -43,6 +48,8 @@ void setup()
   //initialise CAN
   while (!start())
     ;
+
+  timer100ms.setInterval(100, incTimer);
 }
 
 void loop()
@@ -53,6 +60,13 @@ void loop()
     processSerialIn();
   }
 
+  if (sendButton >= 5)
+  {
+    sendButtonPressed();
+    resetICCButton();
+    sendButton = 0;
+  }
+
   //process CAN data (from car)
   if (CAN_MSGAVAIL == CAN.checkReceive())
   { //check data incoming
@@ -61,13 +75,7 @@ void loop()
     CAN.readMsgBuf(&len, buf); //read data: length and buffer (data)
     int canNodeID = CAN.getCanId();
     processCANDataIn(canNodeID, buf);
-
-    //send CAN data?
   }
-
-  //TODO no need to do this each time
-  sendButtonPressed();
-  resetICCButton();
 }
 
 /*
@@ -89,6 +97,11 @@ boolean start()
   }
 }
 
+void incTimer()
+{
+  sendButton++;
+}
+
 /*
 Function to send a CAN message (to the car)
 */
@@ -96,13 +109,19 @@ void sendCANMessage(int id, unsigned char msg[8])
 {
   //sendMsgBuf(id (hex), 0, 8, data buf)
   CAN.sendMsgBuf(id, 0, 8, msg);
+  if (chg == true)
+  {
+    Serial.println(String(id,HEX) + ": " + String(msg[0],HEX) + ", " + String(msg[3],HEX));
+    chg = false;
+  }
+  //Serial.println(msg[3]);
 }
 
 /*Function to send a serial message*/
 void sendSerialData(unsigned long ID, unsigned char msg)
 {
   String sM;
-  sM += startChar + "CAN_MSG: " + String(ID, HEX) + " " + String(msg, HEX) + endChar;
+  sM = "<CAN_MSG: " + String(ID, HEX) + " " + String(msg, HEX) + ">";
   Serial.println(sM);
 }
 
@@ -112,7 +131,7 @@ Function to process the serial data received
 void processSerialIn()
 {
   char sIn = Serial.read();
-  if (sIn == endChar)
+  if (sIn == endChar && reading)
   {
     actionSerialIn(incomingSerial);
 
@@ -141,9 +160,11 @@ Method to process use an ICC function
 */
 void actionSerialIn(char sIn[32])
 {
+  Serial.println(sIn);
   if (strcmp(sIn, "door_lock") == 0)
   {
     doorLock();
+    chg = true;
   }
   else if (strcmp(sIn, "dome_light") == 0)
   {
@@ -172,6 +193,7 @@ void actionSerialIn(char sIn[32])
   else if (strcmp(sIn, "face_feet") == 0)
   {
     faceFeet();
+    chg = true;
   }
   else if (strcmp(sIn, "ac") == 0)
   {
@@ -243,6 +265,7 @@ void processCANDataIn(unsigned long canNodeID, unsigned char buf[8])
   {
     sendData();
   }
+  dataChanged = false;
 }
 
 void setICCButton(int position, int code)
