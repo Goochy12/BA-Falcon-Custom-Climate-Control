@@ -145,13 +145,14 @@ public class UsbSerial {
     }
 
     public void sendData(String d) {
-        usbSerialDevice.write(d.getBytes());
-//        tvAppend(textView_output,"\n data sent: " + d + "\n");
+        try{
+            usbSerialDevice.write(d.getBytes());
+        }catch (Exception e){
+            Log.i(TAG, "Send Data EXCEPTION: " + e);
+        }
     }
 
     private void closeConnection() {
         usbSerialDevice.close();
-//        setUI(false);
-//        tvAppend(textView_output,"\n closed connection \n");
     }
 }
