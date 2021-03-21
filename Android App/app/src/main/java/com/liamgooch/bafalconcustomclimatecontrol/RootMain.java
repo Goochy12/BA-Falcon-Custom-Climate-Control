@@ -403,11 +403,19 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         sendFace_status();  //send status
     }
 
+    /**
+     * Method to send face status
+     */
     private void sendFace_status() {
-        sendData(face_string);
+        sendData(face_string);  //send data to USB Serial
     }
 
+    /**
+     * Method to set face button status
+     * @param select - status of the button
+     */
     private void setFaceButton(boolean select) {
+        //set button colours and state
         if (select) {
             button_face.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
             setButton_face_isSelected(true);
@@ -417,16 +425,28 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         }
     }
 
+    /**
+     * Method to set feet status
+     * @param select - status of feet
+     */
     private void setFeet(boolean select) {
-        setFeetButton(select);
-        sendFeet_status();
+        setFeetButton(select);  //set button status
+        sendFeet_status();  //send status
     }
 
+    /**
+     * Method to send feet status
+     */
     private void sendFeet_status() {
-        sendData(feet_string);
+        sendData(feet_string);  //send data to USB Serial
     }
 
+    /**
+     * Method to set button status
+     * @param select - status of the button
+     */
     private void setFeetButton(boolean select) {
+        //set button colours and state
         if (select) {
             button_feet.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
             setButton_feet_isSelected(true);
@@ -436,16 +456,28 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         }
     }
 
+    /**
+     * Method to set face feet status
+     * @param select - status of face feet
+     */
     private void setFaceFeet(boolean select) {
-        setFaceFeetButton(select);
-        sendFaceFeet_status();
+        setFaceFeetButton(select);  //set button status
+        sendFaceFeet_status();  //send status
     }
 
+    /**
+     * Method to send face feet status
+     */
     private void sendFaceFeet_status() {
-        sendData(face_feet_string);
+        sendData(face_feet_string); //send data to USB Serial
     }
 
+    /**
+     * Method to set the face feet button status
+     * @param select - state of the button
+     */
     private void setFaceFeetButton(boolean select) {
+        //set button colours and state
         if (select) {
             button_face_feet.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
             setButton_face_feet_isSelected(true);
@@ -455,16 +487,28 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         }
     }
 
+    /**
+     * Method to set feet front demist
+     * @param select - status of the feet front demist
+     */
     private void setFeetFrontDemist(boolean select) {
-        setFeetFrontDemistButton(select);
-        sendFeetFrontDemist_status();
+        setFeetFrontDemistButton(select);   //set button status
+        sendFeetFrontDemist_status();   //send status
     }
 
+    /**
+     * Method to send feet front demist status
+     */
     private void sendFeetFrontDemist_status() {
-        sendData(feet_front_demist_string);
+        sendData(feet_front_demist_string); //send data to USB Serial
     }
 
+    /**
+     * Method to set feet front demist button status
+     * @param select - status of the button
+     */
     private void setFeetFrontDemistButton(boolean select) {
+        //set button colours and state
         if (select) {
             button_feet_front_demist.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
             setButton_feet_front_demist_isSelected(true);
@@ -474,77 +518,123 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         }
     }
 
+    /**
+     * Method to send dome light status
+     */
     private void sendDomeLight_status() {
-        sendData(dome_light_string);
+        sendData(dome_light_string);    //send data to USB Serial
     }
 
+    /**
+     * Method to send door lock status
+     */
     private void sendDoorLock_status() {
-        sendData(door_lock_string);
+        sendData(door_lock_string); //send data to USB Serial
     }
 
-
-    //progress bars
-
+    /**
+     * Method to increase temperature
+     */
     private void tempUp() {
-        incrementTempProgressBar(1);
-        sendTempUp_status();
+        incrementTempProgressBar(1);    //increase temp by 1
+        sendTempUp_status();    //send data to USB Serial
     }
 
+    /**
+     * Method to decrease temperature
+     */
     private void tempDown() {
-        incrementTempProgressBar(-1);
-        sendTempDown_status();
+        incrementTempProgressBar(-1);   //decrease temp by 1
+        sendTempDown_status();  //send data to USB Serial
     }
 
+    /**
+     * Method to set temperature to 0
+     */
     private void temp0() {
-        this.tempProgressBar.setProgress(0);
-        sendTemp0_status();
+        this.tempProgressBar.setProgress(0);    //set temp to 0
+        sendTemp0_status(); //send data to USB Serial
     }
 
+    /**
+     * Method to increase fan
+     */
     private void fanUp() {
-        incrementFanProgressBar(1);
-        sendFanUp_status();
+        incrementFanProgressBar(1); //increase fan by 1
+        sendFanUp_status(); //send data to USB Seria;
     }
 
+    /**
+     * Method to decrease fan
+     */
     private void fanDown() {
-        incrementFanProgressBar(-1);
-        sendFanDown_status();
+        incrementFanProgressBar(-1);    //decrease fan by 1
+        sendFanDown_status();   //send data to USB Serial
     }
 
+    /**
+     * Method to send temp status of 0
+     */
     private void sendTemp0_status() {
-        sendData(temp0_string);
+        sendData(temp0_string); //send data to USB Serial
     }
 
+    /**
+     * Method to send temp status of x amount
+     */
     private void sendTemp_status(int amount) {
-        sendData(temp_set_string, amount);
+        sendData(temp_set_string, amount);  //send data to USB Serial
     }
 
+    /**
+     * Method to send fan up status
+     */
     private void sendFanUp_status() {
-        sendData(fan_up_string);
+        sendData(fan_up_string);    //send data to USB Serial
     }
 
+    /**
+     * Method to send fan down status
+     */
     private void sendFanDown_status() {
-        sendData(fan_down_string);
+        sendData(fan_down_string);  //send data to USB Serial
     }
 
+    /**
+     * Method to increment fan progress bar by x amount
+     */
     public void incrementFanProgressBar(int incAmount) {
-        this.fanProgressBar.incrementProgressBy(incAmount);
+        this.fanProgressBar.incrementProgressBy(incAmount); //increment progress
     }
 
+    /**
+     * Method to send temp up status
+     */
     private void sendTempUp_status() {
-        sendData(temp_up_string);
+        sendData(temp_up_string);   //send data to USB Serial
     }
 
+    /**
+     * Method to send temp down status
+     */
     private void sendTempDown_status() {
-        sendData(temp_down_string);
+        sendData(temp_down_string); //send data to USB Serial
     }
 
+    /**
+     * Method to increment temp progress bar by x amount
+     */
     private void incrementTempProgressBar(int incAmount) {
-        this.tempProgressBar.incrementProgressBy(incAmount);
-        setProgressColours();
-        acMaxCheck();
+        this.tempProgressBar.incrementProgressBy(incAmount);    //increment progress
+        setTempProgressColours();   //set the colours of the progress bar
+        acMaxCheck();   //check whether AC MAX should be enacted
     }
 
-    private void setProgressColours() {
+    /**
+     * Method to set colours of the temp progress bar
+     */
+    private void setTempProgressColours() {
+        //if the progress is greater than half way - set the colour red, else blue
         if (getTempProgressBarProgress() > (getTempProgressBarMaxProgress() / 2)) {
             this.tempProgressBar.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
         } else {
@@ -552,14 +642,17 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         }
     }
 
+    /**
+     * Method to set ac Max if temp is 0
+     */
     private void acMaxCheck() {
-        setAcMaxButton(getTempProgressBarProgress() <= 0);
+        setAcMaxButton(getTempProgressBarProgress() <= 0);  //set ac max if temp is 0
     }
 
     public void setTempProgressBar(int amount) {
         this.tempProgressBar.setProgress(amount);
         sendTemp_status(amount);
-        setProgressColours();
+        setTempProgressColours();
         acMaxCheck();
     }
 
