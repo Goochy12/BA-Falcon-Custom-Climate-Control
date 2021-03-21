@@ -28,14 +28,16 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
 //    TODO: Create a log to show in settings fragment
 
-    private UsbSerial usbSerial;
-    private Decoder decoder;
-    boolean startedSuccessfully = false;
+    private UsbSerial usbSerial;    //instance for USB serial manager class
+    private Decoder decoder;    //instance to decoder class
+    boolean startedSuccessfully = false;    //flag for successful USB Serial connection
 
+    // image button declarations
     private ImageButton button_frontDemist, button_rearDemist, button_cabin_cycle, button_fanUp,
             button_fanDown, button_tempUp, button_tempDown, button_domeLight, button_doorLock, button_settings,
             button_face, button_feet, button_face_feet, button_feet_front_demist;
 
+    //other button declarations
     private Button button_ac, button_acMax;
 
     //boolean variables for button
@@ -44,6 +46,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     private String button_cabin_cycle_isSelected;
     private ProgressBar fanProgressBar, tempProgressBar;
 
+    //declaration for "this"
     private Activity thisActivity;
     private Context thisContext;
 
@@ -54,8 +57,8 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.thisActivity = getActivity();
-        this.thisContext = getContext();
+        this.thisActivity = getActivity();  //get this activity
+        this.thisContext = getContext();    //get this contect
     }
 
     @Override
@@ -87,24 +90,16 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         button_ac = view.findViewById(R.id.button_ac);
         button_acMax = view.findViewById(R.id.button_acMax);
 
+        button_settings = view.findViewById(R.id.button_settings);
+
         //declare progress bars
         fanProgressBar = view.findViewById(R.id.fanProgressBar);
         tempProgressBar = view.findViewById(R.id.tempProgressBar);
 
         //set boolean variables
-        button_frontDemist_isSelected = false;
-        button_rearDemist_isSelected = false;
-        button_cabin_cycle_isSelected = closed_cabin_string;
-        button_ac_isSelected = false;
-        button_acMax_isSelected = false;
-        button_face_isSelected = false;
-        button_feet_isSelected = false;
-        button_face_feet_isSelected = false;
-        button_feet_front_demist_isSelected = false;
+//        setEnabledState(false);
 
-        button_settings = view.findViewById(R.id.button_settings);
         //declare button listeners
-
         button_settings.setOnClickListener(v -> getParentFragmentManager().beginTransaction().add(R.id.fragment_container, new SettingsFragment(RootMain.this)).addToBackStack("settings").commit());
 
         button_ac.setOnClickListener(v -> setAC(!getButton_ac_isSelected()));
@@ -143,20 +138,28 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
         button_feet_front_demist.setOnClickListener(v -> setFeetFrontDemist(!getButton_feet_front_demist_isSelected()));
 
-        setStartState();
-        this.decoder = new Decoder();
+        setStartState();    //set the starting state for the interface
+        this.decoder = new Decoder();   //create a new instance of the decoder
 
-        //usb serial
+        //create a new USB Serial instance
         this.usbSerial = new UsbSerial(this.thisActivity.getApplicationContext(), this);
-        startSerialConnection();
+        startSerialConnection();    //attempt to start the serial connection
     }
 
+    /**
+     * Method to get a set of data from USB Serial
+     */
     @Override
     public void getData() {
-        sendData(getData_string);
+        sendData(getData_string);   //send the get_data string via USB Serial
     }
 
-    private void setState(boolean state) {
+    /**
+     * Method to set the enabled state of the buttons and progress bars
+     * @param state - True or False
+     */
+    private void setEnabledState(boolean state) {
+        //declare buttons
         button_frontDemist.setEnabled(state);
         button_rearDemist.setEnabled(state);
         button_cabin_cycle.setEnabled(state);
@@ -177,24 +180,54 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         //declare progress bars
         fanProgressBar.setEnabled(state);
         tempProgressBar.setEnabled(state);
+
+        //set boolean variables
+//        button_frontDemist_isSelected = false;
+//        button_rearDemist_isSelected = false;
+//        button_cabin_cycle_isSelected = closed_cabin_string;
+//        button_ac_isSelected = false;
+//        button_acMax_isSelected = false;
+//        button_face_isSelected = false;
+//        button_feet_isSelected = false;
+//        button_face_feet_isSelected = false;
+//        button_feet_front_demist_isSelected = false;
     }
 
+    /**
+     * Method to set the starting state before USB serial connection
+     */
     private void setStartState() {
 //        TODO: Reset ALL
         //initialise variables
         setTempProgressBar(1);
         incrementFanProgressBar(0);
-        setState(true);
-//        setAC(true);
-        getData();
+        setEnabledState(true);
+
+        //set button states
+        setFrontDemistButton(false);
+        setRearDemistButton(false);
+        setCabinCycleButton(Decoder.Mappings.CLOSED_CABIN);
+        setACButton(false);
+        setAcMaxButton(false);
+        setFaceButton(false);
+        setFeetButton(false);
+        setFaceFeetButton(false);
+        setFeetFrontDemistButton(false);
+
+        getData();  //get the actual states of each button
     }
 
-    private void setBemState() {
-        setRearDemist(false);
+    /**
+     * Method to set the state for the BEM variables (rear demist, door status)
+     */
+    private void setBemEnabledState() {
+        setRearDemistButton(false);
     }
 
-//    TODO: break into SET_TASK -> SET_BUTTON, SET SEND_STATUS
-
+    /**
+     * Method to set the AC status
+     * @param select
+     */
     private void setAC(boolean select) {
         setACButton(select);
         if (!select) {
@@ -565,7 +598,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
                     decode(decoder.getHimDecodedList(msgHex));
                 } else if (codeHex == decoder.getBemID()) {
                     Log.i(TAG, "process: Decoding BEM");
-                    setBemState();
+                    setBemEnabledState();
                     decode(decoder.getBemDecodedList(msgHex));
                 } else {
                     Log.i(TAG, "process: NOT A VALID ID - " + sIn);
@@ -650,7 +683,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         if (!startedSuccessfully) {
             Toast.makeText(this.thisActivity, "USB SERIAL FAILED TO START", Toast.LENGTH_LONG).show();
 //            TODO: UNCOMMENT FOR TESTING
-            setState(false);
+            setEnabledState(false);
         } else {
             getData();
         }
