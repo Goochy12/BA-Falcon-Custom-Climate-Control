@@ -156,7 +156,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     /**
      * Method to set the enabled state of the buttons and progress bars
-     * @param state - True or False
+     * @param state - button enabled state
      */
     private void setEnabledState(boolean state) {
         //declare buttons
@@ -226,37 +226,39 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     /**
      * Method to set the AC status
-     * @param select - True or False
+     * @param select - AC status state
      */
     private void setAC(boolean select) {
         setACButton(select);    //set the button status
         if (!select) {
             if(getTempProgressBarProgress() <= 0){
                 //if status is false and the current progress is 0 (ac max)
-                temp1ProgressBarAC();    //set the progress bar temp to 1
+                setAcMax(false);    //set AC Max to false
             }
         }
-        sendAC_status();
+        sendAC_status();    //send the ac status to USB serial
     }
 
+    /**
+     * Method to send the AC status
+     */
     private void sendAC_status() {
         sendData(ac_string);
     }
 
+    /**
+     * Method to set the AC Button state
+     * @param select - state of button
+     */
     private void setACButton(boolean select) {
         if (select) {
+            //if state is true, set the buttons colours and boolean state
             button_ac.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
             setButton_ac_isSelected(true);
         } else {
+            //if state is false, set the buttons colours and boolean state
             button_ac.setBackgroundColor(getResources().getColor(R.color.black));
-            setAcMax(false);
             setButton_ac_isSelected(false);
-        }
-    }
-
-    private void temp1ProgressBarAC() {
-        if (getTempProgressBarProgress() <= 0) {
-            setTempProgressBar(1);
         }
     }
 
