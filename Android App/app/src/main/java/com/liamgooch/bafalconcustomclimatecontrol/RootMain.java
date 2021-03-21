@@ -128,7 +128,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         button_settings = view.findViewById(R.id.button_settings);
         //declare button listeners
 
-        button_settings.setOnClickListener(v -> getParentFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment(RootMain.this)).addToBackStack("settings").commit());
+        button_settings.setOnClickListener(v -> getParentFragmentManager().beginTransaction().add(R.id.fragment_container, new SettingsFragment(RootMain.this)).addToBackStack("settings").commit());
 
         button_ac.setOnClickListener(v -> setAC(!getButton_ac_isSelected()));
 

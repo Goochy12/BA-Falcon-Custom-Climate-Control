@@ -2,7 +2,12 @@ package com.liamgooch.bafalconcustomclimatecontrol;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.preference.Preference;
@@ -18,6 +23,13 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     public SettingsFragment(USBSerialCallbacks _serial) {
         this._serial = _serial;
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view =  super.onCreateView(inflater, container, savedInstanceState);
+        view.setBackgroundColor(getResources().getColor(R.color.black));
+        return view;
     }
 
     @Override
