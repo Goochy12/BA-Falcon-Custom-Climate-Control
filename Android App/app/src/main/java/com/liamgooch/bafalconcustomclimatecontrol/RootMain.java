@@ -221,7 +221,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     /**
      * Method to set the state for the BEM variables (rear demist, door status)
      */
-    private void setBemEnabledState() {
+    private void setBemState() {
         setRearDemistButton(false);
     }
 
@@ -245,7 +245,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
      * Method to send the AC status
      */
     private void sendAC_status() {
-        sendData(ac_string);
+        sendData(ac_string);    //send data to serial
     }
 
     /**
@@ -298,16 +298,30 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         }
     }
 
+    /**
+     * Method to set front demist status
+     *
+     * @param select - state of front demist
+     */
     private void setFrontDemist(boolean select) {
-        setFrontDemistButton(select);
-        sendFrontDemist_status();
+        setFrontDemistButton(select);   //set the button
+        sendFrontDemist_status();   //send the status
     }
 
+    /**
+     * Method to send the front demist status to USB Serial
+     */
     private void sendFrontDemist_status() {
-        sendData(front_demist_string);
+        sendData(front_demist_string);  //send data to serial
     }
 
+    /**
+     * Method to set the front demist button status
+     *
+     * @param select - state of the button
+     */
     private void setFrontDemistButton(boolean select) {
+        //set button colours and state
         if (select) {
             button_frontDemist.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
             setButton_frontDemist_isSelected(true);
@@ -317,16 +331,29 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         }
     }
 
+    /**
+     * Method to set the rear demist status
+     *
+     * @param select - state of the rear demist
+     */
     private void setRearDemist(boolean select) {
-        setRearDemistButton(select);
-        sendRearDemist_status();
+        setRearDemistButton(select);    //set the button
+        sendRearDemist_status();    //send the status
     }
 
+    /**
+     * Method to send rear demist status
+     */
     private void sendRearDemist_status() {
-        sendData(rear_demist_string);
+        sendData(rear_demist_string);   //send data to USB Serial
     }
 
+    /**
+     * Method to set rear demist button status
+     * @param select - state of rear demist button
+     */
     private void setRearDemistButton(boolean select) {
+        //set button colours and state
         if (select) {
             button_rearDemist.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
             setButton_rearDemist_isSelected(true);
@@ -336,16 +363,28 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         }
     }
 
+    /**
+     * Method to set cabin cycle status
+     * @param select - state of the cabin cycle
+     */
     private void setCabinCycle(Decoder.Mappings select) {
-        setCabinCycleButton(select);
-        sendCabinCycle_status();
+        setCabinCycleButton(select);    //set button state
+        sendCabinCycle_status();    //send status
     }
 
+    /**
+     * Method to send cabin cycle status
+     */
     private void sendCabinCycle_status() {
-        sendData(cabin_cycle_string);
+        sendData(cabin_cycle_string);   //send string to USB Serial
     }
 
+    /**
+     * Method to set cabin cycle button state
+     * @param cycleString - state of the cabin cycle
+     */
     private void setCabinCycleButton(Decoder.Mappings cycleString) {
+        //set button colours and state
         if (cycleString == Decoder.Mappings.OPEN_CABIN) {
             button_cabin_cycle.setImageResource(R.drawable.open_cabin);
             setButton_cabin_cycle_isSelected(open_cabin_string);
@@ -355,9 +394,13 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         }
     }
 
+    /**
+     * Method to set face status
+     * @param select - status of face
+     */
     private void setFace(boolean select) {
-        setFaceButton(select);
-        sendFace_status();
+        setFaceButton(select);  //set button status
+        sendFace_status();  //send status
     }
 
     private void sendFace_status() {
@@ -618,7 +661,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
                     decode(decoder.getHimDecodedList(msgHex));
                 } else if (codeHex == decoder.getBemID()) {
                     Log.i(TAG, "process: Decoding BEM");
-                    setBemEnabledState();
+                    setBemState();
                     decode(decoder.getBemDecodedList(msgHex));
                 } else {
                     Log.i(TAG, "process: NOT A VALID ID - " + sIn);
