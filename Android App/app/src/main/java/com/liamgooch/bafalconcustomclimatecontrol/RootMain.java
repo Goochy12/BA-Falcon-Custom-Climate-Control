@@ -757,7 +757,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     private void process(String sIn) {
         //try to process and decode Serial messages
         try {
-            HashMap<Integer, Integer> messages = new HashMap<>();   //create a new hash map for messages - ID as key
+            HashMap<Integer, Integer> messages = new HashMap<>();   //create a new hash map for messages - CODE as key
             String[] raw = sIn.split(endChar);  //split each string by the end character
 
             //for each split string
@@ -766,7 +766,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
                 r = r.replace(startChar, "");   //replace the starting char with nothing
                 String[] m = r.split(splitChar);    //split the string by the split character
                 if (m[0].equals(canMsg_string)) {
-                    //if the first part of the message is equal to the can message string - process the ID and value
+                    //if the first part of the message is equal to the can message string - process the CODE and value
                     messages.put(Integer.parseInt(m[1], 16), Integer.parseInt(m[2], 16));
                 }
             }
@@ -777,11 +777,11 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
                 Integer msgHex = set.getValue();    //message
 
                 if (codeHex == decoder.getHimID()) {
-                    Log.i(TAG, "process: Decoding HIM - ID: " + codeHex + ", MSG: " + msgHex);    //log
+                    Log.i(TAG, "process: Decoding HIM - CODE: " + codeHex + ", MSG: " + msgHex);    //log
                     setStartState();    //set the start state - before the buttons are updated
                     decode(decoder.getHimDecodedList(msgHex));  //decode and make changes
                 } else if (codeHex == decoder.getBemID()) {
-                    Log.i(TAG, "process: Decoding BEM - ID: " + codeHex + ", MSG: " + msgHex);  //log
+                    Log.i(TAG, "process: Decoding BEM - CODE: " + codeHex + ", MSG: " + msgHex);  //log
                     setBemState();  //set the BEM state to default before buttons are changed
                     decode(decoder.getBemDecodedList(msgHex));  //decode and make changes
                 } else {

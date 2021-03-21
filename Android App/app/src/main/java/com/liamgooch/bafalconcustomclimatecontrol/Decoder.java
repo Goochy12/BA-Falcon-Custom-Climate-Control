@@ -7,7 +7,7 @@ import static com.liamgooch.bafalconcustomclimatecontrol.HexCodes.*;
 
 public class Decoder {
 
-
+    //enum mappings for climate controls
     enum Mappings {
         AC, OPEN_CABIN, CLOSED_CABIN, FACE, FEET, FACE_FEET, FRONT_DEMIST, FEET_FRONT_DEMIST, REAR_DEMIST, FRONT_LEFT_DOOR, FRONT_RIGHT_DOOR, BACK_LEFT_DOOR, BACK_RIGHT_DOOR, BOOT
     }
@@ -75,6 +75,9 @@ public class Decoder {
     private HashMap<Integer, ArrayList<Mappings>> bemHashMap = null;
 
 
+    /**
+     * Constructor to add all mappings to each possible combination
+     */
     public Decoder() {
         himHashMap = new HashMap<>();
         bemHashMap = new HashMap<>();
@@ -393,21 +396,42 @@ public class Decoder {
         rearDemist.add(Mappings.BACK_RIGHT_DOOR);
         rearDemist.add(Mappings.BOOT);
         bemHashMap.put(rearDemistFrontLeftFrontRightBackLeftBackRightBootHexCode, rearDemist);
-
     }
 
+    /**
+     * Method to get the HIM ID
+     *
+     * @return - the HIM ID
+     */
     public int getHimID() {
         return himID;
     }
 
+    /**
+     * Method to get the BEM ID
+     *
+     * @return - the BEM ID
+     */
     public int getBemID() {
         return bemID;
     }
 
+    /**
+     * Method to get a decoded HIM list based on an inputted code
+     *
+     * @param code - the HIM code from the vehicle
+     * @return - a list of enums detailing which climate settings are currently active
+     */
     public ArrayList<Mappings> getHimDecodedList(int code) {
         return himHashMap.get(code);
     }
 
+    /**
+     * Method to get a decoded BEM list based on an inputted code
+     *
+     * @param code - the BEM code from the vehicle
+     * @return - a list of enums detailing which climate settings are currently active
+     */
     public ArrayList<Mappings> getBemDecodedList(int code) {
         return bemHashMap.get(code);
     }
