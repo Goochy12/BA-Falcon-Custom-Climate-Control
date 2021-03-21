@@ -156,6 +156,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     /**
      * Method to set the enabled state of the buttons and progress bars
+     *
      * @param state - button enabled state
      */
     private void setEnabledState(boolean state) {
@@ -226,12 +227,13 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     /**
      * Method to set the AC status
+     *
      * @param select - AC status state
      */
     private void setAC(boolean select) {
         setACButton(select);    //set the button status
         if (!select) {
-            if(getTempProgressBarProgress() <= 0){
+            if (getTempProgressBarProgress() <= 0) {
                 //if status is false and the current progress is 0 (ac max)
                 setAcMax(false);    //set AC Max to false
             }
@@ -248,34 +250,47 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     /**
      * Method to set the AC Button state
+     *
      * @param select - state of button
      */
     private void setACButton(boolean select) {
+        //set the buttons colours and boolean state
         if (select) {
-            //if state is true, set the buttons colours and boolean state
             button_ac.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
             setButton_ac_isSelected(true);
         } else {
-            //if state is false, set the buttons colours and boolean state
             button_ac.setBackgroundColor(getResources().getColor(R.color.black));
             setButton_ac_isSelected(false);
         }
     }
 
+    /**
+     * Method to set the AC MAX Status
+     *
+     * @param select - state of AC MAX
+     */
     private void setAcMax(boolean select) {
-        setAcMaxButton(select);
+        setAcMaxButton(select); //set the button state
         if (getButton_acMax_isSelected()) {
-            temp0();
+            setAC(true);    //set AC
+            temp0();    //if AC MAX is selected set the temp to 0
         } else {
+            //else - reset the progress to 1 and send a temp up status
             setTempProgressBar(1);
+            //TODO: FIX THIS -> SEND UP STATUS
             sendTempUp_status();
         }
     }
 
+    /**
+     * Method to set the AC MAX button status
+     *
+     * @param select - state of the button
+     */
     private void setAcMaxButton(boolean select) {
+        //set button colours and state
         if (select) {
             button_acMax.setBackgroundColor(getResources().getColor(R.color.design_default_color_primary));
-            setAC(true);
             setButton_acMax_isSelected(true);
         } else {
             button_acMax.setBackgroundColor(getResources().getColor(R.color.black));
