@@ -226,12 +226,15 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     /**
      * Method to set the AC status
-     * @param select
+     * @param select - True or False
      */
     private void setAC(boolean select) {
-        setACButton(select);
+        setACButton(select);    //set the button status
         if (!select) {
-            tempProgressBarAC();
+            if(getTempProgressBarProgress() <= 0){
+                //if status is false and the current progress is 0 (ac max)
+                temp1ProgressBarAC();    //set the progress bar temp to 1
+            }
         }
         sendAC_status();
     }
@@ -251,8 +254,8 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         }
     }
 
-    private void tempProgressBarAC() {
-        if (tempProgressBar.getProgress() <= 0) {
+    private void temp1ProgressBarAC() {
+        if (getTempProgressBarProgress() <= 0) {
             setTempProgressBar(1);
         }
     }
@@ -482,7 +485,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     }
 
     private void setProgressColours() {
-        if (this.tempProgressBar.getProgress() > (this.tempProgressBar.getMax() / 2)) {
+        if (getTempProgressBarProgress() > (getTempProgressBarMaxProgress() / 2)) {
             this.tempProgressBar.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
         } else {
             this.tempProgressBar.getProgressDrawable().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);
@@ -490,7 +493,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     }
 
     private void acMaxCheck() {
-        setAcMaxButton(this.tempProgressBar.getProgress() <= 0);
+        setAcMaxButton(getTempProgressBarProgress() <= 0);
     }
 
     public void setTempProgressBar(int amount) {
@@ -687,5 +690,13 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         } else {
             getData();
         }
+    }
+
+    public int getTempProgressBarProgress() {
+        return tempProgressBar.getProgress();
+    }
+
+    public int getTempProgressBarMaxProgress() {
+        return tempProgressBar.getMax();
     }
 }
