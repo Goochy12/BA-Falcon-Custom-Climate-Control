@@ -111,7 +111,7 @@ void sendCANMessage(int id, unsigned char msg[8])
   CAN.sendMsgBuf(id, 0, 8, msg);
   if (chg == true)
   {
-    Serial.println(String(id,HEX) + ": " + String(msg[0],HEX) + ", " + String(msg[3],HEX));
+    Serial.println(String(id, HEX) + ": " + String(msg[0], HEX) + ", " + String(msg[3], HEX));
     chg = false;
   }
   //Serial.println(msg[3]);
@@ -189,6 +189,10 @@ void actionSerialIn(char sIn[32])
   else if (strcmp(sIn, "face") == 0)
   {
     face();
+  }
+  else if (strcmp(sIn, "feet") == 0)
+  {
+    feet();
   }
   else if (strcmp(sIn, "face_feet") == 0)
   {
@@ -337,6 +341,11 @@ void face()
 void faceFeet()
 {
   setICCButton(0, 0x4);
+}
+
+void feet()
+{
+  setICCButton(0, 0x8);
 }
 
 void ac()
