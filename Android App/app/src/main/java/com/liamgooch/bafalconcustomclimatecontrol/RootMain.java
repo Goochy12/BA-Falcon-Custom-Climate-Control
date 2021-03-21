@@ -200,7 +200,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     private void setStartState() {
 //        TODO: Reset ALL
         //initialise variables
-        setTempProgressBar(1);
+        setTemp(1);
         incrementFanProgressBar(0);
         setEnabledState(true);
 
@@ -276,7 +276,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
             temp0();    //if AC MAX is selected set the temp to 0
         } else {
             //else - reset the progress to 1 and send a temp up status
-            setTempProgressBar(1);
+            setTemp(1);
             //TODO: FIX THIS -> SEND UP STATUS
             sendTempUp_status();
         }
@@ -369,7 +369,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
      */
     private void setCabinCycle(Decoder.Mappings select) {
         setCabinCycleButton(select);    //set button state
-        sendCabinCycle_status();    //send status
+        sendCabinCycle_status();    //send status to USB Serial
     }
 
     /**
@@ -400,7 +400,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
      */
     private void setFace(boolean select) {
         setFaceButton(select);  //set button status
-        sendFace_status();  //send status
+        sendFace_status();  //send status to USB Serial
     }
 
     /**
@@ -431,7 +431,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
      */
     private void setFeet(boolean select) {
         setFeetButton(select);  //set button status
-        sendFeet_status();  //send status
+        sendFeet_status();  //send status to USB Serial
     }
 
     /**
@@ -462,7 +462,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
      */
     private void setFaceFeet(boolean select) {
         setFaceFeetButton(select);  //set button status
-        sendFaceFeet_status();  //send status
+        sendFaceFeet_status();  //send status to USB Serial
     }
 
     /**
@@ -493,7 +493,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
      */
     private void setFeetFrontDemist(boolean select) {
         setFeetFrontDemistButton(select);   //set button status
-        sendFeetFrontDemist_status();   //send status
+        sendFeetFrontDemist_status();   //send status to USB Serial
     }
 
     /**
@@ -581,6 +581,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     /**
      * Method to send temp status of x amount
+     * @param amount - the temp amount to send to USB Serial
      */
     private void sendTemp_status(int amount) {
         sendData(temp_set_string, amount);  //send data to USB Serial
@@ -649,11 +650,15 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         setAcMaxButton(getTempProgressBarProgress() <= 0);  //set ac max if temp is 0
     }
 
-    public void setTempProgressBar(int amount) {
-        this.tempProgressBar.setProgress(amount);
-        sendTemp_status(amount);
-        setTempProgressColours();
-        acMaxCheck();
+    /**
+     * Method to set temp by x amount
+     * @param amount - the amount to set the temprature to
+     */
+    public void setTemp(int amount) {
+        this.tempProgressBar.setProgress(amount);   //set the temp by x amount
+        sendTemp_status(amount);    //send the temp status to USB Serial
+        setTempProgressColours();   //set temp progress bar colours
+        acMaxCheck();   //check if AC MAX needs to be enabled
     }
 
 
@@ -832,23 +837,34 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         Log.i(TAG, "sendData: " + d);
     }
 
+    /**
+     * Method to start the serial connection
+     */
     @Override
     public void startSerialConnection() {
-        this.usbSerial.startUSBConnection();
-        this.startedSuccessfully = this.usbSerial.startUSBConnection();
+        this.startedSuccessfully = this.usbSerial.startUSBConnection(); //call the start method
         if (!startedSuccessfully) {
+            //if unsuccessful create a toast
             Toast.makeText(this.thisActivity, "USB SERIAL FAILED TO START", Toast.LENGTH_LONG).show();
 //            TODO: UNCOMMENT FOR TESTING
-            setEnabledState(false);
+            setEnabledState(false); //set the button states to disabled
         } else {
-            getData();
+            getData();  //if successful get HIM and BEM data from USB Serial
         }
     }
 
+    /**
+     * Method to get the current progress bar temperature
+     * @return - the current temperature in the progress bar
+     */
     public int getTempProgressBarProgress() {
         return tempProgressBar.getProgress();
     }
 
+    /**
+     * Method to get the max temperature progress
+     * @return - the max temperature progress
+     */
     public int getTempProgressBarMaxProgress() {
         return tempProgressBar.getMax();
     }
