@@ -818,31 +818,31 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     private void makeChanges(Decoder.Mappings mappedValue) {
         switch (mappedValue) {
             case AC:
-                setAC(true);
+                setACButton(true);
                 return;
             case FACE:
-                setFace(true);
+                setFaceButton(true);
                 return;
             case FEET:
-                setFeet(true);
+                setFeetButton(true);
                 return;
             case FACE_FEET:
-                setFaceFeet(true);
+                setFaceFeetButton(true);
                 return;
             case FEET_FRONT_DEMIST:
-                setFeetFrontDemist(true);
+                setFeetFrontDemistButton(true);
                 return;
             case FRONT_DEMIST:
-                setFrontDemist(true);
+                setFrontDemistButton(true);
                 return;
             case OPEN_CABIN:
-                setCabinCycle(Decoder.Mappings.OPEN_CABIN);
+                setCabinCycleButton(Decoder.Mappings.OPEN_CABIN);
                 return;
             case CLOSED_CABIN:
-                setCabinCycle(Decoder.Mappings.CLOSED_CABIN);
+                setCabinCycleButton(Decoder.Mappings.CLOSED_CABIN);
                 return;
             case REAR_DEMIST:
-                setRearDemist(true);
+                setRearDemistButton(true);
                 return;
             default:
         }
