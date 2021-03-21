@@ -22,34 +22,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.liamgooch.bafalconcustomclimatecontrol.Strings.*;
+
 public class RootMain extends Fragment implements USBSerialCallbacks {
 
 //    TODO: Create a log to show in settings fragment
-
-    private static final String TAG = "BAFalcon-Test";
-    private static final String ac_string = "ac";
-    private static final String fan_up_string = "fan_up";
-    private static final String fan_down_string = "fan_down";
-    private static final String temp_up_string = "temp_up";
-    private static final String temp_down_string = "temp_down";
-    private static final String temp_set_string = "temp_set";
-    private static final String temp0_string = "temp0";
-    private static final String face_string = "face";
-    private static final String feet_string = "feet";
-    private static final String face_feet_string = "face_feet";
-    private static final String feet_front_demist_string = "feet_front_demist";
-    private static final String front_demist_string = "front_demist";
-    private static final String rear_demist_string = "rear_demist";
-    private static final String closed_cabin_string = "closed_cabin";
-    private static final String open_cabin_string = "open_cabin";
-    private static final String cabin_cycle_string = "cabin_cycle";
-    private static final String dome_light_string = "dome_light";
-    private static final String door_lock_string = "door_lock";
-    private static final String getData_string = "get_data";
-    private static final String startChar = "<";
-    private static final String endChar = ">";
-    private static final String splitChar = " ";
-    private static final String canMsg_string = "CAN_MSG:";
 
     private UsbSerial usbSerial;
     private Decoder decoder;
