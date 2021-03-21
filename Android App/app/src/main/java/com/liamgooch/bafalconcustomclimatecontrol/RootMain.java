@@ -350,6 +350,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     /**
      * Method to set rear demist button status
+     *
      * @param select - state of rear demist button
      */
     private void setRearDemistButton(boolean select) {
@@ -365,6 +366,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     /**
      * Method to set cabin cycle status
+     *
      * @param select - state of the cabin cycle
      */
     private void setCabinCycle(Decoder.Mappings select) {
@@ -381,6 +383,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     /**
      * Method to set cabin cycle button state
+     *
      * @param cycleString - state of the cabin cycle
      */
     private void setCabinCycleButton(Decoder.Mappings cycleString) {
@@ -396,6 +399,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     /**
      * Method to set face status
+     *
      * @param select - status of face
      */
     private void setFace(boolean select) {
@@ -412,6 +416,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     /**
      * Method to set face button status
+     *
      * @param select - status of the button
      */
     private void setFaceButton(boolean select) {
@@ -427,6 +432,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     /**
      * Method to set feet status
+     *
      * @param select - status of feet
      */
     private void setFeet(boolean select) {
@@ -443,6 +449,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     /**
      * Method to set button status
+     *
      * @param select - status of the button
      */
     private void setFeetButton(boolean select) {
@@ -458,6 +465,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     /**
      * Method to set face feet status
+     *
      * @param select - status of face feet
      */
     private void setFaceFeet(boolean select) {
@@ -474,6 +482,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     /**
      * Method to set the face feet button status
+     *
      * @param select - state of the button
      */
     private void setFaceFeetButton(boolean select) {
@@ -489,6 +498,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     /**
      * Method to set feet front demist
+     *
      * @param select - status of the feet front demist
      */
     private void setFeetFrontDemist(boolean select) {
@@ -505,6 +515,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     /**
      * Method to set feet front demist button status
+     *
      * @param select - status of the button
      */
     private void setFeetFrontDemistButton(boolean select) {
@@ -581,6 +592,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     /**
      * Method to send temp status of x amount
+     *
      * @param amount - the temp amount to send to USB Serial
      */
     private void sendTemp_status(int amount) {
@@ -652,6 +664,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     /**
      * Method to set temp by x amount
+     *
      * @param amount - the amount to set the temprature to
      */
     public void setTemp(int amount) {
@@ -736,48 +749,72 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         this.button_acMax_isSelected = button_acMax_isSelected;
     }
 
+    /**
+     * Method to process the received Serial string
+     *
+     * @param sIn - the serial received
+     */
     private void process(String sIn) {
+        //try to process and decode Serial messages
         try {
-            HashMap<Integer, Integer> messages = new HashMap<>();
-            String[] raw = sIn.split(endChar);
+            HashMap<Integer, Integer> messages = new HashMap<>();   //create a new hash map for messages - ID as key
+            String[] raw = sIn.split(endChar);  //split each string by the end character
 
+            //for each split string
             for (String r : raw) {
-                r = r.replace(startChar, "");
-                String[] m = r.split(splitChar);
+                //TODO: try catch for each split string
+                r = r.replace(startChar, "");   //replace the starting char with nothing
+                String[] m = r.split(splitChar);    //split the string by the split character
                 if (m[0].equals(canMsg_string)) {
+                    //if the first part of the message is equal to the can message string - process the ID and value
                     messages.put(Integer.parseInt(m[1], 16), Integer.parseInt(m[2], 16));
                 }
             }
 
+            //for each Message in the hash map -> process
             for (Map.Entry<Integer, Integer> set : messages.entrySet()) {
-                Integer codeHex = set.getKey();
-                Integer msgHex = set.getValue();
+                Integer codeHex = set.getKey(); //ID
+                Integer msgHex = set.getValue();    //message
 
                 if (codeHex == decoder.getHimID()) {
-                    Log.i(TAG, "process: Decoding HIM");
-                    setStartState();
-                    decode(decoder.getHimDecodedList(msgHex));
+                    Log.i(TAG, "process: Decoding HIM - ID: " + codeHex + ", MSG: " + msgHex);    //log
+                    setStartState();    //set the start state - before the buttons are updated
+                    decode(decoder.getHimDecodedList(msgHex));  //decode and make changes
                 } else if (codeHex == decoder.getBemID()) {
-                    Log.i(TAG, "process: Decoding BEM");
-                    setBemState();
-                    decode(decoder.getBemDecodedList(msgHex));
+                    Log.i(TAG, "process: Decoding BEM - ID: " + codeHex + ", MSG: " + msgHex);  //log
+                    setBemState();  //set the BEM state to default before buttons are changed
+                    decode(decoder.getBemDecodedList(msgHex));  //decode and make changes
                 } else {
-                    Log.i(TAG, "process: NOT A VALID ID - " + sIn);
+                    Log.i(TAG, "process: NOT A VALID ID - " + sIn); //log
                 }
             }
         } catch (Exception e) {
+            //catch exceptions and show a toast
             Log.i(TAG, "process: " + e);
             Toast.makeText(thisContext, "ERROR PROCESSING SERIAL IN", Toast.LENGTH_LONG).show();
         }
 
     }
 
+    /**
+     * Method to decode the inputted mappings
+     *
+     * @param mappings - list of enum values to update the UI with appropriate values - [FACE, OPEN_CABIN, etc.]
+     */
     private void decode(ArrayList<Decoder.Mappings> mappings) {
         for (Decoder.Mappings mapping : mappings) {
+            //for each value in the list - make a change on the UI
             makeChanges(mapping);
         }
     }
 
+    //TODO: serial sent - should buttons just be updated instead?
+
+    /**
+     * Method to make changes to the UI
+     *
+     * @param mappedValue - the enum value which will dictate the changes - (FACE, OPEN_CABIN etc.)
+     */
     private void makeChanges(Decoder.Mappings mappedValue) {
         switch (mappedValue) {
             case AC:
@@ -811,30 +848,54 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         }
     }
 
+    /**
+     * Callback method for when USB Serial is received
+     *
+     * @param serial - the serial string
+     */
     @Override
     public void serialInCallback(String serial) {
-        //decode
+        //decode and process the string - on the UI thread as changes to the UI are eventually made
         this.thisActivity.runOnUiThread(() -> process(serial));
     }
 
+    /**
+     * Method to construct a string to be sent over serial
+     *
+     * @param inputData - the input data
+     * @return - properly formatted data to be sent
+     */
     private String constructSerialData(String inputData) {
-        return startChar + inputData + endChar;
+        return startChar + inputData + endChar; //append start and end chars for USB Serial
     }
 
+    /**
+     * Method to send data to USB serial
+     *
+     * @param d - the data string to send
+     */
     private void sendData(String d) {
         if (startedSuccessfully) {
-            this.usbSerial.sendData(constructSerialData(d));
+            //if USB Serial is connected
+            this.usbSerial.sendData(constructSerialData(d));    //send the data
         }
-        Log.i(TAG, "sendData: " + d);
+        Log.i(TAG, "sendData: " + d);   //log the message
     }
 
+    /**
+     * Method to send data to USB Serial with an interger amount
+     *
+     * @param d      - the data string to send
+     * @param amount - the amount to append to the string
+     */
     private void sendData(String d, int amount) {
-        String data = "";
+        String data = "";   //initialise the string
         if (startedSuccessfully) {
-            data = d + ":" + amount;
-            this.usbSerial.sendData(constructSerialData(data));
+            //if USB Serial is connected
+            data = d + ":" + amount;    //append the amount to the data
+            this.usbSerial.sendData(constructSerialData(data)); //send the appended data
         }
-        Log.i(TAG, "sendData: " + d);
+        Log.i(TAG, "sendData: " + d);   //log the message sent
     }
 
     /**
@@ -855,6 +916,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     /**
      * Method to get the current progress bar temperature
+     *
      * @return - the current temperature in the progress bar
      */
     public int getTempProgressBarProgress() {
@@ -863,6 +925,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     /**
      * Method to get the max temperature progress
+     *
      * @return - the max temperature progress
      */
     public int getTempProgressBarMaxProgress() {
