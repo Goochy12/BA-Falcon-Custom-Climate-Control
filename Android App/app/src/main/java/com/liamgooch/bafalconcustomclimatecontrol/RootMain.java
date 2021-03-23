@@ -21,6 +21,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.liamgooch.bafalconcustomclimatecontrol.Strings.*;
 
@@ -674,81 +676,6 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         acMaxCheck();   //check if AC MAX needs to be enabled
     }
 
-
-    //boolean getters and setters
-
-    public Boolean getButton_frontDemist_isSelected() {
-        return button_frontDemist_isSelected;
-    }
-
-    public void setButton_frontDemist_isSelected(Boolean button_frontDemist_isSelected) {
-        this.button_frontDemist_isSelected = button_frontDemist_isSelected;
-    }
-
-    public Boolean getButton_rearDemist_isSelected() {
-        return button_rearDemist_isSelected;
-    }
-
-    public void setButton_rearDemist_isSelected(Boolean button_rearDemist_isSelected) {
-        this.button_rearDemist_isSelected = button_rearDemist_isSelected;
-    }
-
-    public String getButton_cabin_cycle_isSelected() {
-        return button_cabin_cycle_isSelected;
-    }
-
-    public void setButton_cabin_cycle_isSelected(String button_cabin_cycle_isSelected) {
-        this.button_cabin_cycle_isSelected = button_cabin_cycle_isSelected;
-    }
-
-    public Boolean getButton_ac_isSelected() {
-        return button_ac_isSelected;
-    }
-
-    public void setButton_ac_isSelected(Boolean button_ac_isSelected) {
-        this.button_ac_isSelected = button_ac_isSelected;
-    }
-
-    public Boolean getButton_face_isSelected() {
-        return button_face_isSelected;
-    }
-
-    public void setButton_face_isSelected(Boolean button_face_isSelected) {
-        this.button_face_isSelected = button_face_isSelected;
-    }
-
-    public Boolean getButton_feet_isSelected() {
-        return button_feet_isSelected;
-    }
-
-    public void setButton_feet_isSelected(Boolean button_feet_isSelected) {
-        this.button_feet_isSelected = button_feet_isSelected;
-    }
-
-    public Boolean getButton_face_feet_isSelected() {
-        return button_face_feet_isSelected;
-    }
-
-    public void setButton_face_feet_isSelected(Boolean button_face_feet_isSelected) {
-        this.button_face_feet_isSelected = button_face_feet_isSelected;
-    }
-
-    public Boolean getButton_feet_front_demist_isSelected() {
-        return button_feet_front_demist_isSelected;
-    }
-
-    public void setButton_feet_front_demist_isSelected(Boolean button_feet_front_demist_isSelected) {
-        this.button_feet_front_demist_isSelected = button_feet_front_demist_isSelected;
-    }
-
-    public Boolean getButton_acMax_isSelected() {
-        return button_acMax_isSelected;
-    }
-
-    public void setButton_acMax_isSelected(Boolean button_acMax_isSelected) {
-        this.button_acMax_isSelected = button_acMax_isSelected;
-    }
-
     /**
      * Method to process the received Serial string
      *
@@ -756,18 +683,31 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
      */
     private void process(String sIn) {
         //try to process and decode Serial messages
+        Log.i(TAG, "process: " + sIn);
         try {
             HashMap<Integer, Integer> messages = new HashMap<>();   //create a new hash map for messages - CODE as key
-            String[] raw = sIn.split(endChar);  //split each string by the end character
+
+            Pattern pattern = Pattern.compile(regexPattern);    //compile a pattern with a pre defined regular expression for processing serial received
+            Matcher matcher = pattern.matcher(sIn); //match the pattern to the serial received
+
+            ArrayList<String> raw = new ArrayList<>();  //create a new array list
+
+            while (matcher.find()) {
+                //add all split strings to the list
+                String token = matcher.group(0); //group 0 is always the entire match
+                raw.add(token);
+            }
 
             //for each split string
             for (String r : raw) {
-                //TODO: try catch for each split string
-                r = r.replace(startChar, "");   //replace the starting char with nothing
-                String[] m = r.split(splitChar);    //split the string by the split character
-                if (m[0].equals(canMsg_string)) {
-                    //if the first part of the message is equal to the can message string - process the CODE and value
-                    messages.put(Integer.parseInt(m[1], 16), Integer.parseInt(m[2], 16));
+                try {
+                    String[] m = r.split(splitChar);    //split the string by the split character
+                    if (m[0].equals(canMsg_string)) {
+                        //if the first part of the message is equal to the can message string - process the CODE and value
+                        messages.put(Integer.parseInt(m[1], 16), Integer.parseInt(m[2], 16));
+                    }
+                } catch (Exception e) {
+                    Log.i(TAG, "EXCEPTION SPLITTING SERIAL IN: " + e);
                 }
             }
 
@@ -788,6 +728,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
                     Log.i(TAG, "process: NOT A VALID ID - " + sIn); //log
                 }
             }
+
         } catch (Exception e) {
             //catch exceptions and show a toast
             Log.i(TAG, "process: " + e);
@@ -930,5 +871,79 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
      */
     public int getTempProgressBarMaxProgress() {
         return tempProgressBar.getMax();
+    }
+
+    //boolean getters and setters
+
+    public Boolean getButton_frontDemist_isSelected() {
+        return button_frontDemist_isSelected;
+    }
+
+    public void setButton_frontDemist_isSelected(Boolean button_frontDemist_isSelected) {
+        this.button_frontDemist_isSelected = button_frontDemist_isSelected;
+    }
+
+    public Boolean getButton_rearDemist_isSelected() {
+        return button_rearDemist_isSelected;
+    }
+
+    public void setButton_rearDemist_isSelected(Boolean button_rearDemist_isSelected) {
+        this.button_rearDemist_isSelected = button_rearDemist_isSelected;
+    }
+
+    public String getButton_cabin_cycle_isSelected() {
+        return button_cabin_cycle_isSelected;
+    }
+
+    public void setButton_cabin_cycle_isSelected(String button_cabin_cycle_isSelected) {
+        this.button_cabin_cycle_isSelected = button_cabin_cycle_isSelected;
+    }
+
+    public Boolean getButton_ac_isSelected() {
+        return button_ac_isSelected;
+    }
+
+    public void setButton_ac_isSelected(Boolean button_ac_isSelected) {
+        this.button_ac_isSelected = button_ac_isSelected;
+    }
+
+    public Boolean getButton_face_isSelected() {
+        return button_face_isSelected;
+    }
+
+    public void setButton_face_isSelected(Boolean button_face_isSelected) {
+        this.button_face_isSelected = button_face_isSelected;
+    }
+
+    public Boolean getButton_feet_isSelected() {
+        return button_feet_isSelected;
+    }
+
+    public void setButton_feet_isSelected(Boolean button_feet_isSelected) {
+        this.button_feet_isSelected = button_feet_isSelected;
+    }
+
+    public Boolean getButton_face_feet_isSelected() {
+        return button_face_feet_isSelected;
+    }
+
+    public void setButton_face_feet_isSelected(Boolean button_face_feet_isSelected) {
+        this.button_face_feet_isSelected = button_face_feet_isSelected;
+    }
+
+    public Boolean getButton_feet_front_demist_isSelected() {
+        return button_feet_front_demist_isSelected;
+    }
+
+    public void setButton_feet_front_demist_isSelected(Boolean button_feet_front_demist_isSelected) {
+        this.button_feet_front_demist_isSelected = button_feet_front_demist_isSelected;
+    }
+
+    public Boolean getButton_acMax_isSelected() {
+        return button_acMax_isSelected;
+    }
+
+    public void setButton_acMax_isSelected(Boolean button_acMax_isSelected) {
+        this.button_acMax_isSelected = button_acMax_isSelected;
     }
 }

@@ -25,4 +25,5 @@ public class Strings {
     public static final String endChar = ">";
     public static final String splitChar = " ";
     public static final String canMsg_string = "CAN_MSG:";
+    public static final String regexPattern = "<(?:.*?)>";
 }
