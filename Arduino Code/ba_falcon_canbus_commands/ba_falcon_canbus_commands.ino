@@ -37,7 +37,6 @@ char incomingSerial[32];
 int incomingCount = 0;
 bool reading = false;
 int sendButton = 0;
-bool chg = false;
 
 const String errorString = "error";
 
@@ -54,6 +53,7 @@ void setup()
 
 void loop()
 {
+  timer100ms.run();
   //get serial in and process
   if (Serial.available())
   {
@@ -109,12 +109,6 @@ void sendCANMessage(int id, unsigned char msg[8])
 {
   //sendMsgBuf(id (hex), 0, 8, data buf)
   CAN.sendMsgBuf(id, 0, 8, msg);
-  if (chg == true)
-  {
-    Serial.println(String(id, HEX) + ": " + String(msg[0], HEX) + ", " + String(msg[3], HEX));
-    chg = false;
-  }
-  //Serial.println(msg[3]);
 }
 
 /*Function to send a serial message*/
@@ -160,11 +154,9 @@ Method to process use an ICC function
 */
 void actionSerialIn(char sIn[32])
 {
-  Serial.println(sIn);
   if (strcmp(sIn, "door_lock") == 0)
   {
     doorLock();
-    chg = true;
   }
   else if (strcmp(sIn, "dome_light") == 0)
   {
@@ -197,7 +189,6 @@ void actionSerialIn(char sIn[32])
   else if (strcmp(sIn, "face_feet") == 0)
   {
     faceFeet();
-    chg = true;
   }
   else if (strcmp(sIn, "ac") == 0)
   {
