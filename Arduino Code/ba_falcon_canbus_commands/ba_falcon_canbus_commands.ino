@@ -3,42 +3,43 @@
 #include "mcp2515_can.h"
 #include <SimpleTimer.h>
 
-const int SPI_CS_PIN = 10;
-const int CAN_INT_PIN = 2;
+const int SPI_CS_PIN = 10; //pin 10 on arduino
+const int CAN_INT_PIN = 2; //interrupt pin on arduino
 
-const int buttonID = 0x307;
-const int himID = 0x353;
-const int bemID = 0x403;
+const int buttonID = 0x307; //button press ID
+const int himID = 0x353;    //HIM ID
+const int bemID = 0x403;    //BEM ID
 
-const unsigned char keepAliveID = 0x80;
-const unsigned char KeepAlive[8] = {0, 0, 0, 0x80, 0, 1, 0, 0xA};
-unsigned char BEM[8] = {0, 0, 0, 0, 0, 1, 0, 0};
-unsigned char HIM[8] = {0, 0, 0, 0, 0, 1, 0, 0};
+const unsigned char keepAliveID = 0x80;                           //keep alive ID byte 3
+const unsigned char KeepAlive[8] = {0, 0, 0, 0x80, 0, 1, 0, 0xA}; //standard keep alive array
+unsigned char BEM[8] = {0, 0, 0, 0, 0, 0, 0, 0};                  //standard BEM CAN array
+unsigned char HIM[8] = {0, 0, 0, 0, 0, 0, 0, 0};                  //standard HIM CAN array
 
-mcp2515_can CAN(SPI_CS_PIN);
+mcp2515_can CAN(SPI_CS_PIN); //set the CAN CS pin
 
-unsigned char ICC_Buttons[8] = {0, 0, 0, 0x80, 0, 1, 0, 0xA};
-unsigned char ICC_Buttons_OFF[8] = {0, 0, 0, 0, 0, 0, 0, 0xA};
+unsigned char ICC_Buttons[8] = {0, 0, 0, 0x80, 0, 1, 0, 0xA};  //mutable keep alive array
+unsigned char ICC_Buttons_OFF[8] = {0, 0, 0, 0, 0, 0, 0, 0xA}; //mutable keep alive array (car off)
 
 //fan and temp settings
-int fanValue = 0x0;
-int fanMax = 0xE;
-int fanMin = 0x0;
+int fanValue = 0x0; //current fan value
+int fanMax = 0xE;   //max fan value
+int fanMin = 0x0;   //min fan value
 
-int tempValue = 0x0;
-int tempMax = 0xE;
-int tempMin = 0x0;
+int tempValue = 0x0; //current temp value
+int tempMax = 0xE;   //max temp value
+int tempMin = 0x0;   //min temp value
 
-SimpleTimer timer100ms;
+SimpleTimer timer100ms; //sleep timer that runs every 100ms
 
-const char startChar = '<';
-const char endChar = '>';
-char incomingSerial[32];
-int incomingCount = 0;
-bool reading = false;
-int sendButton = 0;
+//Serial input parameters
+const char startChar = '<'; //start char for serial input
+const char endChar = '>';   //start char
+char incomingSerial[32];    //serial input buffer
+int incomingCount = 0;      //current char from serial input
+bool reading = false;       //currently reading serial input flag
+int sendButton = 0;         //send button press flag
 
-const String errorString = "error";
+const String errorString = "error"; //error string
 
 void setup()
 {
@@ -48,7 +49,7 @@ void setup()
   while (!start())
     ;
 
-  timer100ms.setInterval(100, incTimer);
+  timer100ms.setInterval(100, incTimer); //run the incTimer method every 100ms
 }
 
 void loop()
@@ -62,9 +63,9 @@ void loop()
 
   if (sendButton >= 5)
   {
-    sendButtonPressed();
-    resetICCButton();
-    sendButton = 0;
+    sendButtonPressed(); //send the ICC keep alive CAN message
+    resetICCButton();    //reset the ICC keep alive CAN array
+    sendButton = 0;      //reset the button press flag
   }
 
   //process CAN data (from car)
@@ -72,9 +73,9 @@ void loop()
   { //check data incoming
     unsigned char len = 0;
     unsigned char buf[8];
-    CAN.readMsgBuf(&len, buf); //read data: length and buffer (data)
-    int canNodeID = CAN.getCanId();
-    processCANDataIn(canNodeID, buf);
+    CAN.readMsgBuf(&len, buf);        //read data: length and buffer (data)
+    int canNodeID = CAN.getCanId();   //get the CAN ID
+    processCANDataIn(canNodeID, buf); //process the incoming CAN data
   }
 }
 
@@ -97,6 +98,9 @@ boolean start()
   }
 }
 
+/*
+Function to increment the sendButton flag
+*/
 void incTimer()
 {
   sendButton++;
@@ -114,9 +118,9 @@ void sendCANMessage(int id, unsigned char msg[8])
 /*Function to send a serial message*/
 void sendSerialData(unsigned long ID, unsigned char msg)
 {
-  String sM;
+  String sM; //construct a string
   sM = "<CAN_MSG: " + String(ID, HEX) + " " + String(msg, HEX) + ">";
-  Serial.println(sM);
+  Serial.println(sM); //print to serial
 }
 
 /*
@@ -124,18 +128,19 @@ Function to process the serial data received
 */
 void processSerialIn()
 {
-  char sIn = Serial.read();
+  char sIn = Serial.read(); //read the current character
+  //if the character is an end character and currently reading a string
   if (sIn == endChar && reading)
   {
-    actionSerialIn(incomingSerial);
+    actionSerialIn(incomingSerial); //send the serial input to be processed and actioned
 
     //reset incoming serial
     reading = false;
     for (int i; i < incomingCount; i++)
     {
-      incomingSerial[i] = (char)0;
+      incomingSerial[i] = (char)0; //reset incoming serial at i
     }
-    incomingCount = 0;
+    incomingCount = 0; //reset the count
   }
   else if (sIn == startChar)
   {
@@ -144,13 +149,15 @@ void processSerialIn()
   }
   else if (reading)
   {
-    incomingSerial[incomingCount] = sIn;
-    incomingCount++;
+    //if currently reading serial
+    incomingSerial[incomingCount] = sIn; //add the character to the char array
+    incomingCount++;                     //increment the counter
   }
 }
 
 /*
 Method to process use an ICC function
+TODO: use variables
 */
 void actionSerialIn(char sIn[32])
 {
