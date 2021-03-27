@@ -236,50 +236,58 @@ void processCANDataIn(unsigned long canNodeID, unsigned char buf[8])
   //TODO Update IF statements - code smells: add to array
   //read CAN ID
   // String code;
-  bool dataChanged = false;
+  bool dataChanged = false; //has the data changed flag
+  //if the CAN ID is equal to the HIM ID
   if (canNodeID == himID)
   {
+    //check whether the important data has changed
     if (HIM[0] != buf[0])
     {
       dataChanged = true;
     }
     for (int i = 0; i < 8; i++)
     {
-      HIM[i] = buf[i];
+      HIM[i] = buf[i]; //update the data
     }
-    // code = decodeHIM(buf[0]);
-    // sendSerialData(canNodeID, buf[0]);
   }
+  //if the CAN ID is equal to the BEM ID
   else if (canNodeID == bemID)
   {
+    //check whether the important data has changed
     if (BEM[0] != buf[0])
     {
       dataChanged = true;
     }
-    // sendSerialData(canNodeID, buf[0]);
     for (int i = 0; i < 8; i++)
     {
-      BEM[i] = buf[i];
+      BEM[i] = buf[i]; //update the data
     }
   }
 
   if (dataChanged)
   {
+    //if the data has changed, send it via serial
     sendData();
   }
-  dataChanged = false;
+  dataChanged = false; //reset the flag
 }
 
+/*
+Function to set the ICC button array to a certain value at a particular position
+*/
 void setICCButton(int position, int code)
 {
-  ICC_Buttons[position] = code;
+  ICC_Buttons[position] = code; //set the code at a position
 }
 
+/*
+Function to reset the keep alive array to default (with fan and temp)
+*/
 void resetICCButton()
 {
   for (int i = 0; i < sizeof(KeepAlive); i++)
   {
-    ICC_Buttons[i] = KeepAlive[i];
+    ICC_Buttons[i] = KeepAlive[i]; //reset to the static keep alive array
   }
   //temp and fan positions
   iccTemp();
@@ -420,22 +428,6 @@ void setFan(int fanV)
   fanValue = fanV;
 }
 
-// String decodeHIM(unsigned char value)
-// {
-//   switch (value)
-//   {
-//   case acOpenFace:
-//     break;
-
-//   default:
-//     return errorString;
-//   }
-// }
-
-// String decodeBEM(unsigned char value)
-// {
-// }
-
 //MAPPINGS
 // const unsigned char acOpenFace = 0xB2;
 // const unsigned char acOpenFeet = 0xAA;
@@ -456,23 +448,3 @@ void setFan(int fanV)
 // const unsigned char closedFeet = 0x4A;
 // const unsigned char closedFaceFeet = 0x5A;
 // const unsigned char closedFeetFrontDemist = 0x4E;
-
-// const String acOpenFaceString = "ac.open_cabin.face";
-// const String acOpenFeetString = "ac.open_cabin.feet";
-// const String acOpenFaceFeetString = "ac.open_cabin.face/feet";
-// const String acOpenFrontDemistString = "ac.open_cabin.front_demist";
-// const String acOpenFeetFrontDemistString = "ac.open_cabin.feet/front_demist";
-// const String acClosedFaceString = "ac.closed_cabin.face";
-// const String acClosedFeetString = "ac.closed_cabin.feet";
-// const String acClosedFaceFeetString = "ac.closed_cabin.face/feet";
-// const String acClosedFrontDemistString = "ac.closed_cabin.front_demist";
-// const String acClosedFeetFrontString = "ac.closed_cabin.feet/front_demist";
-// const String openFaceString = "open_cabin.face";
-// const String openFeetString = "open_cabin.feet";
-// const String openFaceFeetString = "open_cabin.face/feet";
-// const String openFrontDemistString = "open_cabin.front_demist";
-// const String openFeetFrontDemistString = "open_cabin.feet/front_demist";
-// const String closedFaceString = "closed_cabin.face";
-// const String closedFeetString = "closed_cabin.feet";
-// const String closedFaceFeetString = "closed_cabin.face/feet";
-// const String closedFeetFrontDemistString = "closed_cabin.feet/front_demist";
