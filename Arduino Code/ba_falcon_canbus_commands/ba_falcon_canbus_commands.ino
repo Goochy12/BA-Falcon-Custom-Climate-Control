@@ -43,7 +43,7 @@ const String errorString = "error"; //error string
 
 void setup()
 {
-  Serial.begin(115200);
+  Serial.begin(115200); //begin serial with 115200 baud rate
 
   //initialise CAN
   while (!start())
@@ -70,9 +70,9 @@ void loop()
 
   //process CAN data (from car)
   if (CAN_MSGAVAIL == CAN.checkReceive())
-  { //check data incoming
-    unsigned char len = 0;
-    unsigned char buf[8];
+  {                                   //check data incoming
+    unsigned char len = 0;            //length of the CAN message
+    unsigned char buf[8];             //CAN message
     CAN.readMsgBuf(&len, buf);        //read data: length and buffer (data)
     int canNodeID = CAN.getCanId();   //get the CAN ID
     processCANDataIn(canNodeID, buf); //process the incoming CAN data
@@ -243,7 +243,7 @@ void processCANDataIn(unsigned long canNodeID, unsigned char buf[8])
     //check whether the important data has changed
     if (HIM[0] != buf[0])
     {
-      dataChanged = true;
+      dataChanged = true; //set the data changed flag
     }
     for (int i = 0; i < 8; i++)
     {
@@ -256,7 +256,7 @@ void processCANDataIn(unsigned long canNodeID, unsigned char buf[8])
     //check whether the important data has changed
     if (BEM[0] != buf[0])
     {
-      dataChanged = true;
+      dataChanged = true; //set the data changed flag
     }
     for (int i = 0; i < 8; i++)
     {
@@ -294,6 +294,9 @@ void resetICCButton()
   iccFan();
 }
 
+/*
+Function to send a CAN message via button press
+*/
 void sendButtonPressed()
 {
   sendCANMessage(buttonID, ICC_Buttons);
@@ -363,8 +366,9 @@ void fanUp()
 {
   if (fanValue < fanMax)
   {
-    fanValue += 0x1;
-    iccFan();
+    //if the fan is less than the max fan value
+    fanValue += 0x1; //increment the fan value
+    iccFan();        //set the fan value in the array
   }
 }
 
@@ -372,8 +376,9 @@ void fanDown()
 {
   if (fanValue > fanMin)
   {
-    fanValue -= 0x1;
-    iccFan();
+    //if the fan is greater than the min fan value
+    fanValue -= 0x1; //decrement the fan value
+    iccFan();        //set the fan value in the array
   }
 }
 
@@ -381,8 +386,9 @@ void tempUp()
 {
   if (tempValue < tempMax)
   {
-    tempValue += 0x1;
-    iccTemp();
+    //if the temp is less than the max temp value
+    tempValue += 0x1; //increment the temp value
+    iccTemp();        //set the temp value in the array
   }
 }
 
@@ -390,17 +396,24 @@ void tempDown()
 {
   if (tempValue > tempMin)
   {
-    tempValue -= 0x1;
-    iccTemp();
+    //if the temp is greater than the min temp value
+    tempValue -= 0x1; //decrement the temp value
+    iccTemp();        //set the temp value in the array
   }
 }
 
+/*
+Function to set the temp to 0
+*/
 void temp0()
 {
   tempValue = 0x0;
   iccTemp();
 }
 
+/*
+Function to send the BEM and HIM data via serial
+*/
 void sendData()
 {
   sendSerialData(bemID, BEM[0]);
