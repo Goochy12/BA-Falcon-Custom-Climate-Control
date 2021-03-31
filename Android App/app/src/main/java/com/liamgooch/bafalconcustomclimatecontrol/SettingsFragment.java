@@ -16,10 +16,10 @@ import androidx.preference.SwitchPreferenceCompat;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
-    Preference retrySerialPreference;
-    SwitchPreferenceCompat headUnitControls;
-    Preference getDataPreference;
-    USBSerialCallbacks _serial;
+    Preference retrySerialPreference;   //preference for retrying the serial connection
+    SwitchPreferenceCompat headUnitControls;    //switch preference for whether the head unit controls the climate or the android app
+    Preference getDataPreference;   //preference to get data from serial
+    USBSerialCallbacks _serial; //serial callback instance
 
     public SettingsFragment(USBSerialCallbacks _serial) {
         this._serial = _serial;
@@ -27,7 +27,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view =  super.onCreateView(inflater, container, savedInstanceState);
+        View view = super.onCreateView(inflater, container, savedInstanceState);
         view.setBackgroundColor(getResources().getColor(R.color.black));
         return view;
     }
@@ -36,23 +36,29 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
 
+        //find all preferences
         retrySerialPreference = findPreference("retry_arduino");
         headUnitControls = findPreference("hu_buttons_switch");
         getDataPreference = findPreference("get_data");
 
-        setPreferenceDefaults();
+        setPreferenceDefaults();    //set the default preferences
 
+        //on retry serial connection press
         retrySerialPreference.setOnPreferenceClickListener(preference -> {
             this._serial.startSerialConnection();
             return true;
         });
 
+        //in get preference from serial press
         getDataPreference.setOnPreferenceClickListener(preference -> {
             this._serial.getData();
             return true;
         });
     }
 
+    /**
+     * Method to set the default preferences
+     */
     private void setPreferenceDefaults() {
         headUnitControls.setChecked(true);
     }
