@@ -21,6 +21,7 @@ public class Strings {
     public static final String dome_light_string = "dome_light";
     public static final String door_lock_string = "door_lock";
     public static final String getData_string = "get_data";
+    public static final String reset_string = "reset";
     public static final String startChar = "<";
     public static final String endChar = ">";
     public static final String splitChar = " ";
