@@ -81,7 +81,7 @@ public class UsbSerial {
                             usbSerialDevice.read(mCallback);
                             buffer.setDelimiter("\r\n");
                             Log.i(TAG, "onReceive: connection opened");
-//                            tvAppend(textView_output,"\n Connection established \n");
+                            _serialCalls.getData();
                         } else {
                             Log.i(TAG, "onReceive: port not open");
 
