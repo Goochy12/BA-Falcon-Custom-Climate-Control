@@ -9,6 +9,8 @@ const int CAN_INT_PIN = 2; //interrupt pin on arduino
 const int buttonID = 0x307; //button press ID
 const int himID = 0x353;    //HIM ID
 const int bemID = 0x403;    //BEM ID
+const int tempID = 0x001;   //temp ID
+const int fanID = 0x002;    //fan ID
 
 const unsigned char keepAliveID = 0x80;                           //keep alive ID byte 3
 const unsigned char KeepAlive[8] = {0, 0, 0, 0x80, 0, 1, 0, 0xA}; //standard keep alive array
@@ -416,8 +418,10 @@ Function to send the BEM and HIM data via serial
 */
 void sendData()
 {
-  sendSerialData(bemID, BEM[0]);
-  sendSerialData(himID, HIM[0]);
+  sendSerialData(bemID, BEM[0]);          //send BEM data
+  sendSerialData(himID, HIM[0]);          //send HIM data
+  sendSerialData(tempID, ICC_Buttons[5]); //send temp data
+  sendSerialData(fanID, ICC_Buttons[6]);  //send fan data
 }
 
 //TODO: UPDATE METHODS WITH INPUT FROM KNOBS
