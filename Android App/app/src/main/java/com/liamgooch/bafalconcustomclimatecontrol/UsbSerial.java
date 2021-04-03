@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.felhr.usbserial.UsbSerialDevice;
 import com.felhr.usbserial.UsbSerialInterface;
+import com.felhr.utils.ProtocolBuffer;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -41,6 +42,8 @@ public class UsbSerial {
     UsbSerialDevice usbSerialDevice;
 
     UsbManager usbManager;
+
+    ProtocolBuffer buffer = new ProtocolBuffer(ProtocolBuffer.TEXT); //Also Binary
 
     public UsbSerial(Context context, USBSerialCallbacks _serialCalls) {
 
@@ -76,6 +79,7 @@ public class UsbSerial {
                             usbSerialDevice.setParity(UsbSerialInterface.PARITY_NONE);
                             usbSerialDevice.setFlowControl(UsbSerialInterface.FLOW_CONTROL_OFF);
                             usbSerialDevice.read(mCallback);
+                            buffer.setDelimiter("\r\n");
                             Log.i(TAG, "onReceive: connection opened");
 //                            tvAppend(textView_output,"\n Connection established \n");
                         } else {
@@ -101,15 +105,14 @@ public class UsbSerial {
     UsbSerialInterface.UsbReadCallback mCallback = new UsbSerialInterface.UsbReadCallback() {
         @Override
         public void onReceivedData(byte[] arg0) {
-            String recData = null;
-            try {
-                recData = new String(arg0, "UTF-8");
-//                recData.concat("/n");
-//                tvAppend(textView_output, recData);
-                _serialCalls.serialInCallback(recData);
-
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+            try{
+                buffer.appendData(arg0);
+                while (buffer.hasMoreCommands()){
+                    String data = buffer.nextTextCommand();
+                    _serialCalls.serialInCallback(data);
+                }
+            }catch (Exception e){
+                Log.i(TAG, "onReceivedData EXCEPTION: " + e);
             }
         }
     };
