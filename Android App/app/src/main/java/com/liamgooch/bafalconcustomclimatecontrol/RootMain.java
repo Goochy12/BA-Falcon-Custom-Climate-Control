@@ -684,6 +684,15 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     }
 
     /**
+     * Method to set fan by x amount
+     *
+     * @param amount - the amount to set the fan to
+     */
+    public void setFan(int amount) {
+        fanProgressBar.setProgress(amount);
+    }
+
+    /**
      * Method to process the received Serial string
      *
      * @param sIn - the serial received
@@ -734,12 +743,11 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
                 } else if (codeHex == decoder.getBemID()) {
                     setBemState();  //set the BEM state to default before buttons are changed
                     decodedValue = decoder.getBemDecodedList(msgHex);
-                } else if(codeHex == decoder.getTempID()){
-                    setTemp(msgHex);
-                }else if(codeHex == decoder.getFanID()){
-                    fanProgressBar.setProgress(msgHex);
-                }
-                else {
+                } else if (codeHex == decoder.getTempID()) {
+                    setTemp(msgHex);    //set the temp progress bar
+                } else if (codeHex == decoder.getFanID()) {
+                    setFan(msgHex); //set the fan progress bar
+                } else {
                     Log.i(TAG, "process: NOT A VALID ID - " + sIn); //log
                 }
 
