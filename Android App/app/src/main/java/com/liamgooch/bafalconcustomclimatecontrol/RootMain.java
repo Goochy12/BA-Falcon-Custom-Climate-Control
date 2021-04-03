@@ -215,7 +215,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
         //set button states
         setFrontDemistButton(false);
-        setRearDemistButton(false);
+//        setRearDemistButton(false);
         setCabinCycleButton(Decoder.Mappings.CLOSED_CABIN);
         setACButton(false);
         setAcMaxButton(false);
@@ -815,6 +815,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
                 setRearDemistButton(true);
                 return;
             default:
+                return;
         }
     }
 
@@ -975,5 +976,11 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
     public void setButton_acMax_isSelected(Boolean button_acMax_isSelected) {
         this.button_acMax_isSelected = button_acMax_isSelected;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getData();
     }
 }
