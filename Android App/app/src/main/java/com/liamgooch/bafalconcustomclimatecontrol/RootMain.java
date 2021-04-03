@@ -157,6 +157,13 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     }
 
     /**
+     * Method to reset the Arduino to its starting state
+     */
+    public void resetArduino() {
+        sendData(reset_string); //send the get_data string via USB Serial
+    }
+
+    /**
      * Method to set the enabled state of the buttons and progress bars
      *
      * @param state - button enabled state
@@ -217,7 +224,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         setFaceFeetButton(false);
         setFeetFrontDemistButton(false);
 
-        getData();  //get the actual states of each button
+//        getData();  //get the actual states of each button
     }
 
     /**
@@ -700,11 +707,14 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
             //for each split string
             for (String r : raw) {
+                Log.d(TAG, "process: RAW - " + r);
                 try {
-                    String[] m = r.split(splitChar);    //split the string by the split character
+                    String[] m = r.replace(startChar, "").replace(endChar, "").split(splitChar);    //split the string by the split character
                     if (m[0].equals(canMsg_string)) {
                         //if the first part of the message is equal to the can message string - process the CODE and value
-                        messages.put(Integer.parseInt(m[1], 16), Integer.parseInt(m[2], 16));
+                        int code = Integer.parseInt(m[1], 16);   //CAN ID
+                        int value = Integer.parseInt(m[2], 16); //CAN msg
+                        messages.put(code, value);
                     }
                 } catch (Exception e) {
                     Log.i(TAG, "EXCEPTION SPLITTING SERIAL IN: " + e);
@@ -717,13 +727,21 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
                 Integer msgHex = set.getValue();    //message
 
                 if (codeHex == decoder.getHimID()) {
-                    Log.i(TAG, "process: Decoding HIM - CODE: " + codeHex + ", MSG: " + msgHex);    //log
                     setStartState();    //set the start state - before the buttons are updated
-                    decode(decoder.getHimDecodedList(msgHex));  //decode and make changes
+                    ArrayList<Decoder.Mappings> decodedValue = decoder.getHimDecodedList(msgHex);
+                    if (decodedValue != null) {
+                        decode(decodedValue);  //decode and make changes
+                    } else {
+                        Log.i(TAG, "process: DECODING HIM NULL");
+                    }
                 } else if (codeHex == decoder.getBemID()) {
-                    Log.i(TAG, "process: Decoding BEM - CODE: " + codeHex + ", MSG: " + msgHex);  //log
                     setBemState();  //set the BEM state to default before buttons are changed
-                    decode(decoder.getBemDecodedList(msgHex));  //decode and make changes
+                    ArrayList<Decoder.Mappings> decodedValue = decoder.getBemDecodedList(msgHex);
+                    if (decodedValue != null) {
+                        decode(decodedValue);  //decode and make changes
+                    } else {
+                        Log.i(TAG, "process: DECODING BEM NULL");
+                    }
                 } else {
                     Log.i(TAG, "process: NOT A VALID ID - " + sIn); //log
                 }
@@ -851,6 +869,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 //            TODO: UNCOMMENT FOR TESTING
             setEnabledState(false); //set the button states to disabled
         } else {
+//            resetArduino(); //send the reset signal in case of drop out
             getData();  //if successful get HIM and BEM data from USB Serial
         }
     }
