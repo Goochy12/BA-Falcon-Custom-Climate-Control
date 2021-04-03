@@ -24,6 +24,9 @@ public class HexCodes {
     public static int himID = 0x353;
     public static int bemID = 0x403;
 
+    public static int tempID = 0x001;
+    public static int fanID = 0x002;
+
     public static int rearDemistHexCode = 0x7;
     public static int rearDemistFrontLeftHexCode = 0xF;
     public static int rearDemistFrontRightHexCode = 0x47;

@@ -417,6 +417,24 @@ public class Decoder {
     }
 
     /**
+     * Method to get the temp ID
+     *
+     * @return - the temp ID
+     */
+    public int getTempID() {
+        return tempID;
+    }
+
+    /**
+     * Method to get the fan ID
+     *
+     * @return - the fan ID
+     */
+    public int getFanID() {
+        return fanID;
+    }
+
+    /**
      * Method to get a decoded HIM list based on an inputted code
      *
      * @param code - the HIM code from the vehicle
