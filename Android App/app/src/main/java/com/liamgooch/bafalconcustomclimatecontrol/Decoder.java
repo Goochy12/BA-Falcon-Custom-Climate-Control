@@ -194,208 +194,208 @@ public class Decoder {
         bemHashMap.put(rearDemistHexCode, rearDemist);
 
         rearDemistFrontLeft = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.BOOT);
-        bemHashMap.put(rearDemistFrontLeftHexCode, rearDemist);
+        rearDemistFrontLeft.add(Mappings.REAR_DEMIST);
+        rearDemistFrontLeft.add(Mappings.BOOT);
+        bemHashMap.put(rearDemistFrontLeftHexCode, rearDemistFrontLeft);
 
         rearDemistFrontRight = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.FRONT_LEFT_DOOR);
-        bemHashMap.put(rearDemistFrontRightHexCode, rearDemist);
+        rearDemistFrontRight.add(Mappings.REAR_DEMIST);
+        rearDemistFrontRight.add(Mappings.FRONT_LEFT_DOOR);
+        bemHashMap.put(rearDemistFrontRightHexCode, rearDemistFrontRight);
 
         rearDemistBackLeft = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.FRONT_RIGHT_DOOR);
-        bemHashMap.put(rearDemistBackLeftHexCode, rearDemist);
+        rearDemistBackLeft.add(Mappings.REAR_DEMIST);
+        rearDemistBackLeft.add(Mappings.FRONT_RIGHT_DOOR);
+        bemHashMap.put(rearDemistBackLeftHexCode, rearDemistBackLeft);
 
         rearDemistBackRight = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.BACK_LEFT_DOOR);
-        bemHashMap.put(rearDemistBackRightHexCode, rearDemist);
+        rearDemistBackRight.add(Mappings.REAR_DEMIST);
+        rearDemistBackRight.add(Mappings.BACK_LEFT_DOOR);
+        bemHashMap.put(rearDemistBackRightHexCode, rearDemistBackRight);
 
         rearDemistBoot = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.BACK_RIGHT_DOOR);
-        bemHashMap.put(rearDemistBootHexCode, rearDemist);
+        rearDemistBoot.add(Mappings.REAR_DEMIST);
+        rearDemistBoot.add(Mappings.BACK_RIGHT_DOOR);
+        bemHashMap.put(rearDemistBootHexCode, rearDemistBoot);
 
         rearDemistFrontLeftFrontRight = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.FRONT_LEFT_DOOR);
-        rearDemist.add(Mappings.FRONT_RIGHT_DOOR);
-        bemHashMap.put(rearDemistFrontLeftFrontRightHexCode, rearDemist);
+        rearDemistFrontLeftFrontRight.add(Mappings.REAR_DEMIST);
+        rearDemistFrontLeftFrontRight.add(Mappings.FRONT_LEFT_DOOR);
+        rearDemistFrontLeftFrontRight.add(Mappings.FRONT_RIGHT_DOOR);
+        bemHashMap.put(rearDemistFrontLeftFrontRightHexCode, rearDemistFrontLeftFrontRight);
 
         rearDemistFrontLeftBackLeft = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.FRONT_LEFT_DOOR);
-        rearDemist.add(Mappings.BACK_LEFT_DOOR);
-        bemHashMap.put(rearDemistFrontLeftBackLeftHexCode, rearDemist);
+        rearDemistFrontLeftBackLeft.add(Mappings.REAR_DEMIST);
+        rearDemistFrontLeftBackLeft.add(Mappings.FRONT_LEFT_DOOR);
+        rearDemistFrontLeftBackLeft.add(Mappings.BACK_LEFT_DOOR);
+        bemHashMap.put(rearDemistFrontLeftBackLeftHexCode, rearDemistFrontLeftBackLeft);
 
         rearDemistFrontLeftBackRight = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.FRONT_LEFT_DOOR);
-        rearDemist.add(Mappings.BACK_LEFT_DOOR);
-        bemHashMap.put(rearDemistFrontLeftBackRightHexCode, rearDemist);
+        rearDemistFrontLeftBackRight.add(Mappings.REAR_DEMIST);
+        rearDemistFrontLeftBackRight.add(Mappings.FRONT_LEFT_DOOR);
+        rearDemistFrontLeftBackRight.add(Mappings.BACK_LEFT_DOOR);
+        bemHashMap.put(rearDemistFrontLeftBackRightHexCode, rearDemistFrontLeftBackRight);
 
         rearDemistFrontLeftBoot = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.FRONT_LEFT_DOOR);
-        rearDemist.add(Mappings.BOOT);
-        bemHashMap.put(rearDemistFrontLeftBootHexCode, rearDemist);
+        rearDemistFrontLeftBoot.add(Mappings.REAR_DEMIST);
+        rearDemistFrontLeftBoot.add(Mappings.FRONT_LEFT_DOOR);
+        rearDemistFrontLeftBoot.add(Mappings.BOOT);
+        bemHashMap.put(rearDemistFrontLeftBootHexCode, rearDemistFrontLeftBoot);
 
         rearDemistFrontRightBackLeft = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.FRONT_RIGHT_DOOR);
-        rearDemist.add(Mappings.BACK_LEFT_DOOR);
-        bemHashMap.put(rearDemistFrontRightBackLeftHexCode, rearDemist);
+        rearDemistFrontRightBackLeft.add(Mappings.REAR_DEMIST);
+        rearDemistFrontRightBackLeft.add(Mappings.FRONT_RIGHT_DOOR);
+        rearDemistFrontRightBackLeft.add(Mappings.BACK_LEFT_DOOR);
+        bemHashMap.put(rearDemistFrontRightBackLeftHexCode, rearDemistFrontRightBackLeft);
 
         rearDemistFrontRightBackRight = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.FRONT_RIGHT_DOOR);
-        rearDemist.add(Mappings.BACK_RIGHT_DOOR);
-        bemHashMap.put(rearDemistFrontRightBackRightHexCode, rearDemist);
+        rearDemistFrontRightBackRight.add(Mappings.REAR_DEMIST);
+        rearDemistFrontRightBackRight.add(Mappings.FRONT_RIGHT_DOOR);
+        rearDemistFrontRightBackRight.add(Mappings.BACK_RIGHT_DOOR);
+        bemHashMap.put(rearDemistFrontRightBackRightHexCode, rearDemistFrontRightBackRight);
 
         rearDemistFrontRightBoot = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.FRONT_RIGHT_DOOR);
-        rearDemist.add(Mappings.BOOT);
-        bemHashMap.put(rearDemistFrontRightBootHexCode, rearDemist);
+        rearDemistFrontRightBoot.add(Mappings.REAR_DEMIST);
+        rearDemistFrontRightBoot.add(Mappings.FRONT_RIGHT_DOOR);
+        rearDemistFrontRightBoot.add(Mappings.BOOT);
+        bemHashMap.put(rearDemistFrontRightBootHexCode, rearDemistFrontRightBoot);
 
         rearDemistBackLeftBackRight = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.BACK_LEFT_DOOR);
-        rearDemist.add(Mappings.BACK_RIGHT_DOOR);
-        bemHashMap.put(rearDemistBackLeftBackRightHexCode, rearDemist);
+        rearDemistBackLeftBackRight.add(Mappings.REAR_DEMIST);
+        rearDemistBackLeftBackRight.add(Mappings.BACK_LEFT_DOOR);
+        rearDemistBackLeftBackRight.add(Mappings.BACK_RIGHT_DOOR);
+        bemHashMap.put(rearDemistBackLeftBackRightHexCode, rearDemistBackLeftBackRight);
 
         rearDemistBackLeftBoot = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.BACK_LEFT_DOOR);
-        rearDemist.add(Mappings.BOOT);
-        bemHashMap.put(rearDemistBackLeftBootHexCode, rearDemist);
+        rearDemistBackLeftBoot.add(Mappings.REAR_DEMIST);
+        rearDemistBackLeftBoot.add(Mappings.BACK_LEFT_DOOR);
+        rearDemistBackLeftBoot.add(Mappings.BOOT);
+        bemHashMap.put(rearDemistBackLeftBootHexCode, rearDemistBackLeftBoot);
 
         rearDemistBackRightBoot = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.BACK_RIGHT_DOOR);
-        rearDemist.add(Mappings.BOOT);
-        bemHashMap.put(rearDemistBackRightBootHexCode, rearDemist);
+        rearDemistBackRightBoot.add(Mappings.REAR_DEMIST);
+        rearDemistBackRightBoot.add(Mappings.BACK_RIGHT_DOOR);
+        rearDemistBackRightBoot.add(Mappings.BOOT);
+        bemHashMap.put(rearDemistBackRightBootHexCode, rearDemistBackRightBoot);
 
         rearDemistFrontLeftFrontRightBackLeft = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.FRONT_LEFT_DOOR);
-        rearDemist.add(Mappings.FRONT_RIGHT_DOOR);
-        rearDemist.add(Mappings.BACK_LEFT_DOOR);
-        bemHashMap.put(rearDemistFrontLeftFrontRightBackLeftHexCode, rearDemist);
+        rearDemistFrontLeftFrontRightBackLeft.add(Mappings.REAR_DEMIST);
+        rearDemistFrontLeftFrontRightBackLeft.add(Mappings.FRONT_LEFT_DOOR);
+        rearDemistFrontLeftFrontRightBackLeft.add(Mappings.FRONT_RIGHT_DOOR);
+        rearDemistFrontLeftFrontRightBackLeft.add(Mappings.BACK_LEFT_DOOR);
+        bemHashMap.put(rearDemistFrontLeftFrontRightBackLeftHexCode, rearDemistFrontLeftFrontRightBackLeft);
 
         rearDemistFrontLeftFrontRightBackRight = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.FRONT_LEFT_DOOR);
-        rearDemist.add(Mappings.FRONT_RIGHT_DOOR);
-        rearDemist.add(Mappings.BACK_RIGHT_DOOR);
-        bemHashMap.put(rearDemistFrontLeftFrontRightBackRightHexCode, rearDemist);
+        rearDemistFrontLeftFrontRightBackRight.add(Mappings.REAR_DEMIST);
+        rearDemistFrontLeftFrontRightBackRight.add(Mappings.FRONT_LEFT_DOOR);
+        rearDemistFrontLeftFrontRightBackRight.add(Mappings.FRONT_RIGHT_DOOR);
+        rearDemistFrontLeftFrontRightBackRight.add(Mappings.BACK_RIGHT_DOOR);
+        bemHashMap.put(rearDemistFrontLeftFrontRightBackRightHexCode, rearDemistFrontLeftFrontRightBackRight);
 
         rearDemistFrontLeftFrontRightBoot = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.FRONT_LEFT_DOOR);
-        rearDemist.add(Mappings.FRONT_RIGHT_DOOR);
-        rearDemist.add(Mappings.BOOT);
-        bemHashMap.put(rearDemistFrontLeftFrontRightBootHexCode, rearDemist);
+        rearDemistFrontLeftFrontRightBoot.add(Mappings.REAR_DEMIST);
+        rearDemistFrontLeftFrontRightBoot.add(Mappings.FRONT_LEFT_DOOR);
+        rearDemistFrontLeftFrontRightBoot.add(Mappings.FRONT_RIGHT_DOOR);
+        rearDemistFrontLeftFrontRightBoot.add(Mappings.BOOT);
+        bemHashMap.put(rearDemistFrontLeftFrontRightBootHexCode, rearDemistFrontLeftFrontRightBoot);
 
         rearDemistFrontLeftBackLeftBackRight = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.FRONT_LEFT_DOOR);
-        rearDemist.add(Mappings.BACK_LEFT_DOOR);
-        rearDemist.add(Mappings.BACK_RIGHT_DOOR);
-        bemHashMap.put(rearDemistFrontLeftBackLeftBackRightHexCode, rearDemist);
+        rearDemistFrontLeftBackLeftBackRight.add(Mappings.REAR_DEMIST);
+        rearDemistFrontLeftBackLeftBackRight.add(Mappings.FRONT_LEFT_DOOR);
+        rearDemistFrontLeftBackLeftBackRight.add(Mappings.BACK_LEFT_DOOR);
+        rearDemistFrontLeftBackLeftBackRight.add(Mappings.BACK_RIGHT_DOOR);
+        bemHashMap.put(rearDemistFrontLeftBackLeftBackRightHexCode, rearDemistFrontLeftBackLeftBackRight);
 
         rearDemistFrontLeftBackLeftBoot = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.FRONT_LEFT_DOOR);
-        rearDemist.add(Mappings.BACK_LEFT_DOOR);
-        rearDemist.add(Mappings.BOOT);
-        bemHashMap.put(rearDemistFrontLeftBackLeftBootHexCode, rearDemist);
+        rearDemistFrontLeftBackLeftBoot.add(Mappings.REAR_DEMIST);
+        rearDemistFrontLeftBackLeftBoot.add(Mappings.FRONT_LEFT_DOOR);
+        rearDemistFrontLeftBackLeftBoot.add(Mappings.BACK_LEFT_DOOR);
+        rearDemistFrontLeftBackLeftBoot.add(Mappings.BOOT);
+        bemHashMap.put(rearDemistFrontLeftBackLeftBootHexCode, rearDemistFrontLeftBackLeftBoot);
 
         rearDemistFrontLeftBackRightBoot = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.FRONT_LEFT_DOOR);
-        rearDemist.add(Mappings.BACK_RIGHT_DOOR);
-        rearDemist.add(Mappings.BOOT);
-        bemHashMap.put(rearDemistFrontLeftBackRightBootHexCode, rearDemist);
+        rearDemistFrontLeftBackRightBoot.add(Mappings.REAR_DEMIST);
+        rearDemistFrontLeftBackRightBoot.add(Mappings.FRONT_LEFT_DOOR);
+        rearDemistFrontLeftBackRightBoot.add(Mappings.BACK_RIGHT_DOOR);
+        rearDemistFrontLeftBackRightBoot.add(Mappings.BOOT);
+        bemHashMap.put(rearDemistFrontLeftBackRightBootHexCode, rearDemistFrontLeftBackRightBoot);
 
         rearDemistFrontRightBackLeftBackRight = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.FRONT_RIGHT_DOOR);
-        rearDemist.add(Mappings.BACK_LEFT_DOOR);
-        rearDemist.add(Mappings.BACK_RIGHT_DOOR);
-        bemHashMap.put(rearDemistFrontRightBackLeftBackRightHexCode, rearDemist);
+        rearDemistFrontRightBackLeftBackRight.add(Mappings.REAR_DEMIST);
+        rearDemistFrontRightBackLeftBackRight.add(Mappings.FRONT_RIGHT_DOOR);
+        rearDemistFrontRightBackLeftBackRight.add(Mappings.BACK_LEFT_DOOR);
+        rearDemistFrontRightBackLeftBackRight.add(Mappings.BACK_RIGHT_DOOR);
+        bemHashMap.put(rearDemistFrontRightBackLeftBackRightHexCode, rearDemistFrontRightBackLeftBackRight);
 
         rearDemistFrontRightBackLeftBoot = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.FRONT_RIGHT_DOOR);
-        rearDemist.add(Mappings.BACK_LEFT_DOOR);
-        rearDemist.add(Mappings.BOOT);
-        bemHashMap.put(rearDemistFrontRightBackLeftBootHexCode, rearDemist);
+        rearDemistFrontRightBackLeftBoot.add(Mappings.REAR_DEMIST);
+        rearDemistFrontRightBackLeftBoot.add(Mappings.FRONT_RIGHT_DOOR);
+        rearDemistFrontRightBackLeftBoot.add(Mappings.BACK_LEFT_DOOR);
+        rearDemistFrontRightBackLeftBoot.add(Mappings.BOOT);
+        bemHashMap.put(rearDemistFrontRightBackLeftBootHexCode, rearDemistFrontRightBackLeftBoot);
 
         rearDemistFrontRightBackRightBoot = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.FRONT_RIGHT_DOOR);
-        rearDemist.add(Mappings.BACK_RIGHT_DOOR);
-        rearDemist.add(Mappings.BOOT);
-        bemHashMap.put(rearDemistFrontRightBackRightBootHexCode, rearDemist);
+        rearDemistFrontRightBackRightBoot.add(Mappings.REAR_DEMIST);
+        rearDemistFrontRightBackRightBoot.add(Mappings.FRONT_RIGHT_DOOR);
+        rearDemistFrontRightBackRightBoot.add(Mappings.BACK_RIGHT_DOOR);
+        rearDemistFrontRightBackRightBoot.add(Mappings.BOOT);
+        bemHashMap.put(rearDemistFrontRightBackRightBootHexCode, rearDemistFrontRightBackRightBoot);
 
         rearDemistBackLeftBackRightBoot = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.BACK_LEFT_DOOR);
-        rearDemist.add(Mappings.BACK_RIGHT_DOOR);
-        rearDemist.add(Mappings.BOOT);
-        bemHashMap.put(rearDemistBackLeftBackRightBootHexCode, rearDemist);
+        rearDemistBackLeftBackRightBoot.add(Mappings.REAR_DEMIST);
+        rearDemistBackLeftBackRightBoot.add(Mappings.BACK_LEFT_DOOR);
+        rearDemistBackLeftBackRightBoot.add(Mappings.BACK_RIGHT_DOOR);
+        rearDemistBackLeftBackRightBoot.add(Mappings.BOOT);
+        bemHashMap.put(rearDemistBackLeftBackRightBootHexCode, rearDemistBackLeftBackRightBoot);
 
         rearDemistFrontLeftFrontRightBackLeftBackRight = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.FRONT_LEFT_DOOR);
-        rearDemist.add(Mappings.FRONT_RIGHT_DOOR);
-        rearDemist.add(Mappings.BACK_LEFT_DOOR);
-        rearDemist.add(Mappings.BACK_RIGHT_DOOR);
-        bemHashMap.put(rearDemistFrontLeftFrontRightBackLeftBackRightHexCode, rearDemist);
+        rearDemistFrontLeftFrontRightBackLeftBackRight.add(Mappings.REAR_DEMIST);
+        rearDemistFrontLeftFrontRightBackLeftBackRight.add(Mappings.FRONT_LEFT_DOOR);
+        rearDemistFrontLeftFrontRightBackLeftBackRight.add(Mappings.FRONT_RIGHT_DOOR);
+        rearDemistFrontLeftFrontRightBackLeftBackRight.add(Mappings.BACK_LEFT_DOOR);
+        rearDemistFrontLeftFrontRightBackLeftBackRight.add(Mappings.BACK_RIGHT_DOOR);
+        bemHashMap.put(rearDemistFrontLeftFrontRightBackLeftBackRightHexCode, rearDemistFrontLeftFrontRightBackLeftBackRight);
 
         rearDemistFrontLeftFrontRightBackLeftBoot = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.FRONT_LEFT_DOOR);
-        rearDemist.add(Mappings.FRONT_RIGHT_DOOR);
-        rearDemist.add(Mappings.BACK_LEFT_DOOR);
-        rearDemist.add(Mappings.BOOT);
-        bemHashMap.put(rearDemistFrontLeftFrontRightBackLeftBootHexCode, rearDemist);
+        rearDemistFrontLeftFrontRightBackLeftBoot.add(Mappings.REAR_DEMIST);
+        rearDemistFrontLeftFrontRightBackLeftBoot.add(Mappings.FRONT_LEFT_DOOR);
+        rearDemistFrontLeftFrontRightBackLeftBoot.add(Mappings.FRONT_RIGHT_DOOR);
+        rearDemistFrontLeftFrontRightBackLeftBoot.add(Mappings.BACK_LEFT_DOOR);
+        rearDemistFrontLeftFrontRightBackLeftBoot.add(Mappings.BOOT);
+        bemHashMap.put(rearDemistFrontLeftFrontRightBackLeftBootHexCode, rearDemistFrontLeftFrontRightBackLeftBoot);
 
         rearDemistFrontLeftFrontRightBackRightBoot = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.FRONT_LEFT_DOOR);
-        rearDemist.add(Mappings.FRONT_RIGHT_DOOR);
-        rearDemist.add(Mappings.BACK_RIGHT_DOOR);
-        rearDemist.add(Mappings.BOOT);
-        bemHashMap.put(rearDemistFrontLeftFrontRightBackRightBootHexCode, rearDemist);
+        rearDemistFrontLeftFrontRightBackRightBoot.add(Mappings.REAR_DEMIST);
+        rearDemistFrontLeftFrontRightBackRightBoot.add(Mappings.FRONT_LEFT_DOOR);
+        rearDemistFrontLeftFrontRightBackRightBoot.add(Mappings.FRONT_RIGHT_DOOR);
+        rearDemistFrontLeftFrontRightBackRightBoot.add(Mappings.BACK_RIGHT_DOOR);
+        rearDemistFrontLeftFrontRightBackRightBoot.add(Mappings.BOOT);
+        bemHashMap.put(rearDemistFrontLeftFrontRightBackRightBootHexCode, rearDemistFrontLeftFrontRightBackRightBoot);
 
         rearDemistFrontLeftBackLeftBackRightBoot = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.FRONT_LEFT_DOOR);
-        rearDemist.add(Mappings.BACK_LEFT_DOOR);
-        rearDemist.add(Mappings.BACK_RIGHT_DOOR);
-        rearDemist.add(Mappings.BOOT);
-        bemHashMap.put(rearDemistFrontLeftBackLeftBackRightBootHexCode, rearDemist);
+        rearDemistFrontLeftBackLeftBackRightBoot.add(Mappings.REAR_DEMIST);
+        rearDemistFrontLeftBackLeftBackRightBoot.add(Mappings.FRONT_LEFT_DOOR);
+        rearDemistFrontLeftBackLeftBackRightBoot.add(Mappings.BACK_LEFT_DOOR);
+        rearDemistFrontLeftBackLeftBackRightBoot.add(Mappings.BACK_RIGHT_DOOR);
+        rearDemistFrontLeftBackLeftBackRightBoot.add(Mappings.BOOT);
+        bemHashMap.put(rearDemistFrontLeftBackLeftBackRightBootHexCode, rearDemistFrontLeftBackLeftBackRightBoot);
 
         rearDemistFrontRightBackLeftBackRightBoot = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.FRONT_RIGHT_DOOR);
-        rearDemist.add(Mappings.BACK_LEFT_DOOR);
-        rearDemist.add(Mappings.BACK_RIGHT_DOOR);
-        rearDemist.add(Mappings.BOOT);
-        bemHashMap.put(rearDemistFrontRightBackLeftBackRightBootHexCode, rearDemist);
+        rearDemistFrontRightBackLeftBackRightBoot.add(Mappings.REAR_DEMIST);
+        rearDemistFrontRightBackLeftBackRightBoot.add(Mappings.FRONT_RIGHT_DOOR);
+        rearDemistFrontRightBackLeftBackRightBoot.add(Mappings.BACK_LEFT_DOOR);
+        rearDemistFrontRightBackLeftBackRightBoot.add(Mappings.BACK_RIGHT_DOOR);
+        rearDemistFrontRightBackLeftBackRightBoot.add(Mappings.BOOT);
+        bemHashMap.put(rearDemistFrontRightBackLeftBackRightBootHexCode, rearDemistFrontRightBackLeftBackRightBoot);
 
         rearDemistFrontLeftFrontRightBackLeftBackRightBoot = new ArrayList<>();
-        rearDemist.add(Mappings.REAR_DEMIST);
-        rearDemist.add(Mappings.FRONT_LEFT_DOOR);
-        rearDemist.add(Mappings.FRONT_RIGHT_DOOR);
-        rearDemist.add(Mappings.BACK_LEFT_DOOR);
-        rearDemist.add(Mappings.BACK_RIGHT_DOOR);
-        rearDemist.add(Mappings.BOOT);
-        bemHashMap.put(rearDemistFrontLeftFrontRightBackLeftBackRightBootHexCode, rearDemist);
+        rearDemistFrontLeftFrontRightBackLeftBackRightBoot.add(Mappings.REAR_DEMIST);
+        rearDemistFrontLeftFrontRightBackLeftBackRightBoot.add(Mappings.FRONT_LEFT_DOOR);
+        rearDemistFrontLeftFrontRightBackLeftBackRightBoot.add(Mappings.FRONT_RIGHT_DOOR);
+        rearDemistFrontLeftFrontRightBackLeftBackRightBoot.add(Mappings.BACK_LEFT_DOOR);
+        rearDemistFrontLeftFrontRightBackLeftBackRightBoot.add(Mappings.BACK_RIGHT_DOOR);
+        rearDemistFrontLeftFrontRightBackLeftBackRightBoot.add(Mappings.BOOT);
+        bemHashMap.put(rearDemistFrontLeftFrontRightBackLeftBackRightBootHexCode, rearDemistFrontLeftFrontRightBackLeftBackRightBoot);
     }
 
     /**

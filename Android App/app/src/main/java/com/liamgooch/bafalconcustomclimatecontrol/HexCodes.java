@@ -28,11 +28,11 @@ public class HexCodes {
     public static int fanID = 0x002;
 
     public static int rearDemistHexCode = 0x7;
-    public static int rearDemistFrontLeftHexCode = 0xF;
-    public static int rearDemistFrontRightHexCode = 0x47;
-    public static int rearDemistBackLeftHexCode = 0x87;
-    public static int rearDemistBackRightHexCode = 0x17;
-    public static int rearDemistBootHexCode = 0x27;
+    public static int rearDemistFrontLeftHexCode = 0x47;
+    public static int rearDemistFrontRightHexCode = 0x87;
+    public static int rearDemistBackLeftHexCode = 0x17;
+    public static int rearDemistBackRightHexCode = 0x27;
+    public static int rearDemistBootHexCode = 0xF;
     public static int rearDemistFrontLeftFrontRightHexCode = 0xC7;
     public static int rearDemistFrontLeftBackLeftHexCode = 0x57;
     public static int rearDemistFrontLeftBackRightHexCode = 0x67;
@@ -45,7 +45,7 @@ public class HexCodes {
     public static int rearDemistBackRightBootHexCode = 0x2F;
     public static int rearDemistFrontLeftFrontRightBackLeftHexCode = 0xD7;
     public static int rearDemistFrontLeftFrontRightBackRightHexCode = 0xE7;
-    public static int rearDemistFrontLeftFrontRightBootHexCode = 0xC7;
+    public static int rearDemistFrontLeftFrontRightBootHexCode = 0xCF;
     public static int rearDemistFrontLeftBackLeftBackRightHexCode = 0x77;
     public static int rearDemistFrontLeftBackLeftBootHexCode = 0x5F;
     public static int rearDemistFrontLeftBackRightBootHexCode = 0x6F;
