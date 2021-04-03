@@ -726,24 +726,27 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
                 Integer codeHex = set.getKey(); //ID
                 Integer msgHex = set.getValue();    //message
 
+                ArrayList<Decoder.Mappings> decodedValue = null;
+
                 if (codeHex == decoder.getHimID()) {
                     setStartState();    //set the start state - before the buttons are updated
-                    ArrayList<Decoder.Mappings> decodedValue = decoder.getHimDecodedList(msgHex);
-                    if (decodedValue != null) {
-                        decode(decodedValue);  //decode and make changes
-                    } else {
-                        Log.i(TAG, "process: DECODING HIM NULL");
-                    }
+                    decodedValue = decoder.getHimDecodedList(msgHex);
                 } else if (codeHex == decoder.getBemID()) {
                     setBemState();  //set the BEM state to default before buttons are changed
-                    ArrayList<Decoder.Mappings> decodedValue = decoder.getBemDecodedList(msgHex);
-                    if (decodedValue != null) {
-                        decode(decodedValue);  //decode and make changes
-                    } else {
-                        Log.i(TAG, "process: DECODING BEM NULL");
-                    }
-                } else {
+                    decodedValue = decoder.getBemDecodedList(msgHex);
+                } else if(codeHex == decoder.getTempID()){
+                    setTemp(msgHex);
+                }else if(codeHex == decoder.getFanID()){
+                    fanProgressBar.setProgress(msgHex);
+                }
+                else {
                     Log.i(TAG, "process: NOT A VALID ID - " + sIn); //log
+                }
+
+                if (decodedValue != null) {
+                    decode(decodedValue);  //decode and make changes
+                } else {
+                    Log.i(TAG, "process: DECODING " + Integer.toHexString(codeHex) + " NULL");
                 }
             }
 
