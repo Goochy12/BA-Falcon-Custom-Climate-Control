@@ -104,13 +104,33 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         //declare button listeners
         button_settings.setOnClickListener(v -> getParentFragmentManager().beginTransaction().add(R.id.fragment_container, new SettingsFragment(RootMain.this)).addToBackStack("settings").commit());
 
-        button_ac.setOnClickListener(v -> setAC(!getButton_ac_isSelected()));
+        button_ac.setOnClickListener(v -> {
+            setAC(!getButton_ac_isSelected());
+            getData();  //get the updated data from serial - sanity checking
+        });
 
-        button_acMax.setOnClickListener(v -> setAcMax(!getButton_acMax_isSelected()));
+        button_acMax.setOnClickListener(v -> {
+            setAcMax(!getButton_acMax_isSelected());
+            getData();  //get the updated data from serial - sanity checking
+        });
 
-        button_frontDemist.setOnClickListener(v -> setFrontDemist(!getButton_frontDemist_isSelected()));
+        button_frontDemist.setOnClickListener(v -> {
+            if (!getButton_frontDemist_isSelected()) {
+                setHimState(false);//set the HIM buttons to false to make the change immediately on the UI
+                //if button not pressed - don't allow unselect
+                setFrontDemist(!getButton_frontDemist_isSelected());
+            }
+            getData();  //get the updated data from serial - sanity checking
+        });
 
-        button_rearDemist.setOnClickListener(v -> setRearDemist(!getButton_rearDemist_isSelected()));
+        //TODO: Confirm rear demist unselect
+        button_rearDemist.setOnClickListener(v -> {
+            if (!getButton_rearDemist_isSelected()) {
+                //if button not pressed - don't allow unselect
+                setRearDemist(!getButton_rearDemist_isSelected());
+            }
+            getData();  //get the updated data from serial - sanity checking
+        });
 
         button_cabin_cycle.setOnClickListener(v -> {
             if (getButton_cabin_cycle_isSelected().equals(open_cabin_string)) {
@@ -118,27 +138,74 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
             } else {
                 setCabinCycle(Decoder.Mappings.OPEN_CABIN);
             }
+            getData();  //get the updated data from serial - sanity checking
         });
 
-        button_fanUp.setOnClickListener(v -> fanUp());
+        button_fanUp.setOnClickListener(v -> {
+            fanUp();
+            getData();  //get the updated data from serial - sanity checking
+        });
 
-        button_fanDown.setOnClickListener(v -> fanDown());
+        button_fanDown.setOnClickListener(v -> {
+            fanDown();
+            getData();  //get the updated data from serial - sanity checking
+        });
 
-        button_tempUp.setOnClickListener(v -> tempUp());
+        button_tempUp.setOnClickListener(v -> {
+            tempUp();
+            getData();  //get the updated data from serial - sanity checking
+        });
 
-        button_tempDown.setOnClickListener(v -> tempDown());
+        button_tempDown.setOnClickListener(v -> {
+            tempDown();
+            getData();
+        });
 
-        button_domeLight.setOnClickListener(v -> sendDomeLight_status());
+        button_domeLight.setOnClickListener(v -> {
+            sendDomeLight_status();
+            getData();  //get the updated data from serial - sanity checking
+        });
 
-        button_doorLock.setOnClickListener(v -> sendDoorLock_status());
+        button_doorLock.setOnClickListener(v -> {
+            sendDoorLock_status();
+            getData();  //get the updated data from serial - sanity checking
+        });
 
-        button_face.setOnClickListener(v -> setFace(!getButton_face_isSelected()));
+        button_face.setOnClickListener(v -> {
+            if (!getButton_face_isSelected()) {
+                setHimState(false);//set the HIM buttons to false to make the change immediately on the UI
+                //if button not pressed - don't allow unselect
+                setFace(!getButton_face_isSelected());
+            }
+            getData();  //get the updated data from serial - sanity checking
+        });
 
-        button_feet.setOnClickListener(v -> setFeet(!getButton_feet_isSelected()));
+        button_feet.setOnClickListener(v -> {
+            if (!getButton_feet_isSelected()) {
+                setHimState(false);//set the HIM buttons to false to make the change immediately on the UI
+                //if button not pressed - don't allow unselect
+                setFeet(!getButton_feet_isSelected());
+            }
+            getData();  //get the updated data from serial - sanity checking
+        });
 
-        button_face_feet.setOnClickListener(v -> setFaceFeet(!getButton_face_feet_isSelected()));
+        button_face_feet.setOnClickListener(v -> {
+            if (!getButton_face_feet_isSelected()) {
+                setHimState(false);//set the HIM buttons to false to make the change immediately on the UI
+                //if button not pressed - don't allow unselect
+                setFaceFeet(!getButton_face_feet_isSelected());
+            }
+            getData();  //get the updated data from serial - sanity checking
+        });
 
-        button_feet_front_demist.setOnClickListener(v -> setFeetFrontDemist(!getButton_feet_front_demist_isSelected()));
+        button_feet_front_demist.setOnClickListener(v -> {
+            if (!getButton_feet_front_demist_isSelected()) {
+                setHimState(false); //set the HIM buttons to false to make the change immediately on the UI
+                //if button not pressed - don't allow unselect
+                setFeetFrontDemist(!getButton_feet_front_demist_isSelected());
+            }
+            getData();  //get the updated data from serial - sanity checking
+        });
 
         setStartState();    //set the starting state for the interface
         this.decoder = new Decoder();   //create a new instance of the decoder
@@ -225,6 +292,17 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         setFeetFrontDemistButton(false);
 
 //        getData();  //get the actual states of each button
+    }
+
+    /**
+     * Method to set the state for the HIM buttons
+     */
+    private void setHimState(boolean state) {
+        setFrontDemistButton(state);
+        setFaceButton(state);
+        setFeetButton(state);
+        setFaceFeetButton(state);
+        setFeetFrontDemistButton(state);
     }
 
     /**
