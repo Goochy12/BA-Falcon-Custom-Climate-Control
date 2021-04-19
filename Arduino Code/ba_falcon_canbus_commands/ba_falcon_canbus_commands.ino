@@ -40,6 +40,7 @@ char incomingSerial[32];    //serial input buffer
 int incomingCount = 0;      //current char from serial input
 bool reading = false;       //currently reading serial input flag
 int sendButton = 0;         //send button press flag
+bool climateOff = false;    //climate on/off flag
 
 const String errorString = "error"; //error string
 
@@ -65,9 +66,12 @@ void loop()
 
   if (sendButton >= 5)
   {
-    sendButtonPressed(); //send the ICC keep alive CAN message
-    resetICCButton();    //reset the ICC keep alive CAN array
-    sendButton = 0;      //reset the button press flag
+    if (!climateOff)
+    {
+      sendButtonPressed(); //send the ICC keep alive CAN message
+      resetICCButton();    //reset the ICC keep alive CAN array
+      sendButton = 0;      //reset the button press flag
+    }
   }
 
   //process CAN data (from car)
@@ -226,6 +230,14 @@ void actionSerialIn(char sIn[32])
   else if (strcmp(sIn, "get_data") == 0)
   {
     sendData();
+  }
+  else if (strcmp(sIn, "climate_off") == 0)
+  {
+    climateOff = true;
+  }
+  else if (strcmp(sIn, "climate_on") == 0)
+  {
+    climateOff = false;
   }
   return;
 }
