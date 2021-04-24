@@ -487,7 +487,7 @@
             app:layout_constraintTop_toBottomOf="@+id/divider70" />
 
         <ImageButton
-            android:id="@+id/off_button"
+            android:id="@+id/button_on"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_lock_power_off"

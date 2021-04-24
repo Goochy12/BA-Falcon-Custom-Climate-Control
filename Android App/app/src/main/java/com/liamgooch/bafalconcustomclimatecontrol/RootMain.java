@@ -37,14 +37,14 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     // image button declarations
     private ImageButton button_frontDemist, button_rearDemist, button_cabin_cycle, button_fanUp,
             button_fanDown, button_tempUp, button_tempDown, button_domeLight, button_doorLock, button_settings,
-            button_face, button_feet, button_face_feet, button_feet_front_demist;
+            button_face, button_feet, button_face_feet, button_feet_front_demist, button_on;
 
     //other button declarations
     private Button button_ac, button_acMax;
 
     //boolean variables for button
     private Boolean button_frontDemist_isSelected, button_rearDemist_isSelected, button_ac_isSelected, button_acMax_isSelected,
-            button_face_isSelected, button_feet_isSelected, button_face_feet_isSelected, button_feet_front_demist_isSelected;
+            button_face_isSelected, button_feet_isSelected, button_face_feet_isSelected, button_feet_front_demist_isSelected, button_On_isSelected;
     private String button_cabin_cycle_isSelected;
     private ProgressBar fanProgressBar, tempProgressBar;
 
@@ -74,6 +74,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         //declare buttons
         button_settings = view.findViewById(R.id.button_settings);
+        button_on = view.findViewById(R.id.button_on);
 
         button_frontDemist = view.findViewById(R.id.button_frontDemist);
         button_rearDemist = view.findViewById(R.id.button_rearDemist);
@@ -103,6 +104,11 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
 
         //declare button listeners
         button_settings.setOnClickListener(v -> getParentFragmentManager().beginTransaction().add(R.id.fragment_container, new SettingsFragment(RootMain.this)).addToBackStack("settings").commit());
+
+        button_on.setOnClickListener(v -> {
+            setOn(!getButton_On_isSelected());
+            getData();
+        });
 
         button_ac.setOnClickListener(v -> {
             setAC(!getButton_ac_isSelected());
@@ -310,6 +316,36 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
      */
     private void setBemState() {
         setRearDemistButton(false);
+    }
+
+    /**
+     * Method to set the climate system on and off
+     *
+     * @param select - Climate ON status state
+     */
+    private void setOn(boolean select) {
+        setEnabledState(select);    //set the enabled state
+        if (select) {
+            sendOn_status();    //if climate is to set on state
+        } else {
+            sendOff_status();   //if climate is set to off state
+        }
+
+        setButton_On_isSelected(select);    //set the boolean button on state
+    }
+
+    /**
+     * Method to send climate ON status
+     */
+    private void sendOn_status() {
+        sendData(climate_on_string);
+    }
+
+    /**
+     * Method to send climate OFF status
+     */
+    private void sendOff_status() {
+        sendData(climate_off_string);
     }
 
     /**
@@ -983,6 +1019,14 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
     }
 
     //boolean getters and setters
+
+    public Boolean getButton_On_isSelected() {
+        return button_On_isSelected;
+    }
+
+    public void setButton_On_isSelected(Boolean button_On_isSelected) {
+        this.button_On_isSelected = button_On_isSelected;
+    }
 
     public Boolean getButton_frontDemist_isSelected() {
         return button_frontDemist_isSelected;
