@@ -214,6 +214,7 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         });
 
         setStartState();    //set the starting state for the interface
+        setOnState(true);
         this.decoder = new Decoder();   //create a new instance of the decoder
 
         //create a new USB Serial instance
@@ -298,6 +299,10 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         setFeetFrontDemistButton(false);
 
 //        getData();  //get the actual states of each button
+    }
+
+    private void setOnState(boolean state){
+        setButton_On_isSelected(state);
     }
 
     /**
