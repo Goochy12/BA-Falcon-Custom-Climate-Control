@@ -19,7 +19,7 @@ unsigned char HIM[8] = {0, 0, 0, 0, 0, 0, 0, 0};                  //standard HIM
 
 mcp2515_can CAN(SPI_CS_PIN); //set the CAN CS pin
 
-unsigned char ICC_Buttons[8] = {0, 0, 0, 0x80, 0, 1, 0, 0xA};  //mutable keep alive array
+unsigned char ICC_Buttons[8] = {0, 0, 0, 0x80, 0, 8, 0, 0xA};  //mutable keep alive array
 unsigned char ICC_Buttons_OFF[8] = {0, 0, 0, 0, 0, 0, 0, 0xA}; //mutable keep alive array (car off)
 
 //fan and temp settings
@@ -27,7 +27,7 @@ int fanValue = 0x0; //current fan value
 int fanMax = 0xE;   //max fan value
 int fanMin = 0x0;   //min fan value
 
-int tempValue = 0x0; //current temp value
+int tempValue = 0x8; //current temp value
 int tempMax = 0xE;   //max temp value
 int tempMin = 0x0;   //min temp value
 
