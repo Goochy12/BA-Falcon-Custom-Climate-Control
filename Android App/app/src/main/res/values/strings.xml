@@ -26,4 +26,5 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="get_data_string">Get Data From Climate System</string>
+    <string name="key_coding_string">Code Remote Key</string>
 </resources>

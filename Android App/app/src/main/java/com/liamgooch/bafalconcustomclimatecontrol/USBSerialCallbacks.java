@@ -16,4 +16,10 @@ public interface USBSerialCallbacks {
      * Function for getting data from serial
      */
     void getData();
+
+    /**
+     * Function for sending a command via serial
+     * @param command - the string command to send
+     */
+    void sendCommand(String command);
 }

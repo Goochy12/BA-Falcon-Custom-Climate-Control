@@ -230,6 +230,11 @@ public class RootMain extends Fragment implements USBSerialCallbacks {
         sendData(getData_string);   //send the get_data string via USB Serial
     }
 
+    @Override
+    public void sendCommand(String command) {
+        sendData(command);
+    }
+
     /**
      * Method to reset the Arduino to its starting state
      */

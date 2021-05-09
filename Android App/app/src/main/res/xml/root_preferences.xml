@@ -15,5 +15,8 @@
         <Preference
             app:key="get_data"
             app:title="@string/get_data_string"/>
+        <Preference
+            app:key="key_coding"
+            app:title="@string/key_coding_string"/>
     </PreferenceCategory>
 </PreferenceScreen>

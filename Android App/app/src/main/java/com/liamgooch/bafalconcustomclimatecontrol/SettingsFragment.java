@@ -13,12 +13,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
+import static com.liamgooch.bafalconcustomclimatecontrol.Strings.*;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
     Preference retrySerialPreference;   //preference for retrying the serial connection
     SwitchPreferenceCompat headUnitControls;    //switch preference for whether the head unit controls the climate or the android app
     Preference getDataPreference;   //preference to get data from serial
+    Preference keyCodePreference;   //preference to send key code to serial
     USBSerialCallbacks _serial; //serial callback instance
 
     public SettingsFragment(USBSerialCallbacks _serial) {
@@ -40,6 +42,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         retrySerialPreference = findPreference("retry_arduino");
         headUnitControls = findPreference("hu_buttons_switch");
         getDataPreference = findPreference("get_data");
+        keyCodePreference = findPreference("key_code");
 
         setPreferenceDefaults();    //set the default preferences
 
@@ -52,6 +55,11 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         //in get preference from serial press
         getDataPreference.setOnPreferenceClickListener(preference -> {
             this._serial.getData();
+            return true;
+        });
+
+        keyCodePreference.setOnPreferenceClickListener(preference -> {
+            this._serial.sendCommand(keyCode_string);
             return true;
         });
     }
