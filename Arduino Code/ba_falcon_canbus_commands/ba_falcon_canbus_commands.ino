@@ -41,6 +41,7 @@ int incomingCount = 0;      //current char from serial input
 bool reading = false;       //currently reading serial input flag
 int sendButton = 0;         //send button press flag
 bool climateOff = false;    //climate on/off flag
+bool keyCoding = 0;         //flag for coding key remotes to the central locking module
 
 const String errorString = "error"; //error string
 
@@ -66,6 +67,16 @@ void loop()
 
   if (sendButton >= 5)
   {
+    if (keyCoding >= 1)
+    {
+      //if key coding active
+      rearDemist(); //set rear demist button
+      keyCoding++;  //increment the key coding
+      if (keyCoding >= 3)
+      {
+        keyCoding = 0; //cap variable at 3 and reset once reached
+      }
+    }
     if (!climateOff)
     {
       sendButtonPressed(); //send the ICC keep alive CAN message
@@ -238,6 +249,10 @@ void actionSerialIn(char sIn[32])
   else if (strcmp(sIn, "climate_on") == 0)
   {
     climateOff = false;
+  }
+  else if (strcmp(sIn, "key_code") == 0)
+  {
+    keyCoding = 1;
   }
   return;
 }
