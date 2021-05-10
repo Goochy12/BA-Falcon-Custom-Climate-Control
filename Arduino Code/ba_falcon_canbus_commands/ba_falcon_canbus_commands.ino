@@ -41,7 +41,7 @@ int incomingCount = 0;      //current char from serial input
 bool reading = false;       //currently reading serial input flag
 int sendButton = 0;         //send button press flag
 bool climateOff = false;    //climate on/off flag
-bool keyCoding = 0;         //flag for coding key remotes to the central locking module
+int keyCoding = 0;         //flag for coding key remotes to the central locking module
 
 const String errorString = "error"; //error string
 
@@ -72,7 +72,7 @@ void loop()
       //if key coding active
       rearDemist(); //set rear demist button
       keyCoding++;  //increment the key coding
-      if (keyCoding >= 3)
+      if (keyCoding > 3)
       {
         keyCoding = 0; //cap variable at 3 and reset once reached
       }
