@@ -42,7 +42,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         retrySerialPreference = findPreference("retry_arduino");
         headUnitControls = findPreference("hu_buttons_switch");
         getDataPreference = findPreference("get_data");
-        keyCodePreference = findPreference("key_code");
+        keyCodePreference = findPreference("key_coding");
 
         setPreferenceDefaults();    //set the default preferences
 
