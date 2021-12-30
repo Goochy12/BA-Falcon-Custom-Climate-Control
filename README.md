@@ -3,11 +3,17 @@
 ## Description
 This project was designed for and based on a 2003 BA Falcon with a Single Zone MCC (Manual Climate Control). An Arduino Uno and MCP2515 Can Bus Sheild were used for CAN communication with the vehicle, while an Android App (Java) was written for communication with the Arduino.
 
+Scroll down for photos and video.
+
 ## Photos
 ![Starting Up](https://github.com/Goochy12/BA-Falcon-Custom-Climate-Control/blob/main/resources/images/20210606_133808.jpg)
-![Video](https://github.com/Goochy12/BA-Falcon-Custom-Climate-Control/blob/main/resources/images/20210428_171418.mp4)
+
+
+https://user-images.githubusercontent.com/18386188/147720307-97b063c7-28f7-43fa-a705-af794f92d567.mp4
+
+
 ![Image1](https://github.com/Goochy12/BA-Falcon-Custom-Climate-Control/blob/main/resources/images/20210418_211053.jpg)
-![Image2](https://github.com/Goochy12/BA-Falcon-Custom-Climate-Control/blob/main/resources/images/20210418_211012 1.jpg)
+![Image2](https://github.com/Goochy12/BA-Falcon-Custom-Climate-Control/blob/main/resources/images/20210418_211012%201.jpg)
  
  
 ## Credit
